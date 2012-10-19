@@ -1,0 +1,38 @@
+{
+    "name": "zfr/zfr-forum",
+    "description": "Zend Framework 2 Forum Module, initially developped for http://www.z-f.fr",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "forum",
+        "module",
+        "zf2"
+    ],
+    "homepage": "https://github.com/bakura10/ZfrForum",
+    "authors": [
+        {
+            "name": "Michaël Gallego",
+            "email": "mic.gallego@gmail.com",
+            "homepage": "http://www.michaelgallego.fr/"
+        },
+        {
+            "name": "Florent Blaison",
+            "email": "florent.blaison@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.*",
+        "zf-commons/zfc-user": "dev-master",
+        "doctrine/doctrine-orm-module": "dev-master"
+    },
+    "minimum-stability": "alpha",
+    "autoload": {
+        "psr-0": {
+            "ZfrForum": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}
