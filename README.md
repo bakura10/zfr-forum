@@ -1,5 +1,7 @@
 # ZfrForum - Forum Module For Zend Framework 2
 
+Master: [![Build Status](https://secure.travis-ci.org/bakura10/zfrforum.png?branch=master)](http://travis-ci.org/bakura/zfrforum)
+
 ---
 
 ## Français
