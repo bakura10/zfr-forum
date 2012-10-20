@@ -23,7 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ZfcUser\Entity\UserInterface;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ZfrForum\Repository\MessageRepository")
  * @ORM\Table(name="Messages")
  * @ORM\HasLifecycleCallbacks
  */

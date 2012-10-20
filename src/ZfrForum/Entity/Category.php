@@ -24,7 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Internally, categories are stored into a hierarchical tree in order to easily fetch threads
  * from specific categories, or from all the sub-categories of a given category...
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ZfrForum\Repository\CategoryRepository")
  * @ORM\Table(name="Categories")
  */
 class Category

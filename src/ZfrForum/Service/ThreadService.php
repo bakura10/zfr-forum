@@ -16,25 +16,34 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\DoctrineExtensions;
+namespace ZfrForum\Service;
 
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
-use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use ZfrForum\Entity\Thread;
+use ZfrForum\Mapper\ThreadMapper;
 
-/**
- * This code comes from here:
- * http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/sql-table-prefixes.html
- *
- * TODO: this should be moved to DoctrineModule itself
- */
-class TablePrefix implements ServiceLocatorAwareInterface
+class ThreadService implements ServiceLocatorAwareInterface
 {
     /**
      * @var ServiceLocatorInterface
      */
     protected $serviceLocator;
+
+    /**
+     * @var ThreadMapper
+     */
+    protected $threadMapper;
+
+
+    /**
+     * @param  int $id
+     * @return Thread
+     */
+    public function getById($id)
+    {
+        return $this->getThreadMapper()->getById($id);
+    }
 
     /**
      * Set service locator
@@ -57,37 +66,14 @@ class TablePrefix implements ServiceLocatorAwareInterface
     }
 
     /**
-     * @param LoadClassMetadataEventArgs $eventArgs
+     * @return ThreadMapper
      */
-    public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
+    public function getThreadMapper()
     {
-        $prefix = $this->getPrefixFromConfig();
-
-        if (empty($prefix)) {
-            return;
+        if ($this->threadMapper === null) {
+            $this->threadMapper = $this->getServiceLocator()->get('ZfrForum\Mapper\ThreadMapper');
         }
 
-        $classMetadata = $eventArgs->getClassMetadata();
-        $classMetadata->setPrimaryTable($prefix . $classMetadata->getTableName());
-
-        foreach ($classMetadata->getAssociationMappings() as $fieldName => $mapping) {
-            if ($mapping['type'] == ClassMetadataInfo::MANY_TO_MANY) {
-                $mappedTableName = $classMetadata->associationMappings[$fieldName]['joinTable']['name'];
-                $classMetadata->associationMappings[$fieldName]['joinTable']['name'] = $prefix . $mappedTableName;
-            }
-        }
-    }
-
-    /**
-     * Get the prefix from the configuration
-     *
-     * @return string
-     */
-    protected function getPrefixFromConfig()
-    {
-        /** @var \ZfrForum\Options\ModuleOptions $moduleOptions */
-        $moduleOptions = $this->serviceLocator->get('ZfrForum\Options\ModuleOptions');
-
-        return $moduleOptions->getTablesPrefix();
+        return $this->threadMapper;
     }
 }

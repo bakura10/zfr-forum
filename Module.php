@@ -53,8 +53,33 @@ class Module implements AutoloaderProviderInterface
     public function getServiceConfig()
     {
         return array(
+            /**
+             * Invokables
+             */
             'invokables' => array(
-                'ZfrForum\DoctrineExtensions\TablePrefix' => 'ZfrForum\DoctrineExtensions\TablePrefix'
+                'ZfrForum\DoctrineExtensions\TablePrefix' => 'ZfrForum\DoctrineExtensions\TablePrefix',
+                'ZfrForum\Service\CategoryService'        => 'ZfrForum\Service\CategoryService',
+                'ZfrForum\Service\MessageService'         => 'ZfrForum\Service\MessageService',
+                'ZfrForum\Service\ThreadService'          => 'ZfrForum\Service\ThreadService'
+            ),
+
+            /**
+             * Factories
+             */
+            'factories' => array(
+                'ZfrForum\Options\ModuleOptions' => function ($serviceManager) {
+                    $config  = $serviceManager->get('Config');
+                    $options = isset($config['zfr_forum']) ? $config['zfr_forum'] : array();
+
+                    return new Options\ModuleOptions($options);
+                }
+            ),
+
+            /**
+             * Abstract factories
+             */
+            'abstract_factories' => array(
+                'ZfrForum\ServiceFactory\MapperAbstractFactory'
             )
         );
     }

@@ -25,7 +25,7 @@ use Doctrine\ORM\Mapping;
 use ZfcUser\Entity\UserInterface;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ZfrForum\Repository\ThreadRepository")
  * @ORM\Table(name="Threads")
  * @ORM\HasLifecycleCallbacks
  */
