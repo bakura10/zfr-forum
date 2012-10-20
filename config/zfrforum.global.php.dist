@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * ZfrForum configuration
+ */
+return array(
+    'zfr_forum' => array(
+        /**
+         * The prefix to use for tables names
+         */
+        'tables_prefix' => 'Zfr_'
+    )
+);
