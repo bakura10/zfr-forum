@@ -1,4 +1,4 @@
-<phpunit bootstrap="./Bootstrap.php" colors="true" backupGlobals="false">
+<phpunit bootstrap="Bootstrap.php" colors="true" backupGlobals="false">
     <testsuites>
         <testsuite name="ZfrForum Test Suite">
             <directory>./</directory>
