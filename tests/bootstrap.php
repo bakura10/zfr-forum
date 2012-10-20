@@ -48,7 +48,6 @@ switch (true){
 }
 
 $loader->add('ZfrForumTest', __DIR__);
-$loader->add('ZfrForum', realpath(__DIR__ . '/../src'));
 
 if (!$config = @include __DIR__ . '/TestConfiguration.php') {
     $config = require __DIR__ . '/TestConfiguration.php.dist';
