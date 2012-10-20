@@ -1,6 +1,6 @@
 # ZfrForum - Forum Module For Zend Framework 2
 
-Master: [![Build Status](https://secure.travis-ci.org/bakura10/ZfrForum.png)](http://secure.travis-ci.org/bakura10/ZfrForum)
+Master: [![Build Status](https://secure.travis-ci.org/zf-fr/ZfrForum.png)](http://secure.travis-ci.org/zf-fr/ZfrForum)
 
 ---
 
