@@ -34,11 +34,7 @@ class MapperAbstractFactory implements AbstractFactoryInterface
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        if ($name instanceof ObjectRepository) {
-            return true;
-        }
-
-        return false;
+        return ($name instanceof ObjectRepository);
     }
 
     /**
@@ -54,8 +50,10 @@ class MapperAbstractFactory implements AbstractFactoryInterface
         /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $serviceLocator->get('Doctrine\ORM\EntityManager');
 
+        // Mapper names given are under the form "ZfrForum\Mapper\SomethingMapperInterface", so we need to
+        // remove the MapperInterface part
         $parts       = explode('\\', $name);
-        $entityName  = substr(end($parts), 0, -6);
+        $entityName  = substr(end($parts), 0, -15);
         $entityClass = 'ZfrForum\\Entity\\' . $entityName;
 
         return $entityManager->getRepository($entityClass);

@@ -72,17 +72,17 @@ class Module implements AutoloaderProviderInterface
                 },
 
                 'ZfrForum\Service\CategoryService' => function($serviceManager) {
-                    $categoryMapper = $serviceManager->get('ZfrForum\Mapper\CategoryMapper');
+                    $categoryMapper = $serviceManager->get('ZfrForum\Mapper\CategoryMapperInterface');
                     return new Service\CategoryService($categoryMapper);
                 },
 
                 'ZfrForum\Service\MessageService' => function($serviceManager) {
-                    $messageMapper = $serviceManager->get('ZfrForum\Mapper\MessageMapper');
+                    $messageMapper = $serviceManager->get('ZfrForum\Mapper\MessageMapperInterface');
                     return new Service\MessageService($messageMapper);
                 },
 
                 'ZfrForum\Service\ThreadService' => function($serviceManager) {
-                    $threadMapper = $serviceManager->get('ZfrForum\Mapper\ThreadMapper');
+                    $threadMapper = $serviceManager->get('ZfrForum\Mapper\ThreadMapperInterface');
                     return new Service\ThreadService($threadMapper);
                 },
             ),
