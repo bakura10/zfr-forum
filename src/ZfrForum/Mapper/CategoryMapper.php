@@ -18,19 +18,14 @@
 
 namespace ZfrForum\Mapper;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use ZfrForum\Entity\Category;
 
-interface CategoryMapper
+interface CategoryMapper extends ObjectRepository
 {
     /**
      * @param  Category $category
      * @return mixed
      */
     public function update(Category $category);
-
-    /**
-     * @param  int $id
-     * @return Category
-     */
-    public function getById($id);
 }

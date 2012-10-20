@@ -18,19 +18,14 @@
 
 namespace ZfrForum\Mapper;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use ZfrForum\Entity\Message;
 
-interface MessageMapper
+interface MessageMapper extends ObjectRepository
 {
     /**
      * @param  Message $message
      * @return mixed
      */
     public function update(Message $message);
-
-    /**
-     * @param  int $id
-     * @return Message
-     */
-    public function getById($id);
 }

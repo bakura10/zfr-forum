@@ -18,6 +18,7 @@
 
 namespace ZfrForum\Service\AbstractFactory;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -33,7 +34,7 @@ class MapperAbstractFactory implements AbstractFactoryInterface
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        if (substr(strtolower($name), -6) === 'mapper') {
+        if ($name instanceof ObjectRepository) {
             return true;
         }
 

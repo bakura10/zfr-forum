@@ -18,10 +18,11 @@
 
 namespace ZfrForum\Mapper;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use ZfrForum\Entity\Message;
 use ZfrForum\Entity\Thread;
 
-interface ThreadMapper
+interface ThreadMapper extends ObjectRepository
 {
     /**
      * @param  Thread $thread
@@ -35,10 +36,4 @@ interface ThreadMapper
      * @return mixed
      */
     public function addMessage(Thread $thread, Message $message);
-
-    /**
-     * @param  int $id
-     * @return Thread
-     */
-    public function getById($id);
 }

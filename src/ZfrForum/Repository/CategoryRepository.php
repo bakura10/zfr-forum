@@ -32,13 +32,4 @@ class CategoryRepository extends EntityRepository implements CategoryMapper
     {
         // TODO: Implement update() method.
     }
-
-    /**
-     * @param  int $id
-     * @return Category
-     */
-    public function getById($id)
-    {
-        // TODO: Implement getById() method.
-    }
 }

@@ -32,13 +32,4 @@ class MessageRepository extends EntityRepository implements MessageMapper
     {
         // TODO: Implement update() method.
     }
-
-    /**
-     * @param  int $id
-     * @return Message
-     */
-    public function getById($id)
-    {
-        // TODO: Implement getById() method.
-    }
 }

@@ -43,13 +43,4 @@ class ThreadRepository extends EntityRepository implements ThreadMapper
     {
         // TODO: Implement addMessage() method.
     }
-
-    /**
-     * @param  int $id
-     * @return Thread
-     */
-    public function getById($id)
-    {
-        // TODO: Implement getById() method.
-    }
 }
