@@ -18,18 +18,11 @@
 
 namespace ZfrForum\Service;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use ZfrForum\Entity\Category;
 use ZfrForum\Mapper\CategoryMapper;
 
-class CategoryService implements ServiceLocatorAwareInterface
+class CategoryService
 {
-    /**
-     * @var ServiceLocatorInterface
-     */
-    protected $serviceLocator;
-
     /**
      * @var CategoryMapper
      */
@@ -37,43 +30,19 @@ class CategoryService implements ServiceLocatorAwareInterface
 
 
     /**
+     * @param CategoryMapper $categoryMapper
+     */
+    public function __construct(CategoryMapper $categoryMapper)
+    {
+        $this->categoryMapper = $categoryMapper;
+    }
+
+    /**
      * @param  int $id
      * @return Category
      */
-    public function getById($id)
+    public function find($id)
     {
-        return $this->getCategoryMapper()->getById($id);
-    }
-
-    /**
-     * Set service locator
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-    }
-
-    /**
-     * Get service locator
-     *
-     * @return ServiceLocatorInterface
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
-
-    /**
-     * @return CategoryMapper
-     */
-    public function getCategoryMapper()
-    {
-        if ($this->categoryMapper === null) {
-            $this->categoryMapper = $this->getServiceLocator()->get('ZfrForum\Mapper\CategoryMapper');
-        }
-
-        return $this->categoryMapper;
+        return $this->categoryMapper->find($id);
     }
 }

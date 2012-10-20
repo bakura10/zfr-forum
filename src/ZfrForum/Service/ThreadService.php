@@ -40,9 +40,9 @@ class ThreadService implements ServiceLocatorAwareInterface
      * @param  int $id
      * @return Thread
      */
-    public function getById($id)
+    public function find($id)
     {
-        return $this->getThreadMapper()->getById($id);
+        return $this->getThreadMapper()->find($id);
     }
 
     /**

@@ -40,9 +40,9 @@ class MessageService implements ServiceLocatorAwareInterface
      * @param  int $id
      * @return Message
      */
-    public function getById($id)
+    public function find($id)
     {
-        return $this->getMessageMapper()->getById($id);
+        return $this->getMessageMapper()->find($id);
     }
 
     /**
