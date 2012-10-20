@@ -19,20 +19,20 @@
 namespace ZfrForum\Service;
 
 use ZfrForum\Entity\Category;
-use ZfrForum\Mapper\CategoryMapper;
+use ZfrForum\Mapper\CategoryMapperInterface;
 
 class CategoryService
 {
     /**
-     * @var CategoryMapper
+     * @var CategoryMapperInterface
      */
     protected $categoryMapper;
 
 
     /**
-     * @param CategoryMapper $categoryMapper
+     * @param CategoryMapperInterface $categoryMapper
      */
-    public function __construct(CategoryMapper $categoryMapper)
+    public function __construct(CategoryMapperInterface $categoryMapper)
     {
         $this->categoryMapper = $categoryMapper;
     }

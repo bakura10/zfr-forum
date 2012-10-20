@@ -19,13 +19,21 @@
 namespace ZfrForum\Mapper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
-use ZfrForum\Entity\Category;
+use ZfrForum\Entity\Message;
+use ZfrForum\Entity\Thread;
 
-interface CategoryMapper extends ObjectRepository
+interface ThreadMapperInterface extends ObjectRepository
 {
     /**
-     * @param  Category $category
+     * @param  Thread $thread
      * @return mixed
      */
-    public function update(Category $category);
+    public function create(Thread $thread);
+
+    /**
+     * @param  Thread  $thread
+     * @param  Message $message
+     * @return mixed
+     */
+    public function addMessage(Thread $thread, Message $message);
 }

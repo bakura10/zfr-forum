@@ -21,7 +21,7 @@ namespace ZfrForum\Mapper;
 use Doctrine\Common\Persistence\ObjectRepository;
 use ZfrForum\Entity\Message;
 
-interface MessageMapper extends ObjectRepository
+interface MessageMapperInterface extends ObjectRepository
 {
     /**
      * @param  Message $message

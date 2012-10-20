@@ -18,23 +18,24 @@
 
 namespace ZfrForum\Service;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use ZfrForum\Entity\Message;
-use ZfrForum\Mapper\MessageMapper;
+use ZfrForum\Mapper\MessageMapperInterface;
 
-class MessageService implements ServiceLocatorAwareInterface
+class MessageService
 {
     /**
-     * @var ServiceLocatorInterface
-     */
-    protected $serviceLocator;
-
-    /**
-     * @var MessageMapper
+     * @var MessageMapperInterface
      */
     protected $messageMapper;
 
+
+    /**
+     * @param MessageMapperInterface $messageMapper
+     */
+    public function __construct(MessageMapperInterface $messageMapper)
+    {
+        $this->messageMapper = $messageMapper;
+    }
 
     /**
      * @param  int $id
@@ -42,38 +43,6 @@ class MessageService implements ServiceLocatorAwareInterface
      */
     public function find($id)
     {
-        return $this->getMessageMapper()->find($id);
-    }
-
-    /**
-     * Set service locator
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-    }
-
-    /**
-     * Get service locator
-     *
-     * @return ServiceLocatorInterface
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
-
-    /**
-     * @return MessageMapper
-     */
-    public function getMessageMapper()
-    {
-        if ($this->messageMapper === null) {
-            $this->messageMapper = $this->getServiceLocator()->get('ZfrForum\Mapper\MessageMapper');
-        }
-
-        return $this->messageMapper;
+        return $this->messageMapper->find($id);
     }
 }

@@ -200,19 +200,14 @@ class Thread
     }
 
     /**
-     * Remove a message (by reference or by a key)
+     * Remove a message
      *
-     * @param  Message|int $messageOrKey
+     * @param  Message $message
      * @return Thread
      */
-    public function removeMessage($messageOrKey)
+    public function removeMessage(Message $message)
     {
-        if ($messageOrKey instanceof Message) {
-            $this->messages->removeElement($messageOrKey);
-        } else {
-            $this->messages->remove($messageOrKey);
-        }
-
+        $this->messages->remove($message);
         return $this;
     }
 
@@ -261,7 +256,7 @@ class Thread
      * @param  boolean $isClosed
      * @return Thread
      */
-    public function setIsClosed($isClosed)
+    public function setClosed($isClosed)
     {
         $this->isClosed = (bool) $isClosed;
         return $this;

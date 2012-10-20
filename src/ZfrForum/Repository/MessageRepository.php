@@ -20,9 +20,9 @@ namespace ZfrForum\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\Message;
-use ZfrForum\Mapper\MessageMapper;
+use ZfrForum\Mapper\MessageMapperInterface;
 
-class MessageRepository extends EntityRepository implements MessageMapper
+class MessageRepository extends EntityRepository implements MessageMapperInterface
 {
     /**
      * @param  Message $message

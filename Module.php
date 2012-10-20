@@ -57,10 +57,7 @@ class Module implements AutoloaderProviderInterface
              * Invokables
              */
             'invokables' => array(
-                'ZfrForum\DoctrineExtensions\TablePrefix' => 'ZfrForum\DoctrineExtensions\TablePrefix',
-                'ZfrForum\Service\CategoryService'        => 'ZfrForum\Service\CategoryService',
-                'ZfrForum\Service\MessageService'         => 'ZfrForum\Service\MessageService',
-                'ZfrForum\Service\ThreadService'          => 'ZfrForum\Service\ThreadService'
+                'ZfrForum\DoctrineExtensions\TablePrefix' => 'ZfrForum\DoctrineExtensions\TablePrefix'
             ),
 
             /**
@@ -72,7 +69,22 @@ class Module implements AutoloaderProviderInterface
                     $options = isset($config['zfr_forum']) ? $config['zfr_forum'] : array();
 
                     return new Options\ModuleOptions($options);
-                }
+                },
+
+                'ZfrForum\Service\CategoryService' => function($serviceManager) {
+                    $categoryMapper = $serviceManager->get('ZfrForum\Mapper\CategoryMapper');
+                    return new Service\CategoryService($categoryMapper);
+                },
+
+                'ZfrForum\Service\MessageService' => function($serviceManager) {
+                    $messageMapper = $serviceManager->get('ZfrForum\Mapper\MessageMapper');
+                    return new Service\MessageService($messageMapper);
+                },
+
+                'ZfrForum\Service\ThreadService' => function($serviceManager) {
+                    $threadMapper = $serviceManager->get('ZfrForum\Mapper\ThreadMapper');
+                    return new Service\ThreadService($threadMapper);
+                },
             ),
 
             /**

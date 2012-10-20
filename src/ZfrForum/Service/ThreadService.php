@@ -18,23 +18,24 @@
 
 namespace ZfrForum\Service;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use ZfrForum\Entity\Thread;
-use ZfrForum\Mapper\ThreadMapper;
+use ZfrForum\Mapper\ThreadMapperInterface;
 
-class ThreadService implements ServiceLocatorAwareInterface
+class ThreadService
 {
     /**
-     * @var ServiceLocatorInterface
-     */
-    protected $serviceLocator;
-
-    /**
-     * @var ThreadMapper
+     * @var ThreadMapperInterface
      */
     protected $threadMapper;
 
+
+    /**
+     * @param ThreadMapperInterface $threadMapper
+     */
+    public function __construct(ThreadMapperInterface $threadMapper)
+    {
+        $this->threadMapper = $threadMapper;
+    }
 
     /**
      * @param  int $id
@@ -42,38 +43,6 @@ class ThreadService implements ServiceLocatorAwareInterface
      */
     public function find($id)
     {
-        return $this->getThreadMapper()->find($id);
-    }
-
-    /**
-     * Set service locator
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-    }
-
-    /**
-     * Get service locator
-     *
-     * @return ServiceLocatorInterface
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
-
-    /**
-     * @return ThreadMapper
-     */
-    public function getThreadMapper()
-    {
-        if ($this->threadMapper === null) {
-            $this->threadMapper = $this->getServiceLocator()->get('ZfrForum\Mapper\ThreadMapper');
-        }
-
-        return $this->threadMapper;
+        return $this->threadMapper->find($id);
     }
 }

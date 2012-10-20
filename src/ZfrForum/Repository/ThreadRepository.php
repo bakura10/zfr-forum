@@ -21,9 +21,9 @@ namespace ZfrForum\Repository;
 use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\Message;
 use ZfrForum\Entity\Thread;
-use ZfrForum\Mapper\ThreadMapper;
+use ZfrForum\Mapper\ThreadMapperInterface;
 
-class ThreadRepository extends EntityRepository implements ThreadMapper
+class ThreadRepository extends EntityRepository implements ThreadMapperInterface
 {
     /**
      * @param  Thread $thread

@@ -20,10 +20,19 @@ namespace ZfrForum\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\Category;
-use ZfrForum\Mapper\CategoryMapper;
+use ZfrForum\Mapper\CategoryMapperInterface;
 
-class CategoryRepository extends EntityRepository implements CategoryMapper
+class CategoryRepository extends EntityRepository implements CategoryMapperInterface
 {
+    /**
+     * @param  Category $category
+     * @return mixed
+     */
+    public function create(Category $category)
+    {
+        // TODO: Implement create() method.
+    }
+
     /**
      * @param  Category $category
      * @return mixed
