@@ -46,4 +46,16 @@ class Module implements AutoloaderProviderInterface
     {
         return include __DIR__ . '/config/module.config.php';
     }
+
+    /**
+     * @return array
+     */
+    public function getServiceConfig()
+    {
+        return array(
+            'invokables' => array(
+                'ZfrForum\DoctrineExtensions\TablePrefix' => 'ZfrForum\DoctrineExtensions\TablePrefix'
+            )
+        );
+    }
 }
