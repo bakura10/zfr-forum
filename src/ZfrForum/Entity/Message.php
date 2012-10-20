@@ -53,6 +53,14 @@ class Message
     protected $authorDisplayName;
 
     /**
+     * @var Thread
+     *
+     * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\Thread", inversedBy="messages")
+     * @ORM\JoinColumn(onDelete="cascade")
+     */
+    protected $thread;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="text")
@@ -64,7 +72,7 @@ class Message
      *
      * @ORM\Column(type="datetime")
      */
-    protected $createdAt;
+    protected $sentAt;
 
     /**
      * @var DateTime
@@ -82,7 +90,7 @@ class Message
 
 
     /**
-     * Get the unique identifier of the message
+     * Get the identifier of the message
      *
      * @return int
      */
@@ -137,6 +145,28 @@ class Message
     }
 
     /**
+     * Set the thread this message belongs to
+     *
+     * @param  Thread $thread
+     * @return Message
+     */
+    public function setThread(Thread $thread)
+    {
+        $this->thread = $thread;
+        return $this;
+    }
+
+    /**
+     * Get the thread this message belongs to
+     *
+     * @return Thread
+     */
+    public function getThread()
+    {
+        return $this->thread;
+    }
+
+    /**
      * Set the content of the message
      *
      * @param  string $content
@@ -159,24 +189,26 @@ class Message
     }
 
     /**
-     * Set the date when this message was created
+     * Set when this message was sent for the first time
      *
      * @return Message
      *
      * @ORM\PrePersist
      */
-    public function setCreatedAt()
+    public function setSentAt()
     {
-        $this->createdAt = new DateTime('now');
+        $this->sentAt = new DateTime('now');
         return $this;
     }
 
     /**
+     * Get when this message was sent for the first time
+     *
      * @return DateTime
      */
-    public function getCreatedAt()
+    public function getSentAt()
     {
-        return clone $this->createdAt;
+        return clone $this->sentAt;
     }
 
     /**
