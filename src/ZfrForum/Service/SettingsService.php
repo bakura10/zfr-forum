@@ -56,13 +56,14 @@ class SettingsService
 
         $settings = $this->getGlobalSettings();
 
-        if ($settings->canSettingsBeOverriddenByUser() === false) {
+        if (!$settings->canSettingsBeOverriddenByUser()) {
             return $settings;
         }
 
         $loggedUser = null; // get the logged user
 
-        if ($userSettings = $this->getUserSettings($loggedUser)) {
+        if ($this->getUserSettings($loggedUser)) {
+            $userSettings = $this->getUserSettings($loggedUser);
             $settings = $userSettings;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -29,8 +30,8 @@ use ZfcUser\Entity\UserInterface;
  * @ORM\Table(name="Threads")
  * @ORM\HasLifecycleCallbacks
  */
-class Thread
-{
+class Thread {
+
     /**
      * @var int
      *
@@ -82,8 +83,7 @@ class Thread
      *
      * @ORM\Column(type="boolean")
      */
-    protected $isClosed = false;
-
+    protected $closed = false;
 
     /**
      * Constructor
@@ -123,6 +123,27 @@ class Thread
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set the title of the thread
+     * 
+     * @param type $title
+     * @return Thread 
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * Get the title of the thread
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**
@@ -253,12 +274,12 @@ class Thread
     /**
      * Set if the thread is closed
      *
-     * @param  boolean $isClosed
+     * @param  boolean $closed
      * @return Thread
      */
-    public function setClosed($isClosed)
+    public function setClosed($closed)
     {
-        $this->isClosed = (bool) $isClosed;
+        $this->closed = (bool) $closed;
         return $this;
     }
 
@@ -269,6 +290,7 @@ class Thread
      */
     public function isClosed()
     {
-        return $this->isClosed;
+        return $this->closed;
     }
+
 }
