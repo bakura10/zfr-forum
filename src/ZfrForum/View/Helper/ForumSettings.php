@@ -19,6 +19,7 @@
 namespace ZfrForum\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
+use ZfrForum\Service\SettingsService;
 
 /**
  * This view helper allow to retrieve the settings of the forum. It can either return the global settings or,
@@ -26,8 +27,28 @@ use Zend\View\Helper\AbstractHelper;
  */
 class ForumSettings extends AbstractHelper
 {
+    /**
+     * @var SettingsService
+     */
+    protected $settingsService;
+
+
+    /**
+     * @param SettingsService $settingsService
+     */
+    public function __construct(SettingsService $settingsService)
+    {
+        $this->settingsService = $settingsService;
+    }
+
+    /**
+     * Get the settings (either a GlobalSettings instance or a UserInstance)
+     *
+     * @param  bool $forceGlobals
+     * @return \ZfrForum\Entity\AbstractSettings
+     */
     public function __invoke($forceGlobals = false)
     {
-        // voir le contrôleur de plugin
+        return $this->settingsService->getSettings($forceGlobals);
     }
 }

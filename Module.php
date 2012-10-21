@@ -65,8 +65,11 @@ class Module implements
             /**
              * Invokables
              */
-            'invokables' => array(
-                'ZfrForum\Controller\Plugin\ForumSettings' => 'ZfrForum\Controller\Plugin\ForumSettings'
+            'factories' => array(
+                'ZfrForum\Controller\Plugin\ForumSettings' => function($serviceManager) {
+                    $settingsService = $serviceManager->get('ZfrForum\Service\SettingsService');
+                    return new Controller\Plugin\ForumSettings($settingsService);
+                }
             ),
 
             /**
@@ -87,8 +90,11 @@ class Module implements
             /**
              * Invokables
              */
-            'invokables' => array(
-                'ZfrForum\View\Helper\ForumSettings' => 'ZfrForum\View\Helper\ForumSettings'
+            'factories' => array(
+                'ZfrForum\View\Helper\ForumSettings' => function($serviceManager) {
+                    $settingsService = $serviceManager->get('ZfrForum\Service\SettingsService');
+                    return new View\Helper\ForumSettings($settingsService);
+                }
             ),
 
             /**
