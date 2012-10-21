@@ -16,9 +16,8 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Service\AbstractFactory;
+namespace ZfrForum\ServiceFactory;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -34,7 +33,7 @@ class MapperAbstractFactory implements AbstractFactoryInterface
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        return ($name instanceof ObjectRepository);
+        return (substr($requestedName, -15) === 'MapperInterface');
     }
 
     /**
@@ -52,7 +51,7 @@ class MapperAbstractFactory implements AbstractFactoryInterface
 
         // Mapper names given are under the form "ZfrForum\Mapper\SomethingMapperInterface", so we need to
         // remove the MapperInterface part
-        $parts       = explode('\\', $name);
+        $parts       = explode('\\', $requestedName);
         $entityName  = substr(end($parts), 0, -15);
         $entityClass = 'ZfrForum\\Entity\\' . $entityName;
 

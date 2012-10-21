@@ -134,6 +134,11 @@ class Module implements
                     return new Service\MessageService($messageMapper);
                 },
 
+                'ZfrForum\Service\SettingsService' => function($serviceManager) {
+                    $settingsMapper = $serviceManager->get('ZfrForum\Mapper\SettingsMapperInterface');
+                    return new Service\SettingsService($settingsMapper);
+                },
+
                 'ZfrForum\Service\ThreadService' => function($serviceManager) {
                     $threadMapper = $serviceManager->get('ZfrForum\Mapper\ThreadMapperInterface');
                     return new Service\ThreadService($threadMapper);

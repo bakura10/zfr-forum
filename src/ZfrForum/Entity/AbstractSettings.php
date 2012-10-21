@@ -25,7 +25,7 @@ use Doctrine\ORM\Mapping;
  * GlobalSettings (that describes the global settings that are initially set) and by UserSettings (so that every
  * user can override those settings)
  *
- * @ORM\MappedSuperclass
+ * @ORM\MappedSuperclass(repositoryClass="ZfrForum\Repository\SettingsRepository")
  */
 abstract class AbstractSettings
 {
