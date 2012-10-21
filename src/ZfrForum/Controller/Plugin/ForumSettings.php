@@ -19,6 +19,7 @@
 namespace ZfrForum\Controller\Plugin;
 
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
+use ZfrForum\Service\SettingsService;
 
 /**
  * This controller plugin allow to retrieve the settings of the forum. It can either return the global settings or,
@@ -27,18 +28,27 @@ use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 class ForumSettings extends AbstractPlugin
 {
     /**
-     * @param bool $forceGlobals
+     * @var SettingsService
+     */
+    protected $settingsService;
+
+
+    /**
+     * @param SettingsService $settingsService
+     */
+    public function __construct(SettingsService $settingsService)
+    {
+        $this->settingsService = $settingsService;
+    }
+
+    /**
+     * Get the settings (either a GlobalSettings instance or a UserInstance)
+     *
+     * @param  bool $forceGlobals
+     * @return \ZfrForum\Entity\AbstractSettings
      */
     public function __invoke($forceGlobals = false)
     {
-        /**
-         * Algorithme :
-         *  1) Récupère les settings "globaux" (GlobalSettings) - ici il faudra sûrement implémenter un cache via
-         *     Doctrine pour éviter de faire une nouvelle requête chaque fois au niveau du repository
-         *  2) Si les settings globaux autorisent la surcharge des paramètres (c'est-à-dire si
-         *     $globalSettings->canSettingsBeOverriddenByUser() === true) et que l'on ne force pas la récupération
-         *     des settings globaux, on tente de récupérer les paramètres de l'utilisateur loggué
-         *  3) S'ils n'existent pas, retourner les paramètres globaux, autrement retourner les paramètres de l'utilisateur
-         */
+        return $this->settingsService->getSettings($forceGlobals);
     }
 }
