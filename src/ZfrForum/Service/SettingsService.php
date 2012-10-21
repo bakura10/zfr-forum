@@ -62,8 +62,8 @@ class SettingsService
 
         $loggedUser = null; // get the logged user
 
-        if ($this->getUserSettings($loggedUser)) {
-            $userSettings = $this->getUserSettings($loggedUser);
+        $userSettings = $this->getUserSettings($loggedUser);
+        if ($userSettings) {
             $settings = $userSettings;
         }
 

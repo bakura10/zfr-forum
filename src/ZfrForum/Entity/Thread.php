@@ -128,12 +128,12 @@ class Thread {
     /**
      * Set the title of the thread
      * 
-     * @param type $title
+     * @param string $title
      * @return Thread 
      */
     public function setTitle($title)
     {
-        $this->title = $title;
+        $this->title = (string) $title;
         return $this;
     }
 
