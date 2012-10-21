@@ -37,7 +37,11 @@ return array(
      * ZfrForum configuration
      */
     'zfr_forum' => array(
-        'tables_prefix' => 'Zfr_',
+        'db' => array(
+            'table' => array(
+                'prefix' => 'Zfr_'
+            )
+        ),
 
         'forum_settings' => array(
             /**
@@ -59,7 +63,7 @@ return array(
              */
             'show_signatures'       => true,
             'max_signatures_length' => 250,
-            
+
             /**
              * Other
              */

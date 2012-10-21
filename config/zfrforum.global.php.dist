@@ -5,10 +5,14 @@
  */
 return array(
     'zfr_forum' => array(
-        /**
-         * The prefix to use for tables names
-         */
-        'tables_prefix' => 'Zfr_',
+        'db' => array(
+            'table' => array(
+                /**
+                 * The prefix to use for tables names
+                 */
+                'prefix' => 'Zfr_'
+            )
+        ),
 
         /**
          * Settings for the forum
