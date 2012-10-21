@@ -37,7 +37,34 @@ return array(
      * ZfrForum configuration
      */
     'zfr_forum' => array(
-        'tables_prefix' => 'Zfr_'
+        'tables_prefix' => 'Zfr_',
+
+        'forum_settings' => array(
+            /**
+             * Count settings
+             */
+            'num_threads_per_page'    => 25,
+            'num_messages_per_thread' => 25,
+
+            /**
+             * Style settings
+             */
+            'styles' => array(
+                'Default' => 'default.css'
+            ),
+            'default_style_name' => 'Default',
+
+            /**
+             * Signature settings
+             */
+            'show_signatures'       => true,
+            'max_signatures_length' => 250,
+            
+            /**
+             * Other
+             */
+            'can_settings_be_overridden_by_user' => true,
+        )
     ),
 
     /**

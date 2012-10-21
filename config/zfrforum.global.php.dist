@@ -8,6 +8,50 @@ return array(
         /**
          * The prefix to use for tables names
          */
-        'tables_prefix' => 'Zfr_'
+        'tables_prefix' => 'Zfr_',
+
+        /**
+         * Settings for the forum
+         */
+        'forum_settings' => array(
+            /**
+             * How many threads per page ?
+             */
+            'num_threads_per_page' => 25,
+
+            /**
+             * How many messages per page ?
+             */
+            'num_messages_per_thread' => 25,
+
+            /**
+             * An array of styles for the forum (name => stylesheet). Please note that the Default style
+             * cannot (and should not !!) be removed
+            'styles' => array(
+                'Default' => 'default.css'
+            ),
+
+            /**
+             * The style name that should be used by default
+             */
+            'default_style_name' => 'Default',
+
+            /**
+             * If set to true, signatures are automatically appended to every messages
+             */
+            'show_signatures' => true,
+
+            /**
+             * The max size for signatures (please, think about your users and don't choose 2000 characters
+             * signatures ;-) !
+             */
+            'max_signatures_length' => 250,
+
+            /**
+             * If set to true, every users can have access to a settings panel that allow them to change
+             * those settings so that they can personnalize how the forum is rendered
+             */
+            'can_settings_be_overridden_by_user' => true,
+        )
     )
 );

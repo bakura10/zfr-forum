@@ -108,6 +108,8 @@ class Message
     public function setAuthor(UserInterface $author)
     {
         $this->author = $author;
+        $this->setAuthorDisplayName($author->getDisplayName());
+
         return $this;
     }
 

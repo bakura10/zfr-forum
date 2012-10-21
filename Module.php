@@ -19,8 +19,17 @@
 namespace ZfrForum;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\ControllerPluginProviderInterface;
+use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
-class Module implements AutoloaderProviderInterface
+class Module implements
+    AutoloaderProviderInterface,
+    ConfigProviderInterface,
+    ControllerPluginProviderInterface,
+    ServiceProviderInterface,
+    ViewHelperProviderInterface
 {
     /**
      * @return array
@@ -45,6 +54,50 @@ class Module implements AutoloaderProviderInterface
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
+    }
+
+    /**
+     * @return array
+     */
+    public function getControllerPluginConfig()
+    {
+        return array(
+            /**
+             * Invokables
+             */
+            'invokables' => array(
+                'ZfrForum\Controller\Plugin\ForumSettings' => 'ZfrForum\Controller\Plugin\ForumSettings'
+            ),
+
+            /**
+             * Aliases
+             */
+            'aliases' => array(
+                'forumSettings' => 'ZfrForum\Controller\Plugin\ForumSettings'
+            )
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getViewHelperConfig()
+    {
+        return array(
+            /**
+             * Invokables
+             */
+            'invokables' => array(
+                'ZfrForum\View\Helper\ForumSettings' => 'ZfrForum\View\Helper\ForumSettings'
+            ),
+
+            /**
+             * Aliases
+             */
+            'aliases' => array(
+                'forumSettings' => 'ZfrForum\View\Helper\ForumSettings'
+            )
+        );
     }
 
     /**
