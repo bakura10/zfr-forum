@@ -53,7 +53,7 @@ class Thread
      *
      * @ORM\Column(type="string", length=128)
      */
-    protected $name;
+    protected $title;
 
     /**
      * @var UserInterface
