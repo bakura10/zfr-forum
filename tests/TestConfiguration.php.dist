@@ -1,6 +1,9 @@
 <?php
 return array(
     'modules' => array(
+        'DoctrineModule',
+        'DoctrineORMModule',
+        'ZfcUser',
         'ZfrForum',
     ),
     'module_listener_options' => array(

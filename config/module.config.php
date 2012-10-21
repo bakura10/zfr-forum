@@ -24,13 +24,13 @@ return array(
             )
         ),
 
-        'eventmanager' => array(
+        /*'eventmanager' => array(
             'orm_default' => array(
                 'subscribers' => array(
                     'ZfrForum\DoctrineExtensions\TablePrefix'
                 )
             )
-        )
+        )*/
     ),
 
     /**

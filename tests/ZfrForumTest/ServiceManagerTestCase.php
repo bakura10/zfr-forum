@@ -20,7 +20,7 @@ namespace ZfrForumTest;
 
 use PHPUnit_Framework_TestCase as BaseTestCase;
 use Zend\ServiceManager\ServiceManager;
-use Zend\Mvc\Service\ServiceManagerConfig;
+use Zend\Mvc\Application;
 
 /**
  * Base test case to be used when a service manager instance is required
@@ -36,18 +36,18 @@ class ServiceManagerTestCase extends BaseTestCase
      * @static
      * @param array $configuration
      */
-    public static function setServiceManagerConfiguration(array $configuration)
+    public static function setConfiguration(array $configuration)
     {
-        static::$configuration = $configuration;
+        self::$configuration = $configuration;
     }
 
     /**
      * @static
      * @return array
      */
-    public static function getServiceManagerConfiguration()
+    public static function getConfiguration()
     {
-        return static::$configuration;
+        return self::$configuration;
     }
 
     /**
@@ -58,15 +58,11 @@ class ServiceManagerTestCase extends BaseTestCase
      */
     public function getServiceManager(array $configuration = null)
     {
-        $configuration = $configuration ?: static::getServiceManagerConfiguration();
-        $serviceManager = new ServiceManager(new ServiceManagerConfig($configuration));
-        $serviceManager->setService('ApplicationConfiguration', $configuration);
-        $serviceManager->setFactory('ServiceListener', 'Zend\Mvc\Service\ServiceListenerFactory');
-        /* @var $moduleManager \Zend\ModuleManager\ModuleManagerInterface */
-        $moduleManager = $serviceManager->get('ModuleManager');
-        $moduleManager->loadModules();
+        if (empty($configuration)) {
+            $configuration = self::getConfiguration();
+        }
 
-        return $serviceManager;
+        return Application::init($configuration)->getServiceManager();
     }
 }
 

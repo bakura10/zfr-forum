@@ -16,33 +16,30 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Service;
+namespace ZfrForum\Repository;
 
-use ZfrForum\Entity\Message;
-use ZfrForum\Mapper\MessageMapperInterface;
+use Doctrine\ORM\EntityRepository;
+use ZfrForum\Entity\GlobalSettings;
+use ZfrForum\Entity\UserSettings;
+use ZfrForum\Mapper\SettingsMapperInterface;
+use ZfcUser\Entity\UserInterface;
 
-class MessageService
+class SettingsRepository extends EntityRepository implements SettingsMapperInterface
 {
     /**
-     * @var MessageMapperInterface
+     * @return GlobalSettings
      */
-    protected $messageMapper;
-
-
-    /**
-     * @param MessageMapperInterface $messageMapper
-     */
-    public function __construct(MessageMapperInterface $messageMapper)
+    public function findGlobalSettings()
     {
-        $this->messageMapper = $messageMapper;
+        // TODO: Implement findGlobalSettings() method.
     }
 
     /**
-     * @param  int $id
-     * @return Message
+     * @param  UserInterface $user
+     * @return UserSettings|null
      */
-    public function getById($id)
+    public function findByUser(UserInterface $user)
     {
-        return $this->messageMapper->find($id);
+        // TODO: Implement findByUser() method.
     }
 }

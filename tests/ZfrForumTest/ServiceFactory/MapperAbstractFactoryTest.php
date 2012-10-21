@@ -16,33 +16,15 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Service;
+namespace ZfrForumTest\ServiceFactory;
 
-use ZfrForum\Entity\Message;
-use ZfrForum\Mapper\MessageMapperInterface;
+use ZfrForumTest\ServiceManagerTestCase;
 
-class MessageService
+class MapperAbstractFactoryTest extends ServiceManagerTestCase
 {
-    /**
-     * @var MessageMapperInterface
-     */
-    protected $messageMapper;
-
-
-    /**
-     * @param MessageMapperInterface $messageMapper
-     */
-    public function __construct(MessageMapperInterface $messageMapper)
+    public function testCorrectlyGetRepositoryFromMapperInterfaceName()
     {
-        $this->messageMapper = $messageMapper;
-    }
-
-    /**
-     * @param  int $id
-     * @return Message
-     */
-    public function getById($id)
-    {
-        return $this->messageMapper->find($id);
+        $repository = $this->getServiceManager()->get('ZfrForum\Mapper\CategoryMapperInterface');
+        $this->assertInstanceOf('ZfrForum\Repository\CategoryRepository', $repository);
     }
 }

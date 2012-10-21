@@ -41,7 +41,7 @@ class ThreadService
      * @param  int $id
      * @return Thread
      */
-    public function find($id)
+    public function getById($id)
     {
         return $this->threadMapper->find($id);
     }

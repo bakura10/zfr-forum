@@ -41,7 +41,7 @@ class CategoryService
      * @param  int $id
      * @return Category
      */
-    public function find($id)
+    public function getById($id)
     {
         return $this->categoryMapper->find($id);
     }
