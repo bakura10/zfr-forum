@@ -29,14 +29,14 @@ class GlobalSettings extends AbstractSettings
     /**
      * @var array
      */
-    protected $styles = array('Default' => 'default.css');
+    protected $styles;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string")
      */
-    protected $defaultStyleName = 'Default';
+    protected $defaultStyleName;
 
     /**
      * @var int
@@ -50,7 +50,7 @@ class GlobalSettings extends AbstractSettings
      *
      * @ORM\Column(type="boolean")
      */
-    protected $canSettingsBeOverriddenByUser = true;
+    protected $canSettingsBeOverriddenByUser;
 
 
     /**
