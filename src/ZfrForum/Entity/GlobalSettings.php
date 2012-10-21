@@ -29,7 +29,7 @@ class GlobalSettings extends AbstractSettings
     /**
      * @var array
      */
-    protected $styles;
+    protected $styles = array('Default' => 'default.css');
 
     /**
      * @var string

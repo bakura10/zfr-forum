@@ -23,7 +23,7 @@ use ZfrForum\Entity\GlobalSettings;
 
 class GlobalSettingsTest extends TestCase
 {
-    public function testCannotRemoveDefaultStyle()
+    public function testCannotRemoveDefaultStyleOnceAdded()
     {
         $settings = new GlobalSettings();
         $this->assertTrue($settings->hasStyle('Default'));
