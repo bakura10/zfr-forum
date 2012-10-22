@@ -1,4 +1,5 @@
 <?php
+
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -19,30 +20,17 @@
 namespace ZfrForum\Service;
 
 use ZfrForum\Entity\Message;
-use ZfrForum\Mapper\UserBanMapperInterface;
+use ZfcUser\Entity\UserInterface;
 
 class UserBanService
 {
+    
     /**
-     * @var UserBanMapperInterface
+     * Return true if the user is banned
+     * @param UserInterface $user
+     * @return boolean
      */
-    protected $userBanMapper;
-
-
-    /**
-     * @param UserBanMapperInterface $userBanMapper
-     */
-    public function __construct(UserBanMapperInterface $userBanMapper)
-    {
-        $this->userBanMapper = $userBanMapper;
-    }
-
-    /**
-     * @param  int $id
-     * @return UserBan
-     */
-    public function getById($id)
-    {
-        return $this->userBanMapper->find($id);
+    public function isBanned(UserInterface $user) {
+        
     }
 }

@@ -25,8 +25,12 @@ use Zend\ModuleManager\Feature\ControllerPluginProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
-class Module implements
-AutoloaderProviderInterface, ConfigProviderInterface, ControllerPluginProviderInterface, ServiceProviderInterface, ViewHelperProviderInterface {
+class Module implements AutoloaderProviderInterface,
+    ConfigProviderInterface,
+    ControllerPluginProviderInterface,
+    ServiceProviderInterface,
+    ViewHelperProviderInterface
+{
 
     /**
      * @return array
@@ -111,7 +115,8 @@ AutoloaderProviderInterface, ConfigProviderInterface, ControllerPluginProviderIn
              * Invokables
              */
             'invokables' => array(
-                'ZfrForum\DoctrineExtensions\TablePrefix' => 'ZfrForum\DoctrineExtensions\TablePrefix'
+                'ZfrForum\DoctrineExtensions\TablePrefix' => 'ZfrForum\DoctrineExtensions\TablePrefix',
+                'ZfrForum\Service\UserBanService' => 'ZfrForum\Service\UserBanService',
             ),
             /**
              * Factories
@@ -138,10 +143,6 @@ AutoloaderProviderInterface, ConfigProviderInterface, ControllerPluginProviderIn
                 'ZfrForum\Service\ThreadService' => function($serviceManager) {
                     $threadMapper = $serviceManager->get('ZfrForum\Mapper\ThreadMapperInterface');
                     return new Service\ThreadService($threadMapper);
-                },
-                'ZfrForum\Service\UserBanService' => function($serviceManager) {
-                    $userBanMapper = $serviceManager->get('ZfrForum\Mapper\UserBanMapperInterface');
-                    return new Service\UserBanService($userBanMapper);
                 },
             ),
             /**

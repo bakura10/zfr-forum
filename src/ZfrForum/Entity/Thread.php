@@ -86,7 +86,7 @@ class Thread {
     protected $followedBy;
 
     /**
-     * @var bool
+     * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
@@ -97,7 +97,7 @@ class Thread {
      */
     public function __construct()
     {
-        $this->messages = new ArrayCollection();
+        $this->messages   = new ArrayCollection();
         $this->followedBy = new ArrayCollection();
     }
 
@@ -322,7 +322,7 @@ class Thread {
      */
     public function setClosed($closed)
     {
-        $this->closed = (bool) $closed;
+        $this->closed = (boolean) $closed;
         return $this;
     }
 

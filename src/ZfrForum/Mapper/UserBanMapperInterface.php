@@ -24,8 +24,14 @@ use ZfrForum\Entity\UserBan;
 interface UserBanMapperInterface extends ObjectRepository
 {
     /**
-     * @param  Message $message
+     * @param  UserBan $ban
      * @return mixed
      */
-    public function update(UserBan $ban);
+    public function ban(UserBan $ban);
+    
+    /**
+     * @param  UserBan $ban
+     * @return mixed
+     */
+    public function unban(UserBan $ban);
 }

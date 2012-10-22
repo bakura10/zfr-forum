@@ -1,4 +1,5 @@
 <?php
+
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -24,12 +25,23 @@ use ZfrForum\Mapper\UserBanMapperInterface;
 
 class UserBanRepository extends EntityRepository implements UserBanMapperInterface
 {
+    
     /**
-     * @param  Message $message
+     * @param  UserBan $ban
      * @return mixed
      */
-    public function update(UserBan $ban)
+    public function ban(UserBan $ban)
     {
-        // TODO: Implement update() method.
+        // TODO: Implement ban() method.
     }
+
+    /**
+     * @param  UserBan $ban
+     * @return mixed
+     */
+    public function unban(UserBan $ban)
+    {
+        // TODO: Implement unban() method.
+    }
+
 }

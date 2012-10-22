@@ -25,7 +25,7 @@ use ZfcUser\Entity\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="ZfrForum\Repository\UserBanRepository")
- * @ORM\Table(name="Userban")
+ * @ORM\Table(name="Usersban")
  */
 class UserBan {
 
@@ -48,7 +48,7 @@ class UserBan {
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", length=1000)
      */
     protected $message;
 
@@ -65,6 +65,13 @@ class UserBan {
      * @ORM\ManyToOne(targetEntity="ZfcUser\Entity\UserInterface")
      */
     protected $bannedBy;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $actived = false;
 
     /**
      * Get the identifier of the ban
@@ -82,7 +89,7 @@ class UserBan {
      * @param UserInterface $author
      * @return UserBan
      */
-    public function setUser($user)
+    public function setUser(UserInterface $user)
     {
         $this->user = $user;
         return $this;
@@ -123,9 +130,10 @@ class UserBan {
     /**
      * Set the end date of the ban
      *
+     * @param DateTime $expire
      * @return UserBan
      */
-    public function setExpire($expire)
+    public function setExpire(DateTime $expire)
     {
         $this->expire = $expire;
         return $this;
@@ -147,7 +155,7 @@ class UserBan {
      * @param UserInterface $bannedBy
      * @return UserBan
      */
-    public function setBannedBy($bannedBy)
+    public function setBannedBy(UserInterface $bannedBy)
     {
         $this->bannedBy = $bannedBy;
         return $this;
@@ -162,5 +170,26 @@ class UserBan {
     {
         return $this->bannedBy;
     }
-
+    
+    /**
+     * Set the ban is actived
+     * 
+     * @param  bolean $actived
+     * @return UserBan
+     */
+    public function setActived($actived)
+    {
+        $this->actived = (boolean) $actived;
+        return $this;
+    }
+    
+    /**
+     * Return true if the ban is actived
+     * 
+     * @return boolean 
+     */
+    public function isActiveD()
+    {
+        return $this->actived;
+    }
 }
