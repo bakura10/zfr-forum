@@ -30,8 +30,8 @@ use ZfcUser\Entity\UserInterface;
  * @ORM\Table(name="Threads")
  * @ORM\HasLifecycleCallbacks
  */
-class Thread {
-
+class Thread
+{
     /**
      * @var int
      *
@@ -82,6 +82,7 @@ class Thread {
      * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="ZfcUser\Entity\UserInterface", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="ThreadsFollowers")
      */
     protected $followers;
 
@@ -91,6 +92,7 @@ class Thread {
      * @ORM\Column(type="boolean")
      */
     protected $closed = false;
+
 
     /**
      * Constructor
@@ -164,6 +166,7 @@ class Thread {
     {
         $this->createdBy = $createdBy;
         $this->addFollower($createdBy);
+
         return $this;
     }
 

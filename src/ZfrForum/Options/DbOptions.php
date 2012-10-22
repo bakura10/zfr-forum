@@ -20,26 +20,33 @@ namespace ZfrForum\Options;
 
 use Zend\Stdlib\AbstractOptions;
 
-class ModuleOptions extends AbstractOptions
+class DbOptions extends AbstractOptions
 {
     /**
-     * @var DbOptions
+     * @var string
      */
-    protected $dbOptions;
+    protected $tablePrefix;
 
 
     /**
-     * @param  array $dbOptions
-     * @return ModuleOptions
+     * Set the table prefix name
+     *
+     * @param  string $tablePrefix
+     * @return DbOptions
      */
-    public function setDbOptions(array $dbOptions)
+    public function setTablePrefix($tablePrefix)
     {
-        $this->dbOptions = new DbOptions($dbOptions);
+        $this->tablePrefix = $tablePrefix;
         return $this;
     }
 
-    public function getDbOptions()
+    /**
+     * Get the table prefix name
+     *
+     * @return string
+     */
+    public function getTablePrefix()
     {
-        return $this->dbOptions;
+        return $this->tablePrefix;
     }
 }

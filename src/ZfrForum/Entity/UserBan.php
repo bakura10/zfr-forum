@@ -25,10 +25,10 @@ use ZfcUser\Entity\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="ZfrForum\Repository\UserBanRepository")
- * @ORM\Table(name="Usersban")
+ * @ORM\Table(name="UsersBan")
  */
-class UserBan {
-
+class UserBan
+{
     /**
      * @var int
      *
@@ -84,9 +84,9 @@ class UserBan {
     }
 
     /**
-     * Set the ban user
+     * Set the banned user
      *
-     * @param UserInterface $author
+     * @param  UserInterface $user
      * @return UserBan
      */
     public function setUser(UserInterface $user)
@@ -96,7 +96,7 @@ class UserBan {
     }
 
     /**
-     * Get the ban user
+     * Get the banned user
      *
      * @return UserInterface
      */
@@ -135,7 +135,7 @@ class UserBan {
      */
     public function setExpireAt(DateTime $expireAt)
     {
-        $this->expireAt = $expireAt;
+        $this->expireAt = clone $expireAt;
         return $this;
     }
 
@@ -146,7 +146,7 @@ class UserBan {
      */
     public function getExpireAt()
     {
-        return $this->expireAt;
+        return clone $this->expireAt;
     }
 
     /**
@@ -174,7 +174,7 @@ class UserBan {
     /**
      * Set the ban is actived
      * 
-     * @param  bolean $actived
+     * @param  boolean $actived
      * @return UserBan
      */
     public function setActived($actived)
