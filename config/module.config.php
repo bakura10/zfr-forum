@@ -37,10 +37,8 @@ return array(
      * ZfrForum configuration
      */
     'zfr_forum' => array(
-        'db' => array(
-            'table' => array(
-                'prefix' => 'Zfr_'
-            )
+        'db_options' => array(
+            'table_prefix' => 'Zfr_'
         ),
 
         'forum_settings' => array(
@@ -53,9 +51,7 @@ return array(
             /**
              * Style settings
              */
-            'styles' => array(
-                'Default' => 'default.css'
-            ),
+            'styles' => array('Default' => 'default.css'),
             'default_style_name' => 'Default',
 
             /**
