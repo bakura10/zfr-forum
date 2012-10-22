@@ -25,7 +25,8 @@ use Zend\ModuleManager\Feature\ControllerPluginProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
-class Module implements AutoloaderProviderInterface,
+class Module implements
+    AutoloaderProviderInterface,
     ConfigProviderInterface,
     ControllerPluginProviderInterface,
     ServiceProviderInterface,
