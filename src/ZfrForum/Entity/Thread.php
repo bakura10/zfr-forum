@@ -83,7 +83,7 @@ class Thread {
      *
      * @ORM\ManyToMany(targetEntity="ZfcUser\Entity\UserInterface", fetch="EXTRA_LAZY")
      */
-    protected $followedBy;
+    protected $followers;
 
     /**
      * @var boolean
@@ -288,7 +288,7 @@ class Thread {
      */
     public function addFollower(UserInterface $user)
     {
-        $this->followedBy->add($user);
+        $this->followers->add($user);
         return $this;
     }
 
@@ -300,7 +300,7 @@ class Thread {
      */
     public function removeFollower(UserInterface $user)
     {
-        $this->followedBy->remove($user);
+        $this->followers->remove($user);
         return $this;
     }
 
@@ -309,9 +309,9 @@ class Thread {
      * 
      * @return Collection
      */
-    public function getFollowedBy()
+    public function getFollowers()
     {
-        return $this->followedBy;
+        return $this->followers;
     }
 
     /**
