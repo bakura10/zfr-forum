@@ -117,14 +117,13 @@ class Module implements
              */
             'invokables' => array(
                 'ZfrForum\DoctrineExtensions\TablePrefix' => 'ZfrForum\DoctrineExtensions\TablePrefix',
-                'ZfrForum\Service\UserBanService' => 'ZfrForum\Service\UserBanService',
             ),
             /**
              * Factories
              */
             'factories' => array(
                 'ZfrForum\Options\ModuleOptions' => function ($serviceManager) {
-                    $config = $serviceManager->get('Config');
+                    $config  = $serviceManager->get('Config');
                     $options = isset($config['zfr_forum']) ? $config['zfr_forum'] : array();
 
                     return new Options\ModuleOptions($options);
@@ -144,6 +143,10 @@ class Module implements
                 'ZfrForum\Service\ThreadService' => function($serviceManager) {
                     $threadMapper = $serviceManager->get('ZfrForum\Mapper\ThreadMapperInterface');
                     return new Service\ThreadService($threadMapper);
+                },
+                'ZfrForum\Service\UserBanService' => function($serviceManager) {
+                    $userBanMapper = $serviceManager->get('ZfrForum\Mapper\UserBanMapperInterface');
+                    return new Service\UserBanService($userBanMapper);
                 },
             ),
             /**

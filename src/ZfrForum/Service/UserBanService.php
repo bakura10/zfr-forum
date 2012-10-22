@@ -20,10 +20,24 @@
 namespace ZfrForum\Service;
 
 use ZfrForum\Entity\Message;
+use ZfrForum\Mapper\UserBanMapperInterface;
 use ZfcUser\Entity\UserInterface;
 
 class UserBanService
 {
+    /**
+     * @var UserBanMapperInterface
+     */
+    protected $userBanMapper;
+
+    /**
+     * @param UserBanMapperInterface $userBanMapper
+     */
+    public function __construct(UserBanMapperInterface $userBanMapper)
+    {
+        $this->userBanMapper = $userBanMapper;
+    }
+
     /**
      * Return true if the user is banned
      * @param UserInterface $user
