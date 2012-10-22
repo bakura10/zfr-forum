@@ -20,6 +20,7 @@ namespace ZfrForumTest\Entity;
 
 use PHPUnit_Framework_TestCase as TestCase;
 use ZfrForum\Entity\Thread;
+use ZfcUser\Entity\User;
 
 class ThreadTest extends TestCase
 {
@@ -27,5 +28,14 @@ class ThreadTest extends TestCase
     {
         $thread = new Thread();
         $this->assertCount(0, $thread->getMessages());
+    }
+    
+    public function testAssertThreadHasLeastOneFollowerByDefault()
+    {
+        $thread = New Thread();
+        $thread->setCreatedBy(new User());
+        
+        $this->assertCount(1, $thread->getFollowedBy());
+        
     }
 }

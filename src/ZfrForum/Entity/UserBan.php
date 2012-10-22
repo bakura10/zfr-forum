@@ -57,7 +57,7 @@ class UserBan {
      *
      * @ORM\Column(type="datetime")
      */
-    protected $expire;
+    protected $expireAt;
 
     /**
      * @var UserInterface
@@ -130,12 +130,12 @@ class UserBan {
     /**
      * Set the end date of the ban
      *
-     * @param DateTime $expire
+     * @param DateTime $expireAt
      * @return UserBan
      */
-    public function setExpire(DateTime $expire)
+    public function setExpireAt(DateTime $expireAt)
     {
-        $this->expire = $expire;
+        $this->expireAt = $expireAt;
         return $this;
     }
 
@@ -144,9 +144,9 @@ class UserBan {
      *
      * @return DateTime
      */
-    public function getExpire()
+    public function getExpireAt()
     {
-        return $this->expire;
+        return $this->expireAt;
     }
 
     /**
@@ -188,7 +188,7 @@ class UserBan {
      * 
      * @return boolean 
      */
-    public function isActiveD()
+    public function isActived()
     {
         return $this->actived;
     }

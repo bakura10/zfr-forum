@@ -24,8 +24,7 @@ use ZfrForum\Entity\UserBan;
 use ZfrForum\Mapper\UserBanMapperInterface;
 
 class UserBanRepository extends EntityRepository implements UserBanMapperInterface
-{
-    
+{ 
     /**
      * @param  UserBan $ban
      * @return mixed
@@ -43,5 +42,4 @@ class UserBanRepository extends EntityRepository implements UserBanMapperInterfa
     {
         // TODO: Implement unban() method.
     }
-
 }

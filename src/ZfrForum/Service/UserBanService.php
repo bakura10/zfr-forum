@@ -24,13 +24,13 @@ use ZfcUser\Entity\UserInterface;
 
 class UserBanService
 {
-    
     /**
      * Return true if the user is banned
      * @param UserInterface $user
      * @return boolean
      */
-    public function isBanned(UserInterface $user) {
+    public function isBanned(UserInterface $user)
+    {
         
     }
 }
