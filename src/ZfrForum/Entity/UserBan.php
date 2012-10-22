@@ -71,7 +71,7 @@ class UserBan {
      *
      * @ORM\Column(type="boolean")
      */
-    protected $actived = false;
+    protected $actived = true;
 
     /**
      * Get the identifier of the ban
