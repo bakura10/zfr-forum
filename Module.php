@@ -1,4 +1,5 @@
 <?php
+
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -25,12 +26,8 @@ use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
 class Module implements
-    AutoloaderProviderInterface,
-    ConfigProviderInterface,
-    ControllerPluginProviderInterface,
-    ServiceProviderInterface,
-    ViewHelperProviderInterface
-{
+AutoloaderProviderInterface, ConfigProviderInterface, ControllerPluginProviderInterface, ServiceProviderInterface, ViewHelperProviderInterface {
+
     /**
      * @return array
      */
@@ -42,7 +39,7 @@ class Module implements
             ),
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/' . str_replace('\\', '/' , __NAMESPACE__),
+                    __NAMESPACE__ => __DIR__ . '/src/' . str_replace('\\', '/', __NAMESPACE__),
                 ),
             ),
         );
@@ -71,7 +68,6 @@ class Module implements
                     return new Controller\Plugin\ForumSettings($settingsService);
                 }
             ),
-
             /**
              * Aliases
              */
@@ -96,7 +92,6 @@ class Module implements
                     return new View\Helper\ForumSettings($settingsService);
                 }
             ),
-
             /**
              * Aliases
              */
@@ -118,39 +113,37 @@ class Module implements
             'invokables' => array(
                 'ZfrForum\DoctrineExtensions\TablePrefix' => 'ZfrForum\DoctrineExtensions\TablePrefix'
             ),
-
             /**
              * Factories
              */
             'factories' => array(
                 'ZfrForum\Options\ModuleOptions' => function ($serviceManager) {
-                    $config  = $serviceManager->get('Config');
+                    $config = $serviceManager->get('Config');
                     $options = isset($config['zfr_forum']) ? $config['zfr_forum'] : array();
 
                     return new Options\ModuleOptions($options);
                 },
-
                 'ZfrForum\Service\CategoryService' => function($serviceManager) {
                     $categoryMapper = $serviceManager->get('ZfrForum\Mapper\CategoryMapperInterface');
                     return new Service\CategoryService($categoryMapper);
                 },
-
                 'ZfrForum\Service\MessageService' => function($serviceManager) {
                     $messageMapper = $serviceManager->get('ZfrForum\Mapper\MessageMapperInterface');
                     return new Service\MessageService($messageMapper);
                 },
-
                 'ZfrForum\Service\SettingsService' => function($serviceManager) {
                     $settingsMapper = $serviceManager->get('ZfrForum\Mapper\SettingsMapperInterface');
                     return new Service\SettingsService($settingsMapper);
                 },
-
                 'ZfrForum\Service\ThreadService' => function($serviceManager) {
                     $threadMapper = $serviceManager->get('ZfrForum\Mapper\ThreadMapperInterface');
                     return new Service\ThreadService($threadMapper);
                 },
+                'ZfrForum\Service\UserBanService' => function($serviceManager) {
+                    $userBanMapper = $serviceManager->get('ZfrForum\Mapper\UserBanMapperInterface');
+                    return new Service\UserBanService($userBanMapper);
+                },
             ),
-
             /**
              * Abstract factories
              */
@@ -159,4 +152,5 @@ class Module implements
             )
         );
     }
+
 }

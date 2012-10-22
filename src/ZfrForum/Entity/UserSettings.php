@@ -26,9 +26,7 @@ use ZfcUser\Entity\UserInterface;
  * some of them can be overridden by the user
  *
  * @ORM\Entity
- * @ORM\Table(name="UserSettings", uniqueConstraints={
- *      @ORM\UniqueConstraint(name="UNIQ_C9D61F0F8D93D649", "columns"={"user"}
- * })
+ * @ORM\Table(name="UserSettings")
  */
 class UserSettings extends AbstractSettings
 {

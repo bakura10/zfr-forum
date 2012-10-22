@@ -79,6 +79,13 @@ class Thread {
     protected $messages;
 
     /**
+     * @var Collection
+     *
+     * @ORM\ManyToMany(targetEntity="ZfcUser\Entity\UserInterface", fetch="EXTRA_LAZY")
+     */
+    protected $followedBy;
+
+    /**
      * @var bool
      *
      * @ORM\Column(type="boolean")
@@ -91,6 +98,7 @@ class Thread {
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->followedBy = new ArrayCollection();
     }
 
     /**
@@ -155,6 +163,7 @@ class Thread {
     public function setCreatedBy(UserInterface $createdBy)
     {
         $this->createdBy = $createdBy;
+        $this->addFollower($createdBy);
         return $this;
     }
 
@@ -269,6 +278,40 @@ class Thread {
     public function getMessages()
     {
         return $this->messages;
+    }
+
+    /**
+     * Add a new follower to a thread
+     *
+     * @param  UserInterface $user
+     * @return Thread
+     */
+    public function addFollower(UserInterface $user)
+    {
+        $this->followedBy->add($user);
+        return $this;
+    }
+
+    /**
+     * Remove a follower
+     *
+     * @param  UserInterface $user
+     * @return Thread
+     */
+    public function removeFollower(UserInterface $user)
+    {
+        $this->followedBy->remove($user);
+        return $this;
+    }
+
+    /**
+     * Get the followers of the thread
+     * 
+     * @return Collection
+     */
+    public function getFollowedBy()
+    {
+        return $this->followedBy;
     }
 
     /**
