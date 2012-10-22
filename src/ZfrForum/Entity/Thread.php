@@ -99,8 +99,8 @@ class Thread
      */
     public function __construct()
     {
-        $this->messages   = new ArrayCollection();
-        $this->followedBy = new ArrayCollection();
+        $this->messages  = new ArrayCollection();
+        $this->followers = new ArrayCollection();
     }
 
     /**
