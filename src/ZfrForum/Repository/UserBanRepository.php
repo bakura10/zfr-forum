@@ -1,4 +1,5 @@
 <?php
+
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -16,26 +17,29 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForumTest\Entity;
+namespace ZfrForum\Repository;
 
-use PHPUnit_Framework_TestCase as TestCase;
-use ZfrForum\Entity\Thread;
-use ZfcUser\Entity\User;
+use Doctrine\ORM\EntityRepository;
+use ZfrForum\Entity\UserBan;
+use ZfrForum\Mapper\UserBanMapperInterface;
 
-class ThreadTest extends TestCase
-{
-    public function testAssertThreadHasNoMessagesByDefault()
+class UserBanRepository extends EntityRepository implements UserBanMapperInterface
+{ 
+    /**
+     * @param  UserBan $ban
+     * @return mixed
+     */
+    public function ban(UserBan $ban)
     {
-        $thread = new Thread();
-        $this->assertCount(0, $thread->getMessages());
+        // TODO: Implement ban() method.
     }
-    
-    public function testAssertThreadHasLeastOneFollowerByDefault()
+
+    /**
+     * @param  UserBan $ban
+     * @return mixed
+     */
+    public function unban(UserBan $ban)
     {
-        $thread = New Thread();
-        $thread->setCreatedBy(new User());
-        
-        $this->assertCount(1, $thread->getFollowedBy());
-        
+        // TODO: Implement unban() method.
     }
 }

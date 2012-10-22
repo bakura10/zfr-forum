@@ -79,7 +79,14 @@ class Thread {
     protected $messages;
 
     /**
-     * @var bool
+     * @var Collection
+     *
+     * @ORM\ManyToMany(targetEntity="ZfcUser\Entity\UserInterface", fetch="EXTRA_LAZY")
+     */
+    protected $followers;
+
+    /**
+     * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
@@ -90,7 +97,8 @@ class Thread {
      */
     public function __construct()
     {
-        $this->messages = new ArrayCollection();
+        $this->messages   = new ArrayCollection();
+        $this->followedBy = new ArrayCollection();
     }
 
     /**
@@ -155,6 +163,7 @@ class Thread {
     public function setCreatedBy(UserInterface $createdBy)
     {
         $this->createdBy = $createdBy;
+        $this->addFollower($createdBy);
         return $this;
     }
 
@@ -272,6 +281,40 @@ class Thread {
     }
 
     /**
+     * Add a new follower to a thread
+     *
+     * @param  UserInterface $user
+     * @return Thread
+     */
+    public function addFollower(UserInterface $user)
+    {
+        $this->followers->add($user);
+        return $this;
+    }
+
+    /**
+     * Remove a follower
+     *
+     * @param  UserInterface $user
+     * @return Thread
+     */
+    public function removeFollower(UserInterface $user)
+    {
+        $this->followers->remove($user);
+        return $this;
+    }
+
+    /**
+     * Get the followers of the thread
+     * 
+     * @return Collection
+     */
+    public function getFollowers()
+    {
+        return $this->followers;
+    }
+
+    /**
      * Set if the thread is closed
      *
      * @param  boolean $closed
@@ -279,7 +322,7 @@ class Thread {
      */
     public function setClosed($closed)
     {
-        $this->closed = (bool) $closed;
+        $this->closed = (boolean) $closed;
         return $this;
     }
 

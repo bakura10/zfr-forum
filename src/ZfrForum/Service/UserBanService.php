@@ -1,4 +1,5 @@
 <?php
+
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -16,26 +17,34 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForumTest\Entity;
+namespace ZfrForum\Service;
 
-use PHPUnit_Framework_TestCase as TestCase;
-use ZfrForum\Entity\Thread;
-use ZfcUser\Entity\User;
+use ZfrForum\Entity\Message;
+use ZfrForum\Mapper\UserBanMapperInterface;
+use ZfcUser\Entity\UserInterface;
 
-class ThreadTest extends TestCase
+class UserBanService
 {
-    public function testAssertThreadHasNoMessagesByDefault()
+    /**
+     * @var UserBanMapperInterface
+     */
+    protected $userBanMapper;
+
+    /**
+     * @param UserBanMapperInterface $userBanMapper
+     */
+    public function __construct(UserBanMapperInterface $userBanMapper)
     {
-        $thread = new Thread();
-        $this->assertCount(0, $thread->getMessages());
+        $this->userBanMapper = $userBanMapper;
     }
-    
-    public function testAssertThreadHasLeastOneFollowerByDefault()
+
+    /**
+     * Return true if the user is banned
+     * @param UserInterface $user
+     * @return boolean
+     */
+    public function isBanned(UserInterface $user)
     {
-        $thread = New Thread();
-        $thread->setCreatedBy(new User());
-        
-        $this->assertCount(1, $thread->getFollowedBy());
         
     }
 }
