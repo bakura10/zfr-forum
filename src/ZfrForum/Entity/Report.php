@@ -127,12 +127,13 @@ class Report
     /**
      * Set when the message has been reported
      *
-     * @param  DateTime $reportedAt
      * @return Report
+     *
+     * @ORM\PrePerist
      */
-    public function setReportedAt(DateTime $reportedAt)
+    public function setReportedAt()
     {
-        $this->reportedAt = clone $reportedAt;
+        $this->reportedAt = new DateTime('now');
         return $this;
     }
 
