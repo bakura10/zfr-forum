@@ -16,20 +16,45 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Repository;
+namespace ZfrForum\Form;
 
-use Doctrine\ORM\EntityRepository;
-use ZfrForum\Entity\Message;
-use ZfrForum\Mapper\MessageMapperInterface;
+use Zend\Form\Fieldset;
+use Zend\InputFilter\InputFilterProviderInterface;
 
-class MessageRepository extends EntityRepository implements MessageMapperInterface
+class PostFieldset extends Fieldset implements InputFilterProviderInterface
 {
     /**
-     * @param  Message $message
-     * @return mixed
+     * Constructor
      */
-    public function update(Message $message)
+    public function __construct()
     {
-        // TODO: Implement update() method.
+        parent::__construct('post');
+
+        $this->add(array(
+            'name'       => 'author',
+            'attributes' => array(
+                'type'     => 'hidden',
+                'required' => 'required'
+            )
+        ));
+
+        $this->add(array(
+            'type'    => 'Zend\Form\Element\Textarea',
+            'name'    => 'content',
+            'options' => array(
+                'label' => 'Your message'
+            )
+        ));
+    }
+
+    /**
+     * Should return an array specification compatible with
+     * {@link Zend\InputFilter\Factory::createInputFilter()}.
+     *
+     * @return array
+     */
+    public function getInputFilterSpecification()
+    {
+        return array();
     }
 }

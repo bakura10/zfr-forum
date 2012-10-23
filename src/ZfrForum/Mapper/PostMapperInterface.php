@@ -16,33 +16,16 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Service;
+namespace ZfrForum\Mapper;
 
-use ZfrForum\Entity\Message;
-use ZfrForum\Mapper\MessageMapperInterface;
+use Doctrine\Common\Persistence\ObjectRepository;
+use ZfrForum\Entity\Post;
 
-class MessageService
+interface PostMapperInterface extends ObjectRepository
 {
     /**
-     * @var MessageMapperInterface
+     * @param  Post $post
+     * @return mixed
      */
-    protected $messageMapper;
-
-
-    /**
-     * @param MessageMapperInterface $messageMapper
-     */
-    public function __construct(MessageMapperInterface $messageMapper)
-    {
-        $this->messageMapper = $messageMapper;
-    }
-
-    /**
-     * @param  int $id
-     * @return Message
-     */
-    public function getById($id)
-    {
-        return $this->messageMapper->find($id);
-    }
+    public function update(Post $post);
 }

@@ -23,11 +23,11 @@ use Doctrine\ORM\Mapping as ORM;
 use ZfcUser\Entity\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="ZfrForum\Repository\MessageRepository")
- * @ORM\Table(name="Messages")
+ * @ORM\Entity(repositoryClass="ZfrForum\Repository\PostRepository")
+ * @ORM\Table(name="Posts")
  * @ORM\HasLifecycleCallbacks
  */
-class Message
+class Post
 {
     /**
      * @var int
@@ -55,7 +55,7 @@ class Message
     /**
      * @var Thread
      *
-     * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\Thread", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\Thread", inversedBy="posts")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $thread;
@@ -90,7 +90,7 @@ class Message
 
 
     /**
-     * Get the identifier of the message
+     * Get the identifier of the post
      *
      * @return int
      */
@@ -100,10 +100,10 @@ class Message
     }
 
     /**
-     * Set the author of the message
+     * Set the author of the post
      *
-     * @param UserInterface $author
-     * @return Message
+     * @param  UserInterface $author
+     * @return Post
      */
     public function setAuthor(UserInterface $author)
     {
@@ -114,7 +114,7 @@ class Message
     }
 
     /**
-     * Get the author of the message
+     * Get the author of the post
      *
      * @return UserInterface
      */
@@ -125,10 +125,10 @@ class Message
 
     /**
      * Set the author display name. This is useful if the author's account is deleted or banned, so that
-     * we can still see who wrote the message
+     * we can still see who wrote the post
      *
      * @param  string $authorDisplayName
-     * @return Message
+     * @return Post
      */
     public function setAuthorDisplayName($authorDisplayName)
     {
@@ -147,10 +147,10 @@ class Message
     }
 
     /**
-     * Set the thread this message belongs to
+     * Set the thread this post belongs to
      *
      * @param  Thread $thread
-     * @return Message
+     * @return Post
      */
     public function setThread(Thread $thread)
     {
@@ -159,7 +159,7 @@ class Message
     }
 
     /**
-     * Get the thread this message belongs to
+     * Get the thread this post belongs to
      *
      * @return Thread
      */
@@ -169,10 +169,10 @@ class Message
     }
 
     /**
-     * Set the content of the message
+     * Set the content of the post
      *
      * @param  string $content
-     * @return Message
+     * @return Post
      */
     public function setContent($content)
     {
@@ -181,7 +181,7 @@ class Message
     }
 
     /**
-     * Get the content of the message
+     * Get the content of the post
      *
      * @return string
      */
@@ -191,9 +191,9 @@ class Message
     }
 
     /**
-     * Set when this message was sent for the first time
+     * Set when this post was sent for the first time
      *
-     * @return Message
+     * @return Post
      *
      * @ORM\PrePersist
      */
@@ -204,7 +204,7 @@ class Message
     }
 
     /**
-     * Get when this message was sent for the first time
+     * Get when this post was sent for the first time
      *
      * @return DateTime
      */
@@ -214,9 +214,9 @@ class Message
     }
 
     /**
-     * Set the last time that the message was modified
+     * Set the last time that the post was modified
      *
-     * @return Message
+     * @return Post
      *
      * @ORM\PreUpdate
      */
@@ -229,7 +229,7 @@ class Message
     }
 
     /**
-     * Get the last time the message was modified
+     * Get the last time the post was modified
      *
      * @return DateTime
      */
@@ -239,7 +239,7 @@ class Message
     }
 
     /**
-     * Get the number of times the message has been modified
+     * Get the number of times the post has been modified
      *
      * @return int
      */

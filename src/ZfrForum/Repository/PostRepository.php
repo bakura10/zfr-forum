@@ -16,16 +16,20 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Mapper;
+namespace ZfrForum\Repository;
 
-use Doctrine\Common\Persistence\ObjectRepository;
-use ZfrForum\Entity\Message;
+use Doctrine\ORM\EntityRepository;
+use ZfrForum\Entity\Post;
+use ZfrForum\Mapper\PostMapperInterface;
 
-interface MessageMapperInterface extends ObjectRepository
+class MessageRepository extends EntityRepository implements PostMapperInterface
 {
     /**
-     * @param  Message $message
+     * @param  Post $post
      * @return mixed
      */
-    public function update(Message $message);
+    public function update(Post $post)
+    {
+        // TODO: Implement update() method.
+    }
 }
