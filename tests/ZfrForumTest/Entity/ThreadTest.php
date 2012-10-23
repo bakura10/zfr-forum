@@ -27,7 +27,7 @@ class ThreadTest extends TestCase
     public function testAssertThreadHasNoMessagesByDefault()
     {
         $thread = new Thread();
-        $this->assertCount(0, $thread->getMessages());
+        $this->assertCount(0, $thread->getPosts());
     }
     
     public function testAssertThreadHasLeastOneFollowerByDefault()
@@ -35,7 +35,6 @@ class ThreadTest extends TestCase
         $thread = New Thread();
         $thread->setCreatedBy(new User());
         
-        $this->assertCount(1, $thread->getFollowedBy());
-        
+        $this->assertCount(1, $thread->getFollowers());
     }
 }

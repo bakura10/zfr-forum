@@ -19,13 +19,13 @@
 namespace ZfrForumTest\Entity;
 
 use PHPUnit_Framework_TestCase as TestCase;
-use ZfrForum\Entity\Message;
+use ZfrForum\Entity\Post;
 
-class MessageTest extends TestCase
+class PostTest extends TestCase
 {
     public function testModifyMessageCorrectlyUpdateModifiedCount()
     {
-        $message = new Message();
+        $message = new Post();
         $this->assertEquals(0, $message->getCountModified());
 
         // This function is not directly called, but instead it's called through event manager by Doctrine,
