@@ -25,7 +25,7 @@ use ZfcUser\Entity\UserInterface;
 /**
  * @ORM\Entity(readOnly=true)
  * @ORM\Table(name="Reports", uniqueConstraints={
- *      @ORM\UniqueConstraint(name="UNIQ_C38372B2B6BD307F", columns={"message", "reported_by"})
+ *      @ORM\UniqueConstraint(name="UNIQ_C38372B2B6BD307F", columns={"post", "reported_by"})
  * })
  * @ORM\HasLifecycleCallbacks
  */
@@ -41,12 +41,12 @@ class Report
     protected $id;
 
     /**
-     * @var Message
+     * @var Post
      *
-     * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\Message")
+     * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\Post")
      * @ORM\JoinColumn(onDelete="cascade")
      */
-    protected $message;
+    protected $post;
 
     /**
      * @var UserInterface
@@ -81,29 +81,29 @@ class Report
     }
 
     /**
-     * Set the reported message
+     * Set the reported post
      *
-     * @param  Message $message
+     * @param  Post $post
      * @return Report
      */
-    public function setMessage(Message $message)
+    public function setPost(Post $post)
     {
-        $this->message = $message;
+        $this->post = $post;
         return $this;
     }
 
     /**
-     * Get the reported message
+     * Get the reported post
      *
-     * @return Message
+     * @return Post
      */
-    public function getMessage()
+    public function getPost()
     {
-        return $this->message;
+        return $this->post;
     }
 
     /**
-     * Set the user that reported the message
+     * Set the user that reported the post
      *
      * @param  UserInterface $reportedBy
      * @return Report
@@ -115,7 +115,7 @@ class Report
     }
 
     /**
-     * Get the user that reported the message
+     * Get the user that reported the post
      *
      * @return UserInterface
      */
@@ -125,7 +125,7 @@ class Report
     }
 
     /**
-     * Set when the message has been reported
+     * Set when the post has been reported
      *
      * @return Report
      *
@@ -138,7 +138,7 @@ class Report
     }
 
     /**
-     * Get when the message has been reported
+     * Get when the post has been reported
      *
      * @return DateTime
      */

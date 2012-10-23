@@ -16,45 +16,33 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Form;
+namespace ZfrForum\Service;
 
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilterProviderInterface;
+use ZfrForum\Entity\Post;
+use ZfrForum\Mapper\PostMapperInterface;
 
-class MessageFieldset extends Fieldset implements InputFilterProviderInterface
+class PostService
 {
     /**
-     * Constructor
+     * @var PostMapperInterface
      */
-    public function __construct()
+    protected $postMapper;
+
+
+    /**
+     * @param PostMapperInterface $postMapper
+     */
+    public function __construct(PostMapperInterface $postMapper)
     {
-        parent::__construct('message');
-
-        $this->add(array(
-            'name'       => 'author',
-            'attributes' => array(
-                'type'     => 'hidden',
-                'required' => 'required'
-            )
-        ));
-
-        $this->add(array(
-            'type'    => 'Zend\Form\Element\Textarea',
-            'name'    => 'content',
-            'options' => array(
-                'label' => 'Your message'
-            )
-        ));
+        $this->postMapper = $postMapper;
     }
 
     /**
-     * Should return an array specification compatible with
-     * {@link Zend\InputFilter\Factory::createInputFilter()}.
-     *
-     * @return array
+     * @param  int $id
+     * @return Post
      */
-    public function getInputFilterSpecification()
+    public function getById($id)
     {
-        return array();
+        return $this->postMapper->find($id);
     }
 }

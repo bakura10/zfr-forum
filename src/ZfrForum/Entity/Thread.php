@@ -73,10 +73,17 @@ class Thread
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="ZfrForum\Entity\Message", mappedBy="thread", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="ZfrForum\Entity\Post", mappedBy="thread", fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"sentAt"="ASC"})
      */
-    protected $messages;
+    protected $posts;
+
+    /**
+     * @var Post
+     *
+     * @ORM\OneToOne
+     */
+    protected $lastPost;
 
     /**
      * @var Collection
@@ -99,7 +106,7 @@ class Thread
      */
     public function __construct()
     {
-        $this->messages  = new ArrayCollection();
+        $this->posts     = new ArrayCollection();
         $this->followers = new ArrayCollection();
     }
 
@@ -204,83 +211,107 @@ class Thread
     }
 
     /**
-     * Add a new message to a thread
+     * Add a new post to a thread
      *
-     * @param  Message $message
+     * @param  Post $post
      * @return Thread
      */
-    public function addMessage(Message $message)
+    public function addPost(Post $post)
     {
-        $message->setThread($this);
-        $this->messages->add($message);
+        $post->setThread($this);
+
+        $this->posts->add($post);
+        $this->setLastPost($post);
 
         return $this;
     }
 
     /**
-     * Add a collection of messages to the thread
+     * Add a collection of posts to the thread
      *
-     * @param  Collection $messages
+     * @param  Collection $posts
      * @return Thread
      */
-    public function addMessages(Collection $messages)
+    public function addPosts(Collection $posts)
     {
-        foreach ($messages as $message) {
-            $this->addMessage($message);
+        foreach ($posts as $post) {
+            $this->addPost($post);
         }
 
         return $this;
     }
 
     /**
-     * Remove a message
+     * Remove a post
      *
-     * @param  Message $message
+     * @param  Post $post
      * @return Thread
      */
-    public function removeMessage(Message $message)
+    public function removePost(Post $post)
     {
-        $this->messages->remove($message);
+        $this->posts->remove($post);
         return $this;
     }
 
     /**
-     * Remove a collection of messages from the thread
+     * Remove a collection of posts from the thread
      *
-     * @param  Collection $messages
+     * @param  Collection $posts
      * @return Thread
      */
-    public function removeMessages(Collection $messages)
+    public function removePosts(Collection $posts)
     {
-        foreach ($messages as $message) {
-            $this->removeMessage($message);
+        foreach ($posts as $post) {
+            $this->removePost($post);
         }
 
         return $this;
     }
 
     /**
-     * Set messages to the thread
+     * Set posts to the thread
      *
-     * @param  Collection $messages
+     * @param  Collection $posts
      * @return Thread
      */
-    public function setMessages(Collection $messages)
+    public function setPosts(Collection $posts)
     {
-        $this->messages->clear();
-        $this->addMessages($messages);
+        $this->posts->clear();
+        $this->addPosts($posts);
 
         return $this;
     }
 
     /**
-     * Get the messages from the thread
+     * Get the posts from the thread
      *
      * @return Collection
      */
-    public function getMessages()
+    public function getPosts()
     {
-        return $this->messages;
+        return $this->posts;
+    }
+
+    /**
+     * Set the last post of the thread
+     *
+     * @param  Post $lastPost
+     * @return Thread
+     */
+    public function setLastPost(Post $lastPost)
+    {
+        $this->lastPost = $lastPost;
+        return $this;
+    }
+
+    /**
+     * Get the last post of the thread
+     *
+     * @return Post
+     */
+    public function getLastPost()
+    {
+        return $this->lastPost;
     }
 
     /**

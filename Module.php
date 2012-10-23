@@ -132,9 +132,9 @@ class Module implements
                     $categoryMapper = $serviceManager->get('ZfrForum\Mapper\CategoryMapperInterface');
                     return new Service\CategoryService($categoryMapper);
                 },
-                'ZfrForum\Service\MessageService' => function($serviceManager) {
-                    $messageMapper = $serviceManager->get('ZfrForum\Mapper\MessageMapperInterface');
-                    return new Service\MessageService($messageMapper);
+                'ZfrForum\Service\PostService' => function($serviceManager) {
+                    $postMapper = $serviceManager->get('ZfrForum\Mapper\PostMapperInterface');
+                    return new Service\PostService($postMapper);
                 },
                 'ZfrForum\Service\SettingsService' => function($serviceManager) {
                     $settingsMapper = $serviceManager->get('ZfrForum\Mapper\SettingsMapperInterface');
