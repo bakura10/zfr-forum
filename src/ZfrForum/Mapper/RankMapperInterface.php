@@ -16,29 +16,28 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Repository;
+namespace ZfrForum\Mapper;
 
-use Doctrine\ORM\EntityRepository;
-use ZfrForum\Entity\Post;
-use ZfrForum\Mapper\PostMapperInterface;
+use Doctrine\Common\Persistence\ObjectRepository;
+use ZfrForum\Entity\Rank;
 
-class MessageRepository extends EntityRepository implements PostMapperInterface
+interface RankMapperInterface extends ObjectRepository
 {
     /**
-     * @param  Post $post
+     * @param  Rank $rank
      * @return mixed
      */
-    public function update(Post $post)
-    {
-        // TODO: Implement update() method.
-    }
+    public function create(Rank $rank);
 
     /**
-     * @param  Post $post
+     * @param  Rank $rank
      * @return mixed
      */
-    public function report(Post $post)
-    {
-        // TODO: Implement report() method.
-    }
+    public function remove(Rank $rank);
+
+    /**
+     * @param  Rank $rank
+     * @return mixed
+     */
+    public function update(Rank $rank);
 }

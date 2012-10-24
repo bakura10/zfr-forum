@@ -1,5 +1,4 @@
 <?php
-
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -135,6 +134,10 @@ class Module implements
                 'ZfrForum\Service\PostService' => function($serviceManager) {
                     $postMapper = $serviceManager->get('ZfrForum\Mapper\PostMapperInterface');
                     return new Service\PostService($postMapper);
+                },
+                'ZfrForum\Service\RankService' => function($serviceManager) {
+                    $rankMapper = $serviceManager->get('ZfrForum\Mapper\RankMapperInterface');
+                    return new Service\RankService($rankMapper);
                 },
                 'ZfrForum\Service\SettingsService' => function($serviceManager) {
                     $settingsMapper = $serviceManager->get('ZfrForum\Mapper\SettingsMapperInterface');

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -81,7 +80,7 @@ class Thread
     /**
      * @var Post
      *
-     * @ORM\OneToOne
+     * @ORM\OneToOne(targetEntity="ZfrForum\Entity\Post")
      */
     protected $lastPost;
 
@@ -92,6 +91,13 @@ class Thread
      * @ORM\JoinTable(name="ThreadsFollowers")
      */
     protected $followers;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $pinned = false;
 
     /**
      * @var boolean
@@ -346,6 +352,28 @@ class Thread
     public function getFollowers()
     {
         return $this->followers;
+    }
+
+    /**
+     * Set if the thread is pinned
+     *
+     * @param  boolean $pinned
+     * @return Thread
+     */
+    public function setPinned($pinned)
+    {
+        $this->pinned = (boolean) $pinned;
+        return $this;
+    }
+
+    /**
+     * Get if the thread is pinned
+     *
+     * @return boolean
+     */
+    public function isPinned()
+    {
+        return $this->isPinned();
     }
 
     /**

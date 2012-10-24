@@ -22,7 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="GLobalSettings")
+ * @ORM\Table(name="GlobalSettings")
  */
 class GlobalSettings extends AbstractSettings
 {

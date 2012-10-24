@@ -19,26 +19,35 @@
 namespace ZfrForum\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use ZfrForum\Entity\Post;
-use ZfrForum\Mapper\PostMapperInterface;
+use ZfrForum\Entity\Rank;
+use ZfrForum\Mapper\RankMapperInterface;
 
-class MessageRepository extends EntityRepository implements PostMapperInterface
+class RankRepository extends EntityRepository implements RankMapperInterface
 {
     /**
-     * @param  Post $post
+     * @param  Rank $rank
      * @return mixed
      */
-    public function update(Post $post)
+    public function create(Rank $rank)
     {
-        // TODO: Implement update() method.
+        // TODO: Implement create() method.
     }
 
     /**
-     * @param  Post $post
+     * @param  Rank $rank
      * @return mixed
      */
-    public function report(Post $post)
+    public function remove(Rank $rank)
     {
-        // TODO: Implement report() method.
+        // TODO: Implement remove() method.
+    }
+
+    /**
+     * @param  Rank $rank
+     * @return mixed
+     */
+    public function update(Rank $rank)
+    {
+        // TODO: Implement update() method.
     }
 }
