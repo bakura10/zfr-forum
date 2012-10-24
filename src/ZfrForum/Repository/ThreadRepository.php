@@ -35,6 +35,24 @@ class ThreadRepository extends EntityRepository implements ThreadMapperInterface
     }
 
     /**
+     * @param  Thread $thread
+     * @return mixed
+     */
+    public function pin(Thread $thread)
+    {
+        // TODO: Implement pin() method.
+    }
+
+    /**
+     * @param  Thread $thread
+     * @return mixed
+     */
+    public function unpin(Thread $thread)
+    {
+        // TODO: Implement unpin() method.
+    }
+
+    /**
      * @param  Thread  $thread
      * @param  Post $post
      * @return mixed
