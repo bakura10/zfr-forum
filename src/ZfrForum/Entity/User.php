@@ -20,27 +20,13 @@ namespace ZfrForum\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use ZfcUser\Entity\UserInterface;
+use ZfcUser\Entity\User as BaseUser;
 
 /**
- * This class is a decorator around a ZfcUser\Entity\UserInterface entity, that adds some
- * useful properties that are needed to make the forum work. Although the decorator adds another
- * table, it avoid you to modify your existing code
- *
- * @ORM\Entity
- * @ORM\Table(name="UsersDecorator")
+ * @ORM\MappedSuperclass
  */
-class UserDecorator
+class User extends BaseUser implements UserInterface
 {
-    /**
-     * @var UserInterface
-     *
-     * @ORM\Id
-     * @ORM\OneToOne(targetEntity="ZfcUser\Entity\UserInterface")
-     * @ORM\JoinColumn(onDelete="cascade")
-     */
-    protected $user;
-
     /**
      * @var string
      *
@@ -57,28 +43,10 @@ class UserDecorator
 
 
     /**
-     * @param UserInterface $user
-     */
-    public function __construct(UserInterface $user)
-    {
-        $this->user = $user;
-    }
-
-    /**
-     * Get the decorated user
-     * 
-     * @return UserInterface
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * Set the IP address of the user (needed for ban functionnality)
      *
      * @param  string $ip
-     * @return UserDecorator
+     * @return User
      */
     public function setIp($ip)
     {
@@ -100,7 +68,7 @@ class UserDecorator
      * Set the last activity date (this is updated at each request)
      *
      * @param  DateTime $lastActivityDate
-     * @return UserDecorator
+     * @return User
      */
     public function setLastActivityDate(DateTime $lastActivityDate)
     {
@@ -118,3 +86,4 @@ class UserDecorator
         return clone $this->lastActivityDate;
     }
 }
+

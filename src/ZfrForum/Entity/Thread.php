@@ -93,6 +93,13 @@ class Thread
     protected $followers;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $countViews = 0;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
@@ -352,6 +359,27 @@ class Thread
     public function getFollowers()
     {
         return $this->followers;
+    }
+
+    /**
+     * Increment the count views by 1
+     *
+     * @return Thread
+     */
+    public function incrementCountViews()
+    {
+        $this->countViews += 1;
+        return $this;
+    }
+
+    /**
+     * Get how many times this thread was viewed
+     *
+     * @return int
+     */
+    public function getCountViews()
+    {
+        return $this->countViews;
     }
 
     /**
