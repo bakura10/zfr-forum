@@ -22,7 +22,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping;
-use ZfcUser\Entity\UserInterface;
+use ZfrForum\Entity\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="ZfrForum\Repository\ThreadRepository")
@@ -58,7 +58,7 @@ class Thread
     /**
      * @var UserInterface
      *
-     * @ORM\ManyToOne(targetEntity="ZfcUser\Entity\UserInterface")
+     * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\UserInterface")
      */
     protected $createdBy;
 
@@ -87,7 +87,7 @@ class Thread
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="ZfcUser\Entity\UserInterface", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="ZfrForum\Entity\UserInterface", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="ThreadsFollowers")
      */
     protected $followers;

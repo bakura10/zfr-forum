@@ -20,7 +20,7 @@ namespace ZfrForum\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use ZfcUser\Entity\UserInterface;
+use ZfrForum\Entity\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="ZfrForum\Repository\PostRepository")
@@ -41,7 +41,7 @@ class Post
     /**
      * @var UserInterface
      *
-     * @ORM\ManyToOne(targetEntity="ZfcUser\Entity\UserInterface")
+     * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\UserInterface")
      */
     protected $author;
 

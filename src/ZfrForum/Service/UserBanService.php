@@ -19,9 +19,8 @@
 
 namespace ZfrForum\Service;
 
-use ZfrForum\Entity\Message;
+use ZfrForum\Entity\UserInterface;
 use ZfrForum\Mapper\UserBanMapperInterface;
-use ZfcUser\Entity\UserInterface;
 
 class UserBanService
 {

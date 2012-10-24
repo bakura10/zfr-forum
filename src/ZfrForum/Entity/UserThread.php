@@ -19,7 +19,7 @@
 namespace ZfrForum\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use ZfcUser\Entity\UserInterface;
+use ZfrForum\Entity\UserInterface;
 
 /**
  * @ORM\Entity
@@ -31,7 +31,7 @@ class UserThread
      * @var UserInterface
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="ZfcUser\Entity\UserInterface")
+     * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\UserInterface")
      */
     protected $user;
 

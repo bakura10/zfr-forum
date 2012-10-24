@@ -18,52 +18,71 @@
 
 namespace ZfrForum\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use ZfrForum\Entity\UserInterface;
+use ZfcUser\Entity\User as BaseUser;
 
 /**
- * This entity is used to save user-wide parameters for the forum. Each forum can define its own default parameters,
- * some of them can be overridden by the user
- *
- * @ORM\Entity
- * @ORM\Table(name="UserSettings")
+ * @ORM\MappedSuperclass
  */
-class UserSettings extends AbstractSettings
+class User extends BaseUser implements UserInterface
 {
-    /**
-     * @var UserInterface
-     *
-     * @ORM\OneToOne(targetEntity="ZfrForum\Entity\UserInterface")
-     */
-    protected $user;
-
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=39)
      */
-    protected $primaryStyleName = 'Default';
+    protected $ip;
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    protected $lastActivityDate;
 
 
     /**
-     * Set the name of the primary style to use
+     * Set the IP address of the user (needed for ban functionnality)
      *
-     * @param  string $primaryStyleName
-     * @return UserSettings
+     * @param  string $ip
+     * @return User
      */
-    public function setPrimaryStyleName($primaryStyleName)
+    public function setIp($ip)
     {
-        $this->primaryStyleName = (string) $primaryStyleName;
+        $this->ip = $ip;
         return $this;
     }
 
     /**
-     * Get the name of the primary style to use
+     * Get the IP address of the user (needed for ban functionnality)
      *
      * @return string
      */
-    public function getPrimaryStyleName()
+    public function getIp()
     {
-        return $this->primaryStyleName;
+        return $this->ip;
+    }
+
+    /**
+     * Set the last activity date (this is updated at each request)
+     *
+     * @param  DateTime $lastActivityDate
+     * @return User
+     */
+    public function setLastActivityDate(DateTime $lastActivityDate)
+    {
+        $this->lastActivityDate = clone $lastActivityDate;
+        return $this;
+    }
+
+    /**
+     * Get the last activity date
+     *
+     * @return DateTime
+     */
+    public function getLastActivityDate()
+    {
+        return clone $this->lastActivityDate;
     }
 }
