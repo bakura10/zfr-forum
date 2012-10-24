@@ -22,7 +22,7 @@ use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\GlobalSettings;
 use ZfrForum\Entity\UserSettings;
 use ZfrForum\Mapper\SettingsMapperInterface;
-use ZfcUser\Entity\UserInterface;
+use ZfrForum\Entity\UserInterface;
 
 class SettingsRepository extends EntityRepository implements SettingsMapperInterface
 {

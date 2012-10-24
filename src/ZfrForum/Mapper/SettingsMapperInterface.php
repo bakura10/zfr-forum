@@ -19,7 +19,7 @@
 namespace ZfrForum\Mapper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
-use ZfcUser\Entity\UserInterface;
+use ZfrForum\Entity\UserInterface;
 use ZfrForum\Entity\GlobalSettings;
 use ZfrForum\Entity\UserSettings;
 

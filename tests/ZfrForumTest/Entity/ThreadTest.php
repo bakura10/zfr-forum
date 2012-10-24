@@ -20,7 +20,7 @@ namespace ZfrForumTest\Entity;
 
 use PHPUnit_Framework_TestCase as TestCase;
 use ZfrForum\Entity\Thread;
-use ZfcUser\Entity\User;
+use ZfrForum\Entity\User;
 
 class ThreadTest extends TestCase
 {

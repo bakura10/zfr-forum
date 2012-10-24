@@ -18,52 +18,43 @@
 
 namespace ZfrForum\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use ZfrForum\Entity\UserInterface;
+use DateTime;
+use ZfcUser\Entity\UserInterface as BaseUserInterface;
 
 /**
- * This entity is used to save user-wide parameters for the forum. Each forum can define its own default parameters,
- * some of them can be overridden by the user
- *
- * @ORM\Entity
- * @ORM\Table(name="UserSettings")
+ * This interface provides some more information that are needed to make the forum works. You can
+ * either implements this interface instead of the ZfcUser\Entity\UserInterface, or directly use
+ * the base implementation ZfrForum\Entity\User
  */
-class UserSettings extends AbstractSettings
+interface UserInterface extends BaseUserInterface
 {
     /**
-     * @var UserInterface
+     * Set the IP address of the user (needed for ban functionnality)
      *
-     * @ORM\OneToOne(targetEntity="ZfrForum\Entity\UserInterface")
+     * @param  string $ip
+     * @return UserInterface
      */
-    protected $user;
+    public function setIp($ip);
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $primaryStyleName = 'Default';
-
-
-    /**
-     * Set the name of the primary style to use
-     *
-     * @param  string $primaryStyleName
-     * @return UserSettings
-     */
-    public function setPrimaryStyleName($primaryStyleName)
-    {
-        $this->primaryStyleName = (string) $primaryStyleName;
-        return $this;
-    }
-
-    /**
-     * Get the name of the primary style to use
+     * Get the IP address of the user (needed for ban functionnality)
      *
      * @return string
      */
-    public function getPrimaryStyleName()
-    {
-        return $this->primaryStyleName;
-    }
+    public function getIp();
+
+    /**
+     * Set the last activity date (this is updated at each request)
+     *
+     * @param  DateTime $lastActivityDate
+     * @return UserInterface
+     */
+    public function setLastActivityDate(DateTime $lastActivityDate);
+
+    /**
+     * Get the last activity date
+     *
+     * @return DateTime
+     */
+    public function getLastActivityDate();
 }

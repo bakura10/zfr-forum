@@ -18,9 +18,9 @@
 
 namespace ZfrForum\Service;
 
-use ZfcUser\Entity\UserInterface;
 use ZfrForum\Entity\AbstractSettings;
 use ZfrForum\Entity\GlobalSettings;
+use ZfrForum\Entity\UserInterface;
 use ZfrForum\Entity\UserSettings;
 use ZfrForum\Mapper\SettingsMapperInterface;
 
