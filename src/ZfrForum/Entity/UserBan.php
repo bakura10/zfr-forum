@@ -48,6 +48,13 @@ class UserBan
     /**
      * @var string
      *
+     * @ORM\Column(type="string", length=36)
+     */
+    protected $ip;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="text", length=1000)
      */
     protected $message;
@@ -103,6 +110,28 @@ class UserBan
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set the IP address of the user when the ban was done
+     *
+     * @param  string $ip
+     * @return UserBan
+     */
+    public function setIp($ip)
+    {
+        $this->ip = (string) $ip;
+        return $this;
+    }
+
+    /**
+     * Get the IP address of the user when the ban was done
+     *
+     * @return string
+     */
+    public function getIp()
+    {
+        return $this->ip;
     }
 
     /**

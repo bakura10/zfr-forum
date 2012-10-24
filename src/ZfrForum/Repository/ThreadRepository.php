@@ -19,7 +19,7 @@
 namespace ZfrForum\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use ZfrForum\Entity\Message;
+use ZfrForum\Entity\Post;
 use ZfrForum\Entity\Thread;
 use ZfrForum\Mapper\ThreadMapperInterface;
 
@@ -36,10 +36,10 @@ class ThreadRepository extends EntityRepository implements ThreadMapperInterface
 
     /**
      * @param  Thread  $thread
-     * @param  Message $message
+     * @param  Post $post
      * @return mixed
      */
-    public function addMessage(Thread $thread, Message $message)
+    public function addPost(Thread $thread, Post $post)
     {
         // TODO: Implement addMessage() method.
     }
