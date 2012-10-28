@@ -61,11 +61,9 @@ class PostService
             throw new Exception\LogicException('A user has to be logged to report a post');
         }
 
-        $user = $this->authenticationService->getIdentity();
-
         $report = new Report();
         $report->setPost($post)
-               ->setReportedBy($user)
+               ->setReportedBy($this->authenticationService->getIdentity())
                ->setReportedAt(new DateTime('now'))
                ->setDescription($description);
 
