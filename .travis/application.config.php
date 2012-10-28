@@ -1,7 +1,10 @@
 <?php
 return array(
     'modules' => array(
-        'Application',
+        'DoctrineModule',
+        'DoctrineORMModule',
+        'ZfcUser',
+        'ZfcUserDoctrineORM',
         'ZfrForum',
     ),
     'module_listener_options' => array(
