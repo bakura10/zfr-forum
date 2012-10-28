@@ -18,6 +18,7 @@
 
 namespace ZfrForumTest\Entity;
 
+use DateTime;
 use PHPUnit_Framework_TestCase as TestCase;
 use ZfrForum\Entity\Post;
 
@@ -28,9 +29,7 @@ class PostTest extends TestCase
         $message = new Post();
         $this->assertEquals(0, $message->getCountModified());
 
-        // This function is not directly called, but instead it's called through event manager by Doctrine,
-        // which explains why it does not have any parameter
-        $message->setLastModifiedAt();
+        $message->setLastModifiedAt(new DateTime('now'));
         $this->assertEquals(1, $message->getCountModified());
     }
 }
