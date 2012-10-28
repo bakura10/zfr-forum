@@ -19,6 +19,8 @@
 namespace ZfrForum\Mapper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
+use Zend\Paginator\Paginator;
+use ZfrForum\Entity\Category;
 use ZfrForum\Entity\Post;
 use ZfrForum\Entity\Thread;
 
@@ -26,26 +28,32 @@ interface ThreadMapperInterface extends ObjectRepository
 {
     /**
      * @param  Thread $thread
-     * @return mixed
+     * @return Thread
      */
     public function create(Thread $thread);
 
     /**
      * @param  Thread $thread
-     * @return mixed
+     * @return void
      */
     public function pin(Thread $thread);
 
     /**
      * @param  Thread $thread
-     * @return mixed
+     * @return void
      */
     public function unpin(Thread $thread);
 
     /**
      * @param  Thread  $thread
      * @param  Post $post
-     * @return mixed
+     * @return void
      */
     public function addPost(Thread $thread, Post $post);
+
+    /**
+     * @param  Category $category
+     * @return Paginator
+     */
+    public function findByCategory(Category $category = null);
 }

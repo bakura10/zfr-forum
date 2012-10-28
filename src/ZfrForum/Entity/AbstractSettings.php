@@ -18,7 +18,7 @@
 
 namespace ZfrForum\Entity;
 
-use Doctrine\ORM\Mapping;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * This mapped superclass describes all the available settings in the forum. This class is then extended by

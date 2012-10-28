@@ -24,7 +24,7 @@ class MapperAbstractFactoryTest extends ServiceManagerTestCase
 {
     public function testCorrectlyGetRepositoryFromMapperInterfaceName()
     {
-        $repository = $this->getServiceManager()->get('ZfrForum\Mapper\CategoryMapperInterface');
+        $repository = self::getServiceManager()->get('ZfrForum\Mapper\CategoryMapperInterface');
         $this->assertInstanceOf('ZfrForum\Repository\CategoryRepository', $repository);
     }
 }

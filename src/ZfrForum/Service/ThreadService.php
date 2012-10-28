@@ -18,6 +18,8 @@
 
 namespace ZfrForum\Service;
 
+use Zend\Paginator\Paginator;
+use ZfrForum\Entity\Category;
 use ZfrForum\Entity\Thread;
 use ZfrForum\Mapper\ThreadMapperInterface;
 
@@ -35,6 +37,27 @@ class ThreadService
     public function __construct(ThreadMapperInterface $threadMapper)
     {
         $this->threadMapper = $threadMapper;
+    }
+
+    /**
+     * Get a paginator for the latest threads, optionally filtered by a category
+     *
+     * @param  Category $category
+     * @throws Exception\UnexpectedValueException
+     * @return Paginator
+     */
+    public function getLatestThreadsByCategory(Category $category = null)
+    {
+        $latestThreads = $this->threadMapper->findByCategory($category);
+
+        if (!$latestThreads instanceof Paginator) {
+            throw new Exception\UnexpectedValueException(sprintf(
+                'This service expects a Zend\Paginator\Paginator instance, %s received',
+                get_class($latestThreads)
+            ));
+        }
+
+        return $latestThreads;
     }
 
     /**

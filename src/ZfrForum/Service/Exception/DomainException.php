@@ -16,28 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Mapper;
+namespace ZfrForum\Service\Exception;
 
-use Doctrine\Common\Persistence\ObjectRepository;
-use ZfrForum\Entity\Category;
-
-interface CategoryMapperInterface extends ObjectRepository
-{
-    /**
-     * @param  Category $category
-     * @return Category
-     */
-    public function create(Category $category);
-
-    /**
-     * @param  Category $category
-     * @return void
-     */
-    public function remove(Category $category);
-
-    /**
-     * @param  Category $category
-     * @return Category
-     */
-    public function update(Category $category);
-}
+class DomainException extends \DomainException
+{}

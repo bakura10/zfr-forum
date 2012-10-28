@@ -16,28 +16,29 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Mapper;
+namespace ZfrForumTest\Service;
 
-use Doctrine\Common\Persistence\ObjectRepository;
+use ZfrForumTest\ServiceManagerTestCase;
 use ZfrForum\Entity\Category;
+use ZfrForum\Service\CategoryService;
 
-interface CategoryMapperInterface extends ObjectRepository
+class CategoryServiceTest extends ServiceManagerTestCase
 {
     /**
-     * @param  Category $category
-     * @return Category
+     * @var CategoryService
      */
-    public function create(Category $category);
+    protected $categoryService;
 
-    /**
-     * @param  Category $category
-     * @return void
-     */
-    public function remove(Category $category);
+    public function setUp()
+    {
+        $this->categoryService = self::getServiceManager()->get('ZfrForum\Service\CategoryService');
+    }
 
-    /**
-     * @param  Category $category
-     * @return Category
-     */
-    public function update(Category $category);
+    public function testThrowExceptionIfCategoryDoesNotHaveName()
+    {
+        $this->setExpectedException('ZfrForum\Service\Exception\DomainException');
+
+        $category = new Category();
+        $this->categoryService->create($category);
+    }
 }

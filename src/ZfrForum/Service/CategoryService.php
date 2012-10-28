@@ -38,6 +38,44 @@ class CategoryService
     }
 
     /**
+     * Create a new category
+     *
+     * @param  Category $category
+     * @throws Exception\DomainException
+     * @return Category
+     */
+    public function create(Category $category)
+    {
+        if ($category->getName() === '' || $category->getName() === null) {
+            throw new Exception\DomainException('A category must have a name, but none was given');
+        }
+
+        return $this->categoryMapper->create($category);
+    }
+
+    /**
+     * Update an existing category
+     *
+     * @param Category $category
+     * @return Category
+     */
+    public function update(Category $category)
+    {
+        return $this->categoryMapper->update($category);
+    }
+
+    /**
+     * Remove an existing category
+     *
+     * @param Category $category
+     * @return void
+     */
+    public function remove(Category $category)
+    {
+        $this->categoryMapper->remove($category);
+    }
+
+    /**
      * @param  int $id
      * @return Category
      */

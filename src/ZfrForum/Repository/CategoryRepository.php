@@ -25,17 +25,84 @@ use ZfrForum\Mapper\CategoryMapperInterface;
 class CategoryRepository extends EntityRepository implements CategoryMapperInterface
 {
     /**
+     * Note : to efficiently create a category, we perform an UPDATE at SQL level. To work correctly with
+     * Doctrine 2, we need to clear the entity manager at the end of the operation. As a consequence, you need
+     * to re-load all the entities affected by this operation.
+     *
      * @param  Category $category
-     * @return mixed
+     * @return Category
      */
     public function create(Category $category)
     {
-        // TODO: Implement create() method.
+        $em = $this->getEntityManager();
+
+        if ($category->hasParent()) {
+            $queryBuilder = $em->createQueryBuilder();
+
+            // First update right bounds
+            $queryBuilder->update('ZfrForum\Entity\Category', 'c')
+                         ->set('c.rightBound', 'c.rightBound + 2')
+                         ->where('c.rightBound >= :rightBound')
+                         ->setParameter('rightBound', $category->getParent()->getRightBound())
+                         ->getQuery()->execute();
+
+            // Then left bounds
+            $queryBuilder->resetDQLParts(array('set', 'where'))
+                         ->set('c.leftBound', 'c.leftBound + 2')
+                         ->where('c.leftBound >= :rightBound')
+                         ->getQuery()->execute();
+        }
+
+        // Finally, add the category
+        $em->persist($category);
+        $em->flush();
+
+        // Clear all the categories (see the note above)
+        $em->clear('ZfrForum\Entity\Category');
+
+        return $em->merge($category);
+    }
+
+    /**
+     * Note : to efficiently remove a category, we perform an UPDATE at SQL level. To work correctly with
+     * Doctrine 2, we need to clear the entity manager at the end of the operation. As a consequence, you need
+     * to re-load all the entities affected by this operation.
+     *
+     * @param  Category $category
+     * @return void
+     */
+    public function remove(Category $category)
+    {
+        $em = $this->getEntityManager();
+
+        if ($category->hasParent()) {
+            $queryBuilder = $em->createQueryBuilder();
+
+            // First update left bounds
+            $queryBuilder->update('ZfrForum\Entity\Category', 'c')
+                         ->set('c.leftBound', 'c.leftBound - 2')
+                         ->where('c.leftBound >= :leftBound')
+                         ->setParameter('leftBound', $category->getLeftBound())
+                         ->getQuery()->execute();
+
+            // Then right bounds
+            $queryBuilder->resetDQLParts(array('set', 'where'))
+                         ->set('c.rightBound', 'c.rightBound - 2')
+                         ->where('c.rightBound >= :leftBound')
+                         ->getQuery()->execute();
+        }
+
+        // Finally, remove the entity
+        $em->remove($category);
+        $em->flush();
+
+        // Clear all the categories (see the note above)
+        $em->clear('ZfrForum\Entity\Category');
     }
 
     /**
      * @param  Category $category
-     * @return mixed
+     * @return Category
      */
     public function update(Category $category)
     {

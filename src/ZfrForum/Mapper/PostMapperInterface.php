@@ -25,13 +25,13 @@ interface PostMapperInterface extends ObjectRepository
 {
     /**
      * @param  Post $post
-     * @return mixed
+     * @return Post
      */
     public function update(Post $post);
 
     /**
      * @param  Post $post
-     * @return mixed
+     * @return void
      */
     public function report(Post $post);
 }
