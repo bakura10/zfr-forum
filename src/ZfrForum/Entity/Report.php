@@ -27,7 +27,6 @@ use ZfrForum\Entity\UserInterface;
  * @ORM\Table(name="Reports", uniqueConstraints={
  *      @ORM\UniqueConstraint(name="UNIQ_C38372B2B6BD307F", columns={"post_id", "reportedBy_id"})
  * })
- * @ORM\HasLifecycleCallbacks
  */
 class Report
 {
@@ -127,13 +126,12 @@ class Report
     /**
      * Set when the post has been reported
      *
+     * @param DateTime $reportedAt
      * @return Report
-     *
-     * @ORM\PrePersist
      */
-    public function setReportedAt()
+    public function setReportedAt(DateTime $reportedAt)
     {
-        $this->reportedAt = new DateTime('now');
+        $this->reportedAt = clone $reportedAt;
         return $this;
     }
 
