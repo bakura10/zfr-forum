@@ -16,43 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Repository;
+namespace ZfrForum\Service\Exception;
 
-use Doctrine\ORM\EntityRepository;
-use Zend\Paginator\Paginator;
-use ZfrForum\Entity\Category;
-use ZfrForum\Entity\Thread;
-use ZfrForum\Mapper\ThreadMapperInterface;
-
-class ThreadRepository extends EntityRepository implements ThreadMapperInterface
-{
-    /**
-     * @param  Thread $thread
-     * @return Thread
-     */
-    public function create(Thread $thread)
-    {
-        $em = $this->getEntityManager();
-        $em->persist($thread);
-        $em->flush();
-    }
-
-    /**
-     * @param  Thread $thread
-     * @return Thread
-     */
-    public function update(Thread $thread)
-    {
-        $this->getEntityManager()->flush($thread);
-        return $thread;
-    }
-
-    /**
-     * @param  Category $category
-     * @return Paginator
-     */
-    public function findByCategory(Category $category = null)
-    {
-        // TODO: Implement findByCategory() method.
-    }
-}
+class UnexpectedValueException extends \UnexpectedValueException
+{}

@@ -18,8 +18,11 @@
 
 namespace ZfrForum\Service;
 
+use DateTime;
+use Zend\Authentication\AuthenticationService;
 use Zend\Paginator\Paginator;
 use ZfrForum\Entity\Category;
+use ZfrForum\Entity\Post;
 use ZfrForum\Entity\Thread;
 use ZfrForum\Mapper\ThreadMapperInterface;
 
@@ -30,13 +33,63 @@ class ThreadService
      */
     protected $threadMapper;
 
+    /**
+     * @var AuthenticationService
+     */
+    protected $authenticationService;
+
 
     /**
      * @param ThreadMapperInterface $threadMapper
+     * @param AuthenticationService $authenticationService
      */
-    public function __construct(ThreadMapperInterface $threadMapper)
+    public function __construct(ThreadMapperInterface $threadMapper, AuthenticationService $authenticationService)
     {
-        $this->threadMapper = $threadMapper;
+        $this->threadMapper          = $threadMapper;
+        $this->authenticationService = $authenticationService;
+    }
+
+    /**
+     * @param  Thread $thread
+     * @param  Post   $post
+     * @throws Exception\LogicException
+     */
+    public function addPost(Thread $thread, Post $post)
+    {
+        if (!$this->authenticationService->hasIdentity()) {
+            throw new Exception\LogicException('A user has to be logged to add a new post');
+        }
+
+        $post->setSentAt(new DateTime('now'))
+             ->setAuthor($this->authenticationService->getIdentity());
+
+        $thread->addPost($post);
+
+        $this->threadMapper->update($thread);
+    }
+
+    /**
+     * Pin a thread
+     *
+     * @param Thread  $thread
+     * @return Thread
+     */
+    public function pin(Thread $thread)
+    {
+        $thread->setPinned(true);
+        return $this->threadMapper->update($thread);
+    }
+
+    /**
+     * Unpin a thread
+     *
+     * @param  Thread $thread
+     * @return Thread
+     */
+    public function unpin(Thread $thread)
+    {
+        $thread->setPinned(false);
+        return $this->threadMapper->update($thread);
     }
 
     /**
