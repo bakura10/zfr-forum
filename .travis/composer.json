@@ -1,6 +1,7 @@
 {
     "minimum-stability": "dev",
     "require": {
+        "zf-commons/zfc-user-doctrine-orm": "dev-master",
         "zfr/zfr-forum": "dev-master"
     }
 }
