@@ -25,7 +25,10 @@ use Doctrine\ORM\Mapping as ORM;
  * from specific categories, or from all the sub-categories of a given category...
  *
  * @ORM\Entity(repositoryClass="ZfrForum\Repository\CategoryRepository")
- * @ORM\Table(name="Categories")
+ * @ORM\Table(name="Categories", indexes={
+ *      @ORM\Index(name="IDX_FF3A7B97AEF225EE", columns={"leftBound"}),
+ *      @ORM\Index(name="IDX_FF3A7B975DE4E6B6", columns={"rightBound"})
+ * })
  */
 class Category
 {
@@ -37,6 +40,14 @@ class Category
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\Category")
+     * @ORM\JoinColumn(onDelete="cascade")
+     */
+    protected $parent;
 
     /**
      * @var string
@@ -57,14 +68,21 @@ class Category
      *
      * @ORM\Column(type="smallint")
      */
-    protected $leftBound;
+    protected $depth = 1;
 
     /**
      * @var int
      *
      * @ORM\Column(type="smallint")
      */
-    protected $rightBound;
+    protected $leftBound = 1;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint")
+     */
+    protected $rightBound = 2;
 
 
     /**
@@ -75,6 +93,45 @@ class Category
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set the parent category (null if none)
+     *
+     * @param Category $parent
+     * @return Category
+     */
+    public function setParent(Category $parent = null)
+    {
+        $this->parent = $parent;
+
+        if ($parent !== null) {
+            $this->setDepth($parent->getDepth() + 1)
+                 ->setLeftBound($parent->getRightBound())
+                 ->setRightBound($parent->getRightBound() + 1);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get the parent category (null if none)
+     *
+     * @return Category
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Return if this category has a parent category
+     *
+     * @return bool
+     */
+    public function hasParent()
+    {
+        return !($this->parent === null);
     }
 
     /**
@@ -119,6 +176,28 @@ class Category
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set the depth of the category
+     *
+     * @param $depth
+     * @return Category
+     */
+    public function setDepth($depth)
+    {
+        $this->depth = (int) $depth;
+        return $this;
+    }
+
+    /**
+     * Get the depth of the category
+     *
+     * @return int
+     */
+    public function getDepth()
+    {
+        return $this->depth;
     }
 
     /**

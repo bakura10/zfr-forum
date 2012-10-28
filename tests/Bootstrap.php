@@ -16,6 +16,7 @@
  * and is licensed under the MIT license.
  */
 
+use Zend\Mvc\Application;
 use ZfrForumTest\ServiceManagerTestCase;
 
 chdir(__DIR__);
@@ -54,3 +55,27 @@ if (!$config = @include __DIR__ . '/TestConfiguration.php') {
 }
 
 ServiceManagerTestCase::setConfiguration($config);
+
+$application    = Application::init(ServiceManagerTestCase::getConfiguration());
+$serviceManager = $application->getServiceManager();
+
+ServiceManagerTestCase::setServiceManager($serviceManager);
+
+// Add some config for Doctrine
+
+/** @var $moduleManager \Zend\ModuleManager\ModuleManager */
+$moduleManager = $serviceManager->get('ModuleManager');
+$serviceManager->setAllowOverride(true);
+
+$config = $serviceManager->get('Config');
+
+$config['doctrine']['connection']['orm_default'] = array(
+    'configuration' => 'orm_default',
+    'eventmanager'  => 'orm_default',
+    'driverClass'   => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
+    'params' => array(
+        'memory' => true
+    )
+);
+
+$serviceManager->setService('Config', $config);

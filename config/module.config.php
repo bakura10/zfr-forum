@@ -14,12 +14,20 @@ return array(
             'zfr_forum_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array('module/ZfrForum/src/ZfrForum/Entity')
+                'paths' => dirname(__DIR__) . '/src/ZfrForum/Entity'
             ),
 
             'orm_default' => array(
                 'drivers' => array(
                     'ZfrForum\Entity' => 'zfr_forum_driver'
+                )
+            )
+        ),
+
+        'entity_resolver' => array(
+            'orm_default' => array(
+                'resolvers' => array(
+                    'ZfrForum\Entity\UserInterface' => 'ZfrForum\Entity\User'
                 )
             )
         ),

@@ -25,13 +25,19 @@ interface CategoryMapperInterface extends ObjectRepository
 {
     /**
      * @param  Category $category
-     * @return mixed
+     * @return Category
      */
     public function create(Category $category);
 
     /**
      * @param  Category $category
-     * @return mixed
+     * @return Category
      */
     public function update(Category $category);
+
+    /**
+     * @param  Category $category
+     * @return void
+     */
+    public function remove(Category $category);
 }

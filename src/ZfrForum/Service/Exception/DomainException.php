@@ -16,15 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForumTest\ServiceFactory;
+namespace ZfrForum\Service\Exception;
 
-use ZfrForumTest\ServiceManagerTestCase;
-
-class MapperAbstractFactoryTest extends ServiceManagerTestCase
-{
-    public function testCorrectlyGetRepositoryFromMapperInterfaceName()
-    {
-        $repository = self::getServiceManager()->get('ZfrForum\Mapper\CategoryMapperInterface');
-        $this->assertInstanceOf('ZfrForum\Repository\CategoryRepository', $repository);
-    }
-}
+class DomainException extends \DomainException
+{}

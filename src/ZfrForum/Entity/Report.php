@@ -25,7 +25,7 @@ use ZfrForum\Entity\UserInterface;
 /**
  * @ORM\Entity(readOnly=true)
  * @ORM\Table(name="Reports", uniqueConstraints={
- *      @ORM\UniqueConstraint(name="UNIQ_C38372B2B6BD307F", columns={"post", "reported_by"})
+ *      @ORM\UniqueConstraint(name="UNIQ_C38372B2B6BD307F", columns={"post_id", "reportedBy_id"})
  * })
  * @ORM\HasLifecycleCallbacks
  */
@@ -129,7 +129,7 @@ class Report
      *
      * @return Report
      *
-     * @ORM\PrePerist
+     * @ORM\PrePersist
      */
     public function setReportedAt()
     {

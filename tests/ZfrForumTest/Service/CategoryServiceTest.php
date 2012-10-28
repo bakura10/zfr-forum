@@ -16,15 +16,29 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForumTest\ServiceFactory;
+namespace ZfrForumTest\Service;
 
 use ZfrForumTest\ServiceManagerTestCase;
+use ZfrForum\Entity\Category;
+use ZfrForum\Service\CategoryService;
 
-class MapperAbstractFactoryTest extends ServiceManagerTestCase
+class CategoryServiceTest extends ServiceManagerTestCase
 {
-    public function testCorrectlyGetRepositoryFromMapperInterfaceName()
+    /**
+     * @var CategoryService
+     */
+    protected $categoryService;
+
+    public function setUp()
     {
-        $repository = self::getServiceManager()->get('ZfrForum\Mapper\CategoryMapperInterface');
-        $this->assertInstanceOf('ZfrForum\Repository\CategoryRepository', $repository);
+        $this->categoryService = self::getServiceManager()->get('ZfrForum\Service\CategoryService');
+    }
+
+    public function testThrowExceptionIfCategoryDoesNotHaveName()
+    {
+        $this->setExpectedException('ZfrForum\Service\Exception\DomainException');
+
+        $category = new Category();
+        $this->categoryService->create($category);
     }
 }
