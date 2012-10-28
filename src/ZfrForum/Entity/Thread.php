@@ -27,7 +27,6 @@ use ZfrForum\Entity\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="ZfrForum\Repository\ThreadRepository")
  * @ORM\Table(name="Threads")
- * @ORM\HasLifecycleCallbacks
  */
 class Thread
 {
@@ -203,13 +202,12 @@ class Thread
     /**
      * Set when this thread was created
      *
+     * @param DateTime $createdAt
      * @return Thread
-     *
-     * @ORM\PrePersist
      */
-    public function setCreatedAt()
+    public function setCreatedAt(DateTime $createdAt)
     {
-        $this->createdAt = new DateTime('now');
+        $this->createdAt = clone $createdAt;
         return $this;
     }
 

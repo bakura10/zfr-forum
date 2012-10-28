@@ -25,7 +25,6 @@ use ZfrForum\Entity\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="ZfrForum\Repository\PostRepository")
  * @ORM\Table(name="Posts")
- * @ORM\HasLifecycleCallbacks
  */
 class Post
 {
@@ -193,13 +192,12 @@ class Post
     /**
      * Set when this post was sent for the first time
      *
+     * @param DateTime $sentAt
      * @return Post
-     *
-     * @ORM\PrePersist
      */
-    public function setSentAt()
+    public function setSentAt(DateTime $sentAt)
     {
-        $this->sentAt = new DateTime('now');
+        $this->sentAt = clone $sentAt;
         return $this;
     }
 
@@ -216,13 +214,12 @@ class Post
     /**
      * Set the last time that the post was modified
      *
+     * @param DateTime $lastModifiedAt
      * @return Post
-     *
-     * @ORM\PreUpdate
      */
-    public function setLastModifiedAt()
+    public function setLastModifiedAt(DateTime $lastModifiedAt)
     {
-        $this->lastModifiedAt = new DateTime('now');
+        $this->lastModifiedAt = clone $lastModifiedAt;
         $this->countModified  += 1;
 
         return $this;
