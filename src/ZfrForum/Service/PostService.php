@@ -18,7 +18,10 @@
 
 namespace ZfrForum\Service;
 
+use DateTime;
+use Zend\Authentication\AuthenticationService;
 use ZfrForum\Entity\Post;
+use ZfrForum\Entity\Report;
 use ZfrForum\Mapper\PostMapperInterface;
 
 class PostService
@@ -28,13 +31,45 @@ class PostService
      */
     protected $postMapper;
 
+    /**
+     * @var AuthenticationService
+     */
+    protected $authenticationService;
+
 
     /**
-     * @param PostMapperInterface $postMapper
+     * @param PostMapperInterface   $postMapper
+     * @param AuthenticationService $authenticationService
      */
-    public function __construct(PostMapperInterface $postMapper)
+    public function __construct(PostMapperInterface $postMapper, AuthenticationService $authenticationService)
     {
-        $this->postMapper = $postMapper;
+        $this->postMapper            = $postMapper;
+        $this->authenticationService = $authenticationService;
+    }
+
+    /**
+     * Report a post
+     *
+     * @param  Post   $post
+     * @param  string $description
+     * @throws Exception\LogicException
+     * @return void
+     */
+    public function report(Post $post, $description)
+    {
+        if (!$this->authenticationService->hasIdentity()) {
+            throw new Exception\LogicException('A user has to be logged to report a post');
+        }
+
+        $user = $this->authenticationService->getIdentity();
+
+        $report = new Report();
+        $report->setPost($post)
+               ->setReportedBy($user)
+               ->setReportedAt(new DateTime('now'))
+               ->setDescription($description);
+
+        $this->postMapper->addReport($report);
     }
 
     /**

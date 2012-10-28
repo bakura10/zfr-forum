@@ -144,4 +144,24 @@ class Report
     {
         return clone $this->reportedAt;
     }
+
+    /**
+     * Set the description of the report
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = (string) $description;
+    }
+
+    /**
+     * Get the description of the report
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 }

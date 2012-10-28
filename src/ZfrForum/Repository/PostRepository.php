@@ -20,9 +20,10 @@ namespace ZfrForum\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\Post;
+use ZfrForum\Entity\Report;
 use ZfrForum\Mapper\PostMapperInterface;
 
-class MessageRepository extends EntityRepository implements PostMapperInterface
+class PostRepository extends EntityRepository implements PostMapperInterface
 {
     /**
      * @param  Post $post
@@ -30,15 +31,18 @@ class MessageRepository extends EntityRepository implements PostMapperInterface
      */
     public function update(Post $post)
     {
-        // TODO: Implement update() method.
+        $this->getEntityManager()->flush($post);
+        return $post;
     }
 
     /**
-     * @param  Post $post
-     * @return mixed
+     * @param  Report $report
+     * @return void
      */
-    public function report(Post $post)
+    public function addReport(Report $report)
     {
-        // TODO: Implement report() method.
+        $em = $this->getEntityManager();
+        $em->persist($report);
+        $em->flush();
     }
 }
