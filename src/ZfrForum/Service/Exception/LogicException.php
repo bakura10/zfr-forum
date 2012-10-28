@@ -16,23 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Mapper;
+namespace ZfrForum\Service\Exception;
 
-use Doctrine\Common\Persistence\ObjectRepository;
-use ZfrForum\Entity\Post;
-use ZfrForum\Entity\Report;
-
-interface PostMapperInterface extends ObjectRepository
-{
-    /**
-     * @param  Post $post
-     * @return Post
-     */
-    public function update(Post $post);
-
-    /**
-     * @param  Report $report
-     * @return void
-     */
-    public function addReport(Report $report);
-}
+class LogicException extends \LogicException
+{}
