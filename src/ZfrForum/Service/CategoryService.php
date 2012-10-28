@@ -42,7 +42,7 @@ class CategoryService
      *
      * @param  Category $category
      * @throws Exception\DomainException
-     * @return void
+     * @return Category
      */
     public function create(Category $category)
     {
@@ -50,18 +50,18 @@ class CategoryService
             throw new Exception\DomainException('A category must have a name, but none was given');
         }
 
-        $category = $this->categoryMapper->create($category);
+        return $this->categoryMapper->create($category);
     }
 
     /**
      * Update an existing category
      *
      * @param Category $category
-     * @return void
+     * @return Category
      */
     public function update(Category $category)
     {
-        $this->categoryMapper->update($category);
+        return $this->categoryMapper->update($category);
     }
 
     /**

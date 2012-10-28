@@ -28,26 +28,26 @@ interface ThreadMapperInterface extends ObjectRepository
 {
     /**
      * @param  Thread $thread
-     * @return mixed
+     * @return Thread
      */
     public function create(Thread $thread);
 
     /**
      * @param  Thread $thread
-     * @return mixed
+     * @return void
      */
     public function pin(Thread $thread);
 
     /**
      * @param  Thread $thread
-     * @return mixed
+     * @return void
      */
     public function unpin(Thread $thread);
 
     /**
      * @param  Thread  $thread
      * @param  Post $post
-     * @return mixed
+     * @return void
      */
     public function addPost(Thread $thread, Post $post);
 

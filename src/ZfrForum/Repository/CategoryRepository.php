@@ -64,15 +64,6 @@ class CategoryRepository extends EntityRepository implements CategoryMapperInter
     }
 
     /**
-     * @param  Category $category
-     * @return mixed
-     */
-    public function update(Category $category)
-    {
-        // TODO: Implement update() method.
-    }
-
-    /**
      * Note : to efficiently remove a category, we perform an UPDATE at SQL level. To work correctly with
      * Doctrine 2, we need to clear the entity manager at the end of the operation. As a consequence, you need
      * to re-load all the entities affected by this operation.
@@ -107,5 +98,14 @@ class CategoryRepository extends EntityRepository implements CategoryMapperInter
 
         // Clear all the categories (see the note above)
         $em->clear('ZfrForum\Entity\Category');
+    }
+
+    /**
+     * @param  Category $category
+     * @return Category
+     */
+    public function update(Category $category)
+    {
+        // TODO: Implement update() method.
     }
 }

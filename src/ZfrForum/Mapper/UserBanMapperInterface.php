@@ -25,13 +25,13 @@ interface UserBanMapperInterface extends ObjectRepository
 {
     /**
      * @param  UserBan $ban
-     * @return mixed
+     * @return void
      */
     public function ban(UserBan $ban);
     
     /**
      * @param  UserBan $ban
-     * @return mixed
+     * @return void
      */
     public function unban(UserBan $ban);
 }

@@ -25,19 +25,19 @@ interface RankMapperInterface extends ObjectRepository
 {
     /**
      * @param  Rank $rank
-     * @return mixed
+     * @return Rank
      */
     public function create(Rank $rank);
 
     /**
      * @param  Rank $rank
-     * @return mixed
+     * @return void
      */
     public function remove(Rank $rank);
 
     /**
      * @param  Rank $rank
-     * @return mixed
+     * @return void
      */
     public function update(Rank $rank);
 }
