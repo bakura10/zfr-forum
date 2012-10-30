@@ -23,7 +23,8 @@ use Doctrine\ORM\Mapping as ORM;
 use ZfcUser\Entity\User as BaseUser;
 
 /**
- * @ORM\MappedSuperclass
+ * @ORM\Entity
+ * @ORM\Table(name="Users")
  */
 class User extends BaseUser implements UserInterface
 {

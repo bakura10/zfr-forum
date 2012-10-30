@@ -20,7 +20,6 @@ namespace ZfrForum\Mapper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use ZfrForum\Entity\Post;
-use ZfrForum\Entity\Report;
 
 interface PostMapperInterface extends ObjectRepository
 {
@@ -29,10 +28,4 @@ interface PostMapperInterface extends ObjectRepository
      * @return Post
      */
     public function update(Post $post);
-
-    /**
-     * @param  Report $report
-     * @return void
-     */
-    public function addReport(Report $report);
 }

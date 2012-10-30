@@ -87,9 +87,9 @@ class Thread
      * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="ZfrForum\Entity\UserInterface", fetch="EXTRA_LAZY")
-     * @ORM\JoinTable(name="ThreadsFollowers", inverseJoinColumns={
-     *      @ORM\JoinColumn(name="user_id")
-     * })
+     * @ORM\JoinTable(name="ThreadsFollowers",
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     * )
      */
     protected $followers;
 

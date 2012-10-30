@@ -16,23 +16,24 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Repository;
+namespace ZfrForum\Mapper;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Persistence\ObjectRepository;
+use Zend\Paginator\Paginator;
 use ZfrForum\Entity\Post;
-use ZfrForum\Mapper\PostMapperInterface;
+use ZfrForum\Entity\Report;
 
-class PostRepository extends EntityRepository implements PostMapperInterface
+interface ReportMapperInterface extends ObjectRepository
 {
     /**
-     * Update the post
-     *
-     * @param  Post $post
-     * @return mixed
+     * @param  Report $report
+     * @return Report
      */
-    public function update(Post $post)
-    {
-        $this->getEntityManager()->flush($post);
-        return $post;
-    }
+    public function create(Report $report);
+
+    /**
+     * @param  Post $post
+     * @return Paginator
+     */
+    public function findByPost(Post $post);
 }

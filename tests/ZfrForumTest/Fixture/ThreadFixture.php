@@ -41,7 +41,8 @@ class ThreadFixture extends AbstractFixture implements DependentFixtureInterface
     function getDependencies()
     {
         return array(
-            'ZfrForumTest\Fixture\UserFixture'
+            'ZfrForumTest\Fixture\UserFixture',
+            'ZfrForumTest\Fixture\CategoryFixture'
         );
     }
 
@@ -52,9 +53,11 @@ class ThreadFixture extends AbstractFixture implements DependentFixtureInterface
     {
         for ($i = 0; $i < self::INSTANCES_COUNT; $i += 1) {
             $user = $this->getReference("user-$i");
+            $category = $this->getReference("category-$i");
 
             $thread = new Thread();
             $thread->setTitle('Foo thread')
+                   ->setCategory($category)
                    ->setCreatedBy($user)
                    ->setCreatedAt(new DateTime('now'));
 

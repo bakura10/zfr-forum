@@ -19,20 +19,44 @@
 namespace ZfrForum\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as PaginatorAdapter;
+use Zend\Paginator\Paginator;
 use ZfrForum\Entity\Post;
-use ZfrForum\Mapper\PostMapperInterface;
+use ZfrForum\Entity\Report;
+use ZfrForum\Mapper\ReportMapperInterface;
 
-class PostRepository extends EntityRepository implements PostMapperInterface
+class ReportRepository extends EntityRepository implements ReportMapperInterface
 {
     /**
-     * Update the post
+     * Add a new report
+     *
+     * @param  Report $report
+     * @return Report
+     */
+    public function create(Report $report)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($report);
+        $em->flush();
+
+        return $report;
+    }
+
+    /**
+     * Find all the reports for a given post, and return as a paginator
      *
      * @param  Post $post
-     * @return mixed
+     * @return Paginator
      */
-    public function update(Post $post)
+    public function findByPost(Post $post)
     {
-        $this->getEntityManager()->flush($post);
-        return $post;
+        $queryBuilder = $this->createQueryBuilder('r');
+        $queryBuilder->where('r.post = :post')
+                     ->setParameter('post', $post);
+
+        $paginatorAdapter = new PaginatorAdapter(new DoctrinePaginator($queryBuilder, false));
+
+        return new Paginator($paginatorAdapter);
     }
 }

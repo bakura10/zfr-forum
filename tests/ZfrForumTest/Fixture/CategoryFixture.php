@@ -16,23 +16,32 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Repository;
+namespace ZfrForumTest\Fixture;
 
-use Doctrine\ORM\EntityRepository;
-use ZfrForum\Entity\Post;
-use ZfrForum\Mapper\PostMapperInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\Persistence\ObjectManager;
+use ZfrForum\Entity\Category;
 
-class PostRepository extends EntityRepository implements PostMapperInterface
+class CategoryFixture extends AbstractFixture
 {
     /**
-     * Update the post
-     *
-     * @param  Post $post
-     * @return mixed
+     * Number of instances to build when the fixture is loaded
      */
-    public function update(Post $post)
+    const INSTANCES_COUNT = 5;
+
+    /**
+     * {@inheritDoc}
+     */
+    function load(ObjectManager $manager)
     {
-        $this->getEntityManager()->flush($post);
-        return $post;
+        for ($i = 0; $i < self::INSTANCES_COUNT; $i += 1) {
+            $category = new Category();
+            $category->setName("Category $i");
+
+            $manager->persist($category);
+            $this->setReference("category-$i", $category);
+        }
+
+        $manager->flush();
     }
 }

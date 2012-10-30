@@ -31,13 +31,13 @@ interface CategoryMapperInterface extends ObjectRepository
 
     /**
      * @param  Category $category
-     * @return void
-     */
-    public function remove(Category $category);
-
-    /**
-     * @param  Category $category
      * @return Category
      */
     public function update(Category $category);
+
+    /**
+     * @param  Category $category
+     * @return void
+     */
+    public function remove(Category $category);
 }
