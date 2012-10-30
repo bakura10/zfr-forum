@@ -54,7 +54,7 @@ class Category
      *
      * @ORM\Column(type="string", length=128)
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * @var string
@@ -68,7 +68,7 @@ class Category
      *
      * @ORM\Column(type="smallint")
      */
-    protected $depth = 1;
+    protected $depth = 0;
 
     /**
      * @var int
@@ -96,20 +96,17 @@ class Category
     }
 
     /**
-     * Set the parent category (null if none)
+     * Set the parent category
      *
      * @param Category $parent
      * @return Category
      */
-    public function setParent(Category $parent = null)
+    public function setParent(Category $parent)
     {
         $this->parent = $parent;
-
-        if ($parent !== null) {
-            $this->setDepth($parent->getDepth() + 1)
-                 ->setLeftBound($parent->getRightBound())
-                 ->setRightBound($parent->getRightBound() + 1);
-        }
+        $this->setDepth($parent->getDepth() + 1)
+             ->setLeftBound($parent->getRightBound())
+             ->setRightBound($parent->getRightBound() + 1);
 
         return $this;
     }
@@ -131,7 +128,7 @@ class Category
      */
     public function hasParent()
     {
-        return !($this->parent === null);
+        return ($this->depth > 1);
     }
 
     /**

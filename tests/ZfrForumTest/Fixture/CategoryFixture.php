@@ -16,30 +16,42 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Mapper;
+namespace ZfrForumTest\Fixture;
 
-use Doctrine\Common\Persistence\ObjectRepository;
-use Zend\Paginator\Paginator;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\Persistence\ObjectManager;
 use ZfrForum\Entity\Category;
-use ZfrForum\Entity\Thread;
 
-interface ThreadMapperInterface extends ObjectRepository
+class CategoryFixture extends AbstractFixture
 {
     /**
-     * @param  Thread $thread
-     * @return Thread
+     * Number of instances to build when the fixture is loaded
      */
-    public function create(Thread $thread);
+    const INSTANCES_COUNT = 5;
 
     /**
-     * @param  Thread $thread
-     * @return Thread
+     * {@inheritDoc}
      */
-    public function update(Thread $thread);
+    function load(ObjectManager $manager)
+    {
+        $repository = $manager->getRepository('ZfrForum\Entity\Category');
 
-    /**
-     * @param  Category $category
-     * @return Paginator
-     */
-    public function findByCategory(Category $category = null);
+        for ($i = 0; $i < self::INSTANCES_COUNT; $i += 1) {
+            $category = new Category();
+            $category->setName("Category $i");
+
+            $category = $repository->create($category);
+            $this->setReference("category-$i", $category);
+
+            // Add a child category
+            $child = new Category();
+            $child->setName("Category $i / 1");
+            $child->setParent($category);
+
+            $child = $repository->create($child);
+            $this->setReference("category-$i-1", $child);
+        }
+
+        $manager->flush();
+    }
 }

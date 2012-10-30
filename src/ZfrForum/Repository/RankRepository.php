@@ -37,17 +37,17 @@ class RankRepository extends EntityRepository implements RankMapperInterface
      * @param  Rank $rank
      * @return mixed
      */
-    public function remove(Rank $rank)
+    public function update(Rank $rank)
     {
-        // TODO: Implement remove() method.
+        // TODO: Implement update() method.
     }
 
     /**
      * @param  Rank $rank
      * @return mixed
      */
-    public function update(Rank $rank)
+    public function remove(Rank $rank)
     {
-        // TODO: Implement update() method.
+        // TODO: Implement remove() method.
     }
 }

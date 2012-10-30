@@ -23,7 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ZfrForum\Entity\UserInterface;
 
 /**
- * @ORM\Entity(readOnly=true)
+ * @ORM\Entity(repositoryClass="ZfrForum\Repository\ReportRepository", readOnly=true)
  * @ORM\Table(name="Reports", uniqueConstraints={
  *      @ORM\UniqueConstraint(name="UNIQ_C38372B2B6BD307F", columns={"post_id", "reportedBy_id"})
  * })
@@ -148,11 +148,13 @@ class Report
     /**
      * Set the description of the report
      *
-     * @param string $description
+     * @param  string $description
+     * @return Report
      */
     public function setDescription($description)
     {
         $this->description = (string) $description;
+        return $this;
     }
 
     /**

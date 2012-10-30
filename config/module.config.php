@@ -7,6 +7,15 @@ return array(
     'router' => include 'module.config.routes.php',
 
     /**
+     * Override ZfcUser options
+     */
+    'zfcuser' => array(
+        // We don't want the original User entity to be generated as we have our own extended class
+        // for ZfrForum
+        'enable_default_entities' => false
+    ),
+
+    /**
      * Doctrine configuration
      */
     'doctrine' => array(

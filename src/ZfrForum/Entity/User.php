@@ -23,7 +23,8 @@ use Doctrine\ORM\Mapping as ORM;
 use ZfcUser\Entity\User as BaseUser;
 
 /**
- * @ORM\MappedSuperclass
+ * @ORM\Entity
+ * @ORM\Table(name="Users")
  */
 class User extends BaseUser implements UserInterface
 {
@@ -32,7 +33,7 @@ class User extends BaseUser implements UserInterface
      *
      * @ORM\Column(type="string", length=39)
      */
-    protected $ip;
+    protected $ip = '';
 
     /**
      * @var DateTime

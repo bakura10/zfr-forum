@@ -22,54 +22,38 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as PaginatorAdapter;
 use Zend\Paginator\Paginator;
-use ZfrForum\Entity\Category;
-use ZfrForum\Entity\Thread;
-use ZfrForum\Mapper\ThreadMapperInterface;
+use ZfrForum\Entity\Post;
+use ZfrForum\Entity\Report;
+use ZfrForum\Mapper\ReportMapperInterface;
 
-class ThreadRepository extends EntityRepository implements ThreadMapperInterface
+class ReportRepository extends EntityRepository implements ReportMapperInterface
 {
     /**
-     * @param  Thread $thread
-     * @return Thread
+     * Add a new report
+     *
+     * @param  Report $report
+     * @return Report
      */
-    public function create(Thread $thread)
+    public function create(Report $report)
     {
         $em = $this->getEntityManager();
-        $em->persist($thread);
+        $em->persist($report);
         $em->flush();
+
+        return $report;
     }
 
     /**
-     * @param  Thread $thread
-     * @return Thread
-     */
-    public function update(Thread $thread)
-    {
-        $this->getEntityManager()->flush($thread);
-        return $thread;
-    }
-
-    /**
-     * @param  Category $category
-     * @param  bool     $strict If set to true, do not consider threads in children categories of the one given
+     * Find all the reports for a given post, and return as a paginator
+     *
+     * @param  Post $post
      * @return Paginator
      */
-    public function findByCategory(Category $category = null, $strict = false)
+    public function findByPost(Post $post)
     {
-        $queryBuilder = $this->createQueryBuilder('t');
-
-        if ($category !== null) {
-            if ($strict) {
-                $queryBuilder->where('t.category = :category')
-                             ->setParameter('category', $category);
-            } else {
-                $queryBuilder->join('t.category', 'c')
-                             ->where('c.leftBound >= :leftBound')
-                             ->andWhere('c.rightBound <= :rightBound')
-                             ->setParameter('leftBound', $category->getLeftBound())
-                             ->setParameter('rightBound', $category->getRightBound());
-            }
-        }
+        $queryBuilder = $this->createQueryBuilder('r');
+        $queryBuilder->where('r.post = :post')
+                     ->setParameter('post', $post);
 
         $paginatorAdapter = new PaginatorAdapter(new DoctrinePaginator($queryBuilder, false));
 

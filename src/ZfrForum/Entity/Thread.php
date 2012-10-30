@@ -71,7 +71,7 @@ class Thread
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="ZfrForum\Entity\Post", mappedBy="thread", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="ZfrForum\Entity\Post", mappedBy="thread", cascade={"persist"}, fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"sentAt"="ASC"})
      */
     protected $posts;
@@ -85,9 +85,12 @@ class Thread
 
     /**
      * @var Collection
+     * TODO: remettre UserInterface
      *
-     * @ORM\ManyToMany(targetEntity="ZfrForum\Entity\UserInterface", fetch="EXTRA_LAZY")
-     * @ORM\JoinTable(name="ThreadsFollowers")
+     * @ORM\ManyToMany(targetEntity="ZfrForum\Entity\User", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="ThreadsFollowers",
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     * )
      */
     protected $followers;
 

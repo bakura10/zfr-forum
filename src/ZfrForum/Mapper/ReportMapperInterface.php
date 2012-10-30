@@ -20,26 +20,20 @@ namespace ZfrForum\Mapper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Zend\Paginator\Paginator;
-use ZfrForum\Entity\Category;
-use ZfrForum\Entity\Thread;
+use ZfrForum\Entity\Post;
+use ZfrForum\Entity\Report;
 
-interface ThreadMapperInterface extends ObjectRepository
+interface ReportMapperInterface extends ObjectRepository
 {
     /**
-     * @param  Thread $thread
-     * @return Thread
+     * @param  Report $report
+     * @return Report
      */
-    public function create(Thread $thread);
+    public function create(Report $report);
 
     /**
-     * @param  Thread $thread
-     * @return Thread
-     */
-    public function update(Thread $thread);
-
-    /**
-     * @param  Category $category
+     * @param  Post $post
      * @return Paginator
      */
-    public function findByCategory(Category $category = null);
+    public function findByPost(Post $post);
 }
