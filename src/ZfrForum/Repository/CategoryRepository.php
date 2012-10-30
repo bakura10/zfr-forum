@@ -97,7 +97,6 @@ class CategoryRepository extends EntityRepository implements CategoryMapperInter
             // Then right bounds
             $queryBuilder->resetDQLParts(array('set', 'where'))
                          ->set('c.rightBound', 'c.rightBound - 2')
-                         ->setParameter('t', 't')
                          ->where('c.rightBound >= :leftBound')
                          ->getQuery()->execute();
         }
