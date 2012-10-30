@@ -47,6 +47,10 @@ class CategoryRepositoryTest extends ServiceManagerTestCase
      */
     protected function createCategory($name, Category $parent = null)
     {
+        if ($parent === null) {
+            $parent = $this->categoryMapper->findRoot();
+        }
+
         $category = new Category();
         $category->setName($name)
                  ->setParent($parent);
@@ -60,8 +64,8 @@ class CategoryRepositoryTest extends ServiceManagerTestCase
         $this->categoryMapper->create($category);
 
         $this->assertInternalType('integer', $category->getId());
-        $this->assertEquals(1, $category->getLeftBound());
-        $this->assertEquals(2, $category->getRightBound());
+        $this->assertEquals(2, $category->getLeftBound());
+        $this->assertEquals(3, $category->getRightBound());
         $this->assertTrue($category->isLeaf());
         $this->assertEquals(0, $category->getChildrenCount());
     }
@@ -72,100 +76,100 @@ class CategoryRepositoryTest extends ServiceManagerTestCase
         $firstRoot = $this->categoryMapper->create($firstRoot);
 
         $this->assertInternalType('integer', $firstRoot->getId());
-        $this->assertEquals(1, $firstRoot->getLeftBound());
-        $this->assertEquals(2, $firstRoot->getRightBound());
+        $this->assertEquals(2, $firstRoot->getLeftBound());
+        $this->assertEquals(3, $firstRoot->getRightBound());
 
         $secondRoot = $this->createCategory('Bar');
         $secondRoot = $this->categoryMapper->create($secondRoot);
 
         $this->assertInternalType('integer', $secondRoot->getId());
-        $this->assertEquals(1, $secondRoot->getLeftBound());
-        $this->assertEquals(2, $secondRoot->getRightBound());
+        $this->assertEquals(4, $secondRoot->getLeftBound());
+        $this->assertEquals(5, $secondRoot->getRightBound());
     }
 
     public function testCanAddNewCategory()
     {
-        // Root category (left bound = 1, right bound = 2)
+        // Root category (left bound = 2, right bound = 3)
         $category = $this->createCategory('Foo');
         $category = $this->categoryMapper->create($category);
 
-        // Node category whose parent is previous category (left bound = 2, right bound = 3)
+        // Node category whose parent is previous category (left bound = 3, right bound = 4)
         $childCategory = $this->createCategory("Foo's child", $category);
         $childCategory = $this->categoryMapper->create($childCategory);
 
         $this->assertInternalType('integer', $childCategory->getId());
-        $this->assertEquals(2, $childCategory->getLeftBound());
-        $this->assertEquals(3, $childCategory->getRightBound());
+        $this->assertEquals(3, $childCategory->getLeftBound());
+        $this->assertEquals(4, $childCategory->getRightBound());
         $this->assertTrue($childCategory->isLeaf());
 
-        // Root category should now have left bound = 1, right bound = 4
-        $category = $this->categoryMapper->find(1);
+        // Root category should now have left bound = 2, right bound = 5
+        $category = $this->categoryMapper->find($category->getId());
         $this->assertInternalType('integer', $category->getId());
-        $this->assertEquals(1, $category->getLeftBound());
-        $this->assertEquals(4, $category->getRightBound());
+        $this->assertEquals(2, $category->getLeftBound());
+        $this->assertEquals(5, $category->getRightBound());
         $this->assertFalse($category->isLeaf());
         $this->assertEquals(1, $category->getChildrenCount());
     }
 
     public function testCanAddMultipleCategories()
     {
-        // Root category (left bound = 1, right bound = 2)
+        // Root category (left bound = 2, right bound = 3)
         $category = $this->createCategory('Foo');
         $category = $this->categoryMapper->create($category);
 
-        // Node category whose parent is previous category (left bound = 2, right bound = 3)
+        // Node category whose parent is previous category (left bound = 3, right bound = 4)
         $firstChild = $this->createCategory("Foo's First Child", $category);
         $this->categoryMapper->create($firstChild);
 
-        $category = $this->categoryMapper->find(1);
+        $category = $this->categoryMapper->find($category->getId());
 
-        // Node category whose parent is previous category (left bound = 4, right bound = 5)
+        // Node category whose parent is previous category (left bound = 5, right bound = 6)
         $secondChild = $this->createCategory("Foo's Second Child", $category);
         $this->categoryMapper->create($secondChild);
 
         // Root category should now have left bound = 1, right bound = 6
-        $category = $this->categoryMapper->find(1);
+        $category = $this->categoryMapper->find($category->getId());
         $this->assertInternalType('integer', $category->getId());
-        $this->assertEquals(1, $category->getLeftBound());
-        $this->assertEquals(6, $category->getRightBound());
+        $this->assertEquals(2, $category->getLeftBound());
+        $this->assertEquals(7, $category->getRightBound());
         $this->assertFalse($category->isLeaf());
         $this->assertEquals(2, $category->getChildrenCount());
     }
 
     public function testCanRemoveCategory()
     {
-        // Root category (left bound = 1, right bound = 2)
+        // Root category (left bound = 2, right bound = 3)
         $category = $this->createCategory('Foo');
         $category = $this->categoryMapper->create($category);
 
-        // Node category whose parent is previous category (left bound = 2, right bound = 3)
+        // Node category whose parent is previous category (left bound = 3, right bound = 4)
         $childCategory = $this->createCategory("Foo's child", $category);
         $childCategory = $this->categoryMapper->create($childCategory);
 
         $this->categoryMapper->remove($childCategory);
 
-        // Root category now have again left bound = 1, right bound = 2
+        // Root category now have again left bound = 2, right bound = 3
         $category = $this->categoryMapper->find($category->getId());
 
-        $this->assertEquals(1, $category->getLeftBound());
-        $this->assertEquals(2, $category->getRightBound());
+        $this->assertEquals(2, $category->getLeftBound());
+        $this->assertEquals(3, $category->getRightBound());
         $this->assertTrue($category->isLeaf());
         $this->assertEquals(0, $category->getChildrenCount());
     }
 
     public function testCanRemoveChildCategoryWhenParentNodeHaveMultipleCategories()
     {
-        // Root category (left bound = 1, right bound = 2)
+        // Root category (left bound = 2, right bound = 3)
         $category = $this->createCategory('Foo');
         $category = $this->categoryMapper->create($category);
 
-        // Node category whose parent is previous category (left bound = 2, right bound = 3)
+        // Node category whose parent is previous category (left bound = 3, right bound = 4)
         $firstChild = $this->createCategory("Foo's First Child", $category);
         $firstChild = $this->categoryMapper->create($firstChild);
 
         $category = $this->categoryMapper->find($category->getId());
 
-        // Node category whose parent is previous category (left bound = 4, right bound = 5)
+        // Node category whose parent is previous category (left bound = 5, right bound = 6)
         $secondChild = $this->createCategory("Foo's Second Child", $category);
         $secondChild = $this->categoryMapper->create($secondChild);
 
@@ -173,14 +177,14 @@ class CategoryRepositoryTest extends ServiceManagerTestCase
         $this->categoryMapper->remove($firstChild);
 
         $secondChild = $this->categoryMapper->find($secondChild->getId());
-        $this->assertEquals(2, $secondChild->getLeftBound());
-        $this->assertEquals(3, $secondChild->getRightBound());
+        $this->assertEquals(3, $secondChild->getLeftBound());
+        $this->assertEquals(4, $secondChild->getRightBound());
         $this->assertTrue($secondChild->isLeaf());
         $this->assertEquals(0, $secondChild->getChildrenCount());
 
         $category = $this->categoryMapper->find($category->getId());
-        $this->assertEquals(1, $category->getLeftBound());
-        $this->assertEquals(4, $category->getRightBound());
+        $this->assertEquals(2, $category->getLeftBound());
+        $this->assertEquals(5, $category->getRightBound());
         $this->assertFalse($category->isLeaf());
         $this->assertEquals(1, $category->getChildrenCount());
     }

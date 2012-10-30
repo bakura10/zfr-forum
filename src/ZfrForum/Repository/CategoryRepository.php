@@ -34,24 +34,26 @@ class CategoryRepository extends EntityRepository implements CategoryMapperInter
      */
     public function create(Category $category)
     {
-        $em = $this->getEntityManager();
-
-        if ($category->hasParent()) {
-            $queryBuilder = $em->createQueryBuilder();
-
-            // First update right bounds
-            $queryBuilder->update('ZfrForum\Entity\Category', 'c')
-                         ->set('c.rightBound', 'c.rightBound + 2')
-                         ->where('c.rightBound >= :rightBound')
-                         ->setParameter('rightBound', $category->getParent()->getRightBound())
-                         ->getQuery()->execute();
-
-            // Then left bounds
-            $queryBuilder->resetDQLParts(array('set', 'where'))
-                         ->set('c.leftBound', 'c.leftBound + 2')
-                         ->where('c.leftBound >= :rightBound')
-                         ->getQuery()->execute();
+        // Does not have a parent ? Add the super root
+        if (!$category->hasParent()) {
+            $category->setParent($this->findRoot());
         }
+
+        $em           = $this->getEntityManager();
+        $queryBuilder = $em->createQueryBuilder();
+
+        // First update right bounds
+        $queryBuilder->update('ZfrForum\Entity\Category', 'c')
+                     ->set('c.rightBound', 'c.rightBound + 2')
+                     ->where('c.rightBound >= :rightBound')
+                     ->setParameter('rightBound', $category->getParent()->getRightBound())
+                     ->getQuery()->execute();
+
+        // Then left bounds
+        $queryBuilder->resetDQLParts(array('set', 'where'))
+                     ->set('c.leftBound', 'c.leftBound + 2')
+                     ->where('c.leftBound >= :rightBound')
+                     ->getQuery()->execute();
 
         // Finally, add the category
         $em->persist($category);
@@ -107,5 +109,23 @@ class CategoryRepository extends EntityRepository implements CategoryMapperInter
 
         // Clear all the categories (see the note above)
         $em->clear('ZfrForum\Entity\Category');
+    }
+
+    /**
+     * This function returns a special category node
+     *
+     * @return Category
+     */
+    public function findRoot()
+    {
+        $root = $this->findOneBy(array('parent' => null));
+
+        if ($root === null) {
+            $root = new Category();
+            $this->_em->persist($root);
+            $this->_em->flush();
+        }
+
+        return $root;
     }
 }

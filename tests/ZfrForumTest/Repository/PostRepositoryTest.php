@@ -58,7 +58,7 @@ class PostRepositoryTest extends ServiceManagerTestCase
         $loader->addFixture(new Fixture\UserFixture());
         $loader->addFixture(new Fixture\ThreadFixture());
         $purger = new ORMPurger();
-        $em = self::getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $em = $this->getEntityManager();
         $this->executor = new ORMExecutor($em, $purger);
         $this->executor->execute($loader->getFixtures());
     }
@@ -84,7 +84,6 @@ class PostRepositoryTest extends ServiceManagerTestCase
 
         $this->assertInternalType('integer', $report->getId());
 
-        /** @var \Zend\Paginator\Paginator $reports */
         $reports = $this->reportMapper->findByPost($post);
 
         $this->assertInstanceOf('Zend\Paginator\Paginator', $reports);
@@ -104,40 +103,5 @@ class PostRepositoryTest extends ServiceManagerTestCase
 
         $this->assertInstanceOf('Zend\Paginator\Paginator', $reports);
         $this->assertEquals(2, $reports->getTotalItemCount());
-    }
-
-    public function testThrowExceptionWhenTheSameUserReportTheSamePostTwice()
-    {
-        $repository = $this->executor->getReferenceRepository();
-        $post = $repository->getReference('thread-0')->getLastPost();
-        $reportedBy = $repository->getReference('user-1');
-
-        $report = new Report();
-        $report->setPost($post)
-            ->setDescription('This post is spam !')
-            ->setReportedBy($reportedBy)
-            ->setReportedAt(new DateTime('now'));
-
-        $this->reportMapper->create($report);
-
-        $this->assertInternalType('integer', $report->getId());
-
-        /** @var \Zend\Paginator\Paginator $reports */
-        $reports = $this->reportMapper->findByPost($post);
-
-        $this->assertInstanceOf('Zend\Paginator\Paginator', $reports);
-        $this->assertEquals(1, $reports->getTotalItemCount());
-
-
-        // Let's try to add another report (of course, this is handled at a higher level in
-        // the service)
-        $report = new Report();
-        $report->setPost($post)
-            ->setDescription('This post is REALLY a spam !')
-            ->setReportedBy($reportedBy)
-            ->setReportedAt(new DateTime('now'));
-
-        $this->setExpectedException('Doctrine\DBAL\DBALException');
-        $this->reportMapper->create($report);
     }
 }

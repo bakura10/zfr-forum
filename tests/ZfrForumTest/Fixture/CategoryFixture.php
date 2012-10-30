@@ -34,12 +34,22 @@ class CategoryFixture extends AbstractFixture
      */
     function load(ObjectManager $manager)
     {
+        $repository = $manager->getRepository('ZfrForum\Entity\Category');
+
         for ($i = 0; $i < self::INSTANCES_COUNT; $i += 1) {
             $category = new Category();
             $category->setName("Category $i");
 
-            $manager->persist($category);
+            $category = $repository->create($category);
             $this->setReference("category-$i", $category);
+
+            // Add a child category
+            $child = new Category();
+            $child->setName("Category $i / 1");
+            $child->setParent($category);
+
+            $child = $repository->create($child);
+            $this->setReference("category-$i-1", $child);
         }
 
         $manager->flush();

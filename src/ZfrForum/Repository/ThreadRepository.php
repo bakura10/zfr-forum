@@ -51,18 +51,24 @@ class ThreadRepository extends EntityRepository implements ThreadMapperInterface
 
     /**
      * @param  Category $category
+     * @param  bool     $strict If set to true, do not consider threads in children categories of the one given
      * @return Paginator
      */
-    public function findByCategory(Category $category = null)
+    public function findByCategory(Category $category = null, $strict = false)
     {
         $queryBuilder = $this->createQueryBuilder('t');
 
         if ($category !== null) {
-            $queryBuilder->join('t.category', 'c')
-                         ->where('c.leftBound >= :leftBound')
-                         ->andWhere('c.rightBound <= :rightBound')
-                         ->setParameter('leftBound', $category->getLeftBound())
-                         ->setParameter('rightBound', $category->getRightBound());
+            if ($strict) {
+                $queryBuilder->where('t.category = :category')
+                             ->setParameter('category', $category);
+            } else {
+                $queryBuilder->join('t.category', 'c')
+                             ->where('c.leftBound >= :leftBound')
+                             ->andWhere('c.rightBound <= :rightBound')
+                             ->setParameter('leftBound', $category->getLeftBound())
+                             ->setParameter('rightBound', $category->getRightBound());
+            }
         }
 
         $paginatorAdapter = new PaginatorAdapter(new DoctrinePaginator($queryBuilder, false));

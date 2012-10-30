@@ -104,5 +104,13 @@ class ServiceManagerTestCase extends BaseTestCase
     {
         return self::$serviceManager;
     }
+
+    /**
+     * @return \Doctrine\ORM\EntityManager
+     */
+    public function getEntityManager()
+    {
+        return self::$serviceManager->get('Doctrine\ORM\EntityManager');
+    }
 }
 
