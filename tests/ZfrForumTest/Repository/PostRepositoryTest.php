@@ -71,7 +71,7 @@ class PostRepositoryTest extends ServiceManagerTestCase
     public function testCanReportAPost()
     {
         $repository = $this->executor->getReferenceRepository();
-        $post = $repository->getReference('post-0');
+        $post = $repository->getReference('thread-0')->getLastPost();
         $reportedBy = $repository->getReference('user-1');
 
         $report = new Report();
@@ -106,10 +106,10 @@ class PostRepositoryTest extends ServiceManagerTestCase
         $this->assertEquals(2, $reports->getTotalItemCount());
     }
 
-    public function testAssertThatTheSameUserCannotReportTheSamePostTwice()
+    public function testThrowExceptionWhenTheSameUserReportTheSamePostTwice()
     {
         $repository = $this->executor->getReferenceRepository();
-        $post = $repository->getReference('post-0');
+        $post = $repository->getReference('thread-0')->getLastPost();
         $reportedBy = $repository->getReference('user-1');
 
         $report = new Report();
@@ -129,18 +129,15 @@ class PostRepositoryTest extends ServiceManagerTestCase
         $this->assertEquals(1, $reports->getTotalItemCount());
 
 
-        // Let's add another report
+        // Let's try to add another report (of course, this is handled at a higher level in
+        // the service)
         $report = new Report();
         $report->setPost($post)
             ->setDescription('This post is REALLY a spam !')
             ->setReportedBy($reportedBy)
             ->setReportedAt(new DateTime('now'));
 
+        $this->setExpectedException('Doctrine\DBAL\DBALException');
         $this->reportMapper->create($report);
-
-        $reports = $this->reportMapper->findByPost($post);
-
-        $this->assertInstanceOf('Zend\Paginator\Paginator', $reports);
-        $this->assertEquals(1, $reports->getTotalItemCount());
     }
 }

@@ -69,6 +69,7 @@ class ThreadFixture extends AbstractFixture implements DependentFixtureInterface
             $thread->addPost($post);
 
             $manager->persist($thread);
+            $this->setReference("thread-$i", $thread);
         }
 
         $manager->flush();
