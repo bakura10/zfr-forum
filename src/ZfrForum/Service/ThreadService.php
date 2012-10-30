@@ -105,7 +105,7 @@ class ThreadService
 
         if (!$latestThreads instanceof Paginator) {
             throw new Exception\UnexpectedValueException(sprintf(
-                'This service expects a Zend\Paginator\Paginator instance, %s received',
+                'This method expects a Zend\Paginator\Paginator instance, %s received',
                 get_class($latestThreads)
             ));
         }

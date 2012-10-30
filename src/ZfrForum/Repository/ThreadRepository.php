@@ -19,6 +19,8 @@
 namespace ZfrForum\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as PaginatorAdapter;
 use Zend\Paginator\Paginator;
 use ZfrForum\Entity\Category;
 use ZfrForum\Entity\Thread;
@@ -53,6 +55,18 @@ class ThreadRepository extends EntityRepository implements ThreadMapperInterface
      */
     public function findByCategory(Category $category = null)
     {
-        // TODO: Implement findByCategory() method.
+        $queryBuilder = $this->createQueryBuilder('t');
+
+        if ($category !== null) {
+            $queryBuilder->join('t.category', 'c')
+                         ->where('c.leftBound >= :leftBound')
+                         ->andWhere('c.rightBound <= :rightBound')
+                         ->setParameter('leftBound', $category->getLeftBound())
+                         ->setParameter('rightBound', $category->getRightBound());
+        }
+
+        $paginatorAdapter = new PaginatorAdapter(new DoctrinePaginator($queryBuilder, false));
+
+        return new Paginator($paginatorAdapter);
     }
 }

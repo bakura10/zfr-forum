@@ -32,7 +32,7 @@ class User extends BaseUser implements UserInterface
      *
      * @ORM\Column(type="string", length=39)
      */
-    protected $ip;
+    protected $ip = '';
 
     /**
      * @var DateTime
