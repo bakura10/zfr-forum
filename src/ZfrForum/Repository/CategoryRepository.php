@@ -89,23 +89,23 @@ class CategoryRepository extends EntityRepository implements CategoryMapperInter
         if ($category->hasParent()) {
             $queryBuilder = $em->createQueryBuilder();
 
-            // First update left bounds
+            // First, remove the entity
+            $em->remove($category);
+            $em->flush();
+
+            // Then, update left bounds
             $queryBuilder->update('ZfrForum\Entity\Category', 'c')
                          ->set('c.leftBound', 'c.leftBound - 2')
                          ->where('c.leftBound >= :leftBound')
                          ->setParameter('leftBound', $category->getLeftBound())
                          ->getQuery()->execute();
 
-            // Then right bounds
+            // Finally, update right bounds
             $queryBuilder->resetDQLParts(array('set', 'where'))
                          ->set('c.rightBound', 'c.rightBound - 2')
                          ->where('c.rightBound >= :leftBound')
                          ->getQuery()->execute();
         }
-
-        // Finally, remove the entity
-        $em->remove($category);
-        $em->flush();
 
         // Clear all the categories (see the note above)
         $em->clear('ZfrForum\Entity\Category');

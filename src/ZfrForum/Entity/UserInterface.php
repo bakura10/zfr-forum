@@ -19,6 +19,7 @@
 namespace ZfrForum\Entity;
 
 use DateTime;
+use ZfcRbac\Identity\IdentityInterface;
 use ZfcUser\Entity\UserInterface as BaseUserInterface;
 
 /**
@@ -26,7 +27,7 @@ use ZfcUser\Entity\UserInterface as BaseUserInterface;
  * either implements this interface instead of the ZfcUser\Entity\UserInterface, or directly use
  * the base implementation ZfrForum\Entity\User
  */
-interface UserInterface extends BaseUserInterface
+interface UserInterface extends BaseUserInterface, IdentityInterface
 {
     /**
      * Set the IP address of the user (needed for ban functionnality)
@@ -57,4 +58,33 @@ interface UserInterface extends BaseUserInterface
      * @return DateTime
      */
     public function getLastActivityDate();
+
+    /**
+     * Set the global role (administrator, moderator...)
+     *
+     * @param  string $role
+     * @return UserInterface
+     */
+    public function setGlobalRole($role);
+
+    /**
+     * Get the global role
+     *
+     * @return string
+     */
+    public function getGlobalRole();
+
+    /**
+     * Get the local role (it cannot be change as it is based on the ID of the user)
+     *
+     * @return string
+     */
+    public function getLocalRole();
+
+    /**
+     * Get the roles for a given user (global + local roles)
+     *
+     * @return array
+     */
+    public function getRoles();
 }

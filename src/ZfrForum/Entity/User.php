@@ -42,6 +42,13 @@ class User extends BaseUser implements UserInterface
      */
     protected $lastActivityDate;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=32)
+     */
+    protected $globalRole = 'MEMBER';
+
 
     /**
      * Set the IP address of the user (needed for ban functionnality)
@@ -86,5 +93,57 @@ class User extends BaseUser implements UserInterface
     {
         return clone $this->lastActivityDate;
     }
-}
 
+    /**
+     * Set the global role
+     *
+     * @param  string $role
+     * @return UserInterface
+     */
+    public function setGlobalRole($role)
+    {
+        $this->globalRole = (string) $role;
+        return $this;
+    }
+
+    /**
+     * Get the global role
+     *
+     * @return string
+     */
+    public function getGlobalRole()
+    {
+        return $this->canonicalizeRole($this->globalRole);
+    }
+
+    /**
+     * Get the local role
+     *
+     * @return string
+     */
+    public function getLocalRole()
+    {
+        return $this->canonicalizeRole($this->id);
+    }
+
+    /**
+     * Get the roles for a given user (a user have two roles : one "global" and one "local")
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        return array($this->getGlobalRole(), $this->getLocalRole());
+    }
+
+    /**
+     * Transform the role name (this is just convention used to avoid name clashes)
+     *
+     * @param  string $role
+     * @return string
+     */
+    protected function canonicalizeRole($role)
+    {
+        return 'USER_ROLE_' . strtoupper(str_replace(' ', '_', $role));
+    }
+}

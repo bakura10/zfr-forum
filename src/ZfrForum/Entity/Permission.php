@@ -18,14 +18,29 @@
 
 namespace ZfrForum\Entity;
 
-use DomainException;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * A permission tells if a given role can do a specific action. In this forum, we have a lot of permissions,
+ * and new ones can be dynamically added. There are "global" permissions assigned to roles, that have a name
+ * following this pattern : PERMISSION_TYPE (eg. PERMISSION_CAN_READ_THREADS).
+ *
+ * You can also add "local" permissions, either for a specific user, or for a whole group. Those permissions follow
+ * this pattern : PERMISSION_CAT_id_TYPE (eg. PERMISSION_CAT_4_CAN_READ_THREADS)
+ *
+ * Here are the basic permission you can find out-of-the-box:
+ *
+ *      - PERMISSION_CAN_READ_THREADS
+ *      - PERMISSION_CAN_CREATE_THREADS
+ *      - PERMISSION_CAN_ADD_REPLIES
+ *      - PERMISSION_CAN_EDIT_POSTS
+ *      - PERMISSION_CAN_DELETE_THREADS
+ *      - PERMISSION_CAN_DELETE_POSTS
+ *
  * @ORM\Entity
- * @ORM\Table(name="Ranks")
+ * @ORM\Table(name="Permissions")
  */
-class Rank
+class Permission
 {
     /**
      * @var int
@@ -39,16 +54,9 @@ class Rank
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=64)
      */
     protected $name;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $minPosts;
 
 
     /**
@@ -62,61 +70,23 @@ class Rank
     }
 
     /**
-     * Set the name of the rank
+     * Set the name of the permission
      *
-     * @param string $name
-     * @return Rank
+     * @param  string $name
+     * @return string
      */
     public function setName($name)
     {
         $this->name = (string) $name;
-        return $this;
-    }
-
-    /**
-     * Get the name of the rank
-     *
-     * @return string
-     */
-    public function getName()
-    {
         return $this->name;
     }
 
     /**
-     * Set how many posts a user need to write to reach this rank
+     * Get the name of the permission
      *
-     * @param  int $minPosts
-     * @throws DomainException
-     * @return Rank
-     */
-    public function setMinPosts($minPosts)
-    {
-        if ($minPosts < 0) {
-            throw new DomainException(sprintf(
-                'The min posts for a rank cannot be negative, %s given',
-                $minPosts
-            ));
-        }
-
-        $this->minPosts = (int) $minPosts;
-        return $this;
-    }
-
-    /**
-     * Get how many posts a user need to write to reach this rank
-     *
-     * @return int
-     */
-    public function getMinPosts()
-    {
-        return $this->minPosts;
-    }
-
-    /**
      * @return string
      */
-    public function __toString()
+    public function getName()
     {
         return $this->getName();
     }
