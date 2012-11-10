@@ -16,18 +16,17 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Entity;
-
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use ZfrForum\Entity\UserInterface;
+use ZfrForum\Entity\Thread;
 use ZfrForum\Entity\Category;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="CategoriesTrack")
+ * @ORM\Table(name="ThreadsTracking")
  */
-class CategoryTrack
+class ThreadTracking
 {
     /**
      * @var UserInterface
@@ -38,9 +37,16 @@ class CategoryTrack
     protected $user;
 
     /**
-     * @var Category
+     * @var Thread
      *
      * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\Thread")
+     */
+    protected $thread;
+
+    /**
+     * @var Category
+     *
      * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\Category")
      */
     protected $category;
@@ -48,7 +54,7 @@ class CategoryTrack
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime")
      */
     protected $markTime;
 
@@ -56,46 +62,14 @@ class CategoryTrack
      * Constructor
      *
      * @param UserInterface $user
-     * @param Category      $category
+     * @param Thread        $thread
      */
-    function __construct(UserInterface $user, Category $category)
+    function __construct(UserInterface $user, Thread $thread)
     {
-        $this->category = $category;
         $this->user = $user;
-        $this->markTime = new DateTime();
-    }
-
-
-    /**
-     * Set when all thread of the category was read
-     *
-     * @param  DateTime $markTime
-     * @return ForumTrack
-     */
-    public function setMarkTime(DateTime $markTime)
-    {
-        $this->markTime = clone $markTime;
-        return $this;
-    }
-
-    /**
-     * Return the markTime
-     *
-     * @return DateTime
-     */
-    public function getMarkTime()
-    {
-        return $this->markTime;
-    }
-
-    /**
-     * Return the category
-     *
-     * @return Category
-     */
-    public function getCategory()
-    {
-        return $this->category;
+        $this->thread = $thread;
+        $this->category = $thread->getCategory();
+        $this->markTime = $thread->getLastPost()->getSentAt();
     }
 
     /**
@@ -108,5 +82,56 @@ class CategoryTrack
         return $this->user;
     }
 
+    /**
+     * Return the thread
+     *
+     * @return Thread
+     */
+    public function getThread()
+    {
+        return $this->thread;
+    }
 
+    /**
+     * Set the category of the thread
+     *
+     * @param  Category $category
+     * @return ThreadTracking
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+        return $this;
+    }
+
+    /**
+     * Return the category of the thread
+     *
+     * @return Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set the created date of the lasted post of the thread
+     *
+     * @param  DateTime $markTime
+     * @return ThreadTracking
+     */
+    public function setMarkTime(DateTime $markTime)
+    {
+        $this->markTime = clone $markTime;
+        return $this;
+    }
+
+    /**
+     * Return the date of the lasted post of the thread
+     * @return DateTime
+     */
+    public function getMarkTime()
+    {
+        return clone $this->markTime;
+    }
 }
