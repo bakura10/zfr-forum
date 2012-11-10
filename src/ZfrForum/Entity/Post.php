@@ -192,7 +192,7 @@ class Post
     /**
      * Set when this post was sent for the first time
      *
-     * @param DateTime $sentAt
+     * @param  DateTime $sentAt
      * @return Post
      */
     public function setSentAt(DateTime $sentAt)
