@@ -19,19 +19,28 @@
 namespace ZfrForum\Service;
 
 use DateTime;
+use ZfcBase\EventManager\EventProvider;
 use Zend\Authentication\AuthenticationService;
 use Zend\Paginator\Paginator;
 use ZfrForum\Entity\Category;
 use ZfrForum\Entity\Post;
 use ZfrForum\Entity\Thread;
+use ZfrForum\Entity\ThreadTracking;
 use ZfrForum\Mapper\ThreadMapperInterface;
+use ZfrForum\Mapper\ThreadTrackingMapperInterface;
+use ZfrForum\Entity\UserInterface;
 
-class ThreadService
+class ThreadService extends EventProvider
 {
     /**
      * @var ThreadMapperInterface
      */
     protected $threadMapper;
+
+    /**
+     * @var ThreadTrackingMapperInterface
+     */
+    protected $threadTrackingMapper;
 
     /**
      * @var AuthenticationService
@@ -40,12 +49,15 @@ class ThreadService
 
 
     /**
-     * @param ThreadMapperInterface $threadMapper
-     * @param AuthenticationService $authenticationService
+     * @param ThreadMapperInterface         $threadMapper
+     * @param ThreadTrackingMapperInterface $threadTrackingMapper
+     * @param AuthenticationService         $authenticationService
      */
-    public function __construct(ThreadMapperInterface $threadMapper, AuthenticationService $authenticationService)
+    public function __construct(ThreadMapperInterface $threadMapper, ThreadTrackingMapperInterface $threadTrackingMapper,
+        AuthenticationService $authenticationService)
     {
         $this->threadMapper          = $threadMapper;
+        $this->threadTrackingMapper  = $threadTrackingMapper;
         $this->authenticationService = $authenticationService;
     }
 
@@ -66,6 +78,13 @@ class ThreadService
         $thread->addPost($post);
 
         $this->threadMapper->update($thread);
+
+        // we raised the event
+        $this->getEventManager()->trigger('addPost.post', this, array(
+                'user' => $post->getAuthor(),
+                'thread' => $thread,
+                'date' => $post->getSentAt()
+            ));
     }
 
     /**
@@ -121,5 +140,31 @@ class ThreadService
     public function getById($id)
     {
         return $this->threadMapper->find($id);
+    }
+
+    /**
+     * Add or update the track for this thread
+     *
+     * @param UserInterface $user
+     * @param Thread        $thread
+     */
+    public function track(UserInterface $user, Thread $thread) {
+        $threadTracking = $this->threadTrackingMapper->findOnBy(array(
+                'thread' => $thread,
+                'user'   => $user
+            ));
+
+        // There is not a track for this thread
+        if ($threadTracking === null) {
+            $threadTracking = new ThreadTracking($user, $thread);
+            $this->threadTrackingMapper->add($threadTracking);
+        } elseif ($threadTracking->getMarkTime() < $thread->getLastPost()->getSentAt()) {
+            $threadTracking->setMarkTime($thread->getLastPost()->getSentAt());
+            $this->threadTrackingMapper->update($threadTracking);
+        }
+
+        // TODO : Penser à tenir compte du CategoryTracking : lorsque tous les threads d'une catégorie sont lus en
+        // TODO : tenant compte du markTime il faut supprimer les threadTracking et ajouter le CategoryTracking à la
+        // TODO : date du jour. Il faut donc s'assurer
     }
 }

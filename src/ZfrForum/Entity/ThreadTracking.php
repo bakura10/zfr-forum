@@ -16,6 +16,8 @@
  * and is licensed under the MIT license.
  */
 
+namespace ZfrForum\Entity;
+
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use ZfrForum\Entity\UserInterface;
@@ -23,6 +25,7 @@ use ZfrForum\Entity\Thread;
 use ZfrForum\Entity\Category;
 
 /**
+ * @ORM\Entity(repositoryClass="ZfrForum\Repository\ThreadTrackingRepository")
  * @ORM\Entity
  * @ORM\Table(name="ThreadsTracking")
  */

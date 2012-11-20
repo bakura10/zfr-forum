@@ -27,7 +27,6 @@ use ZfcUser\Entity\UserInterface;
 
 class CategoryTrackingRepository extends EntityRepository implements CategoryTrackingMapperInterface
 {
-
     /**
      * @param  CategoryTracking $categoryTracking
      * @return CategoryTracking
@@ -55,26 +54,4 @@ class CategoryTrackingRepository extends EntityRepository implements CategoryTra
     {
         // TODO: Implement remove() method.
     }
-
-    /**
-     * @param  Category      $category
-     * @param  UserInterface $user
-     * @return CategoryTracking
-     */
-    public function findByCategoryAndUser(Category $category, UserInterface $user)
-    {
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
-        $queryBuilder->select('ct')
-            ->from('ZfrForum\Entity\CategoryTracking', 'ct')
-            ->where('ct.category = :category')
-            ->andWhere('ct.user = :user')
-            ->setParameter('category', $category)
-            ->setParameter('user', $user);
-
-        $categoryTracking = $queryBuilder->getQuery()->getOneOrNullResult();
-
-        return $categoryTracking;
-    }
-
-
 }

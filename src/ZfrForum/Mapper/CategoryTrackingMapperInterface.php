@@ -20,8 +20,6 @@ namespace ZfrForum\Mapper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use ZfrForum\Entity\CategoryTracking;
-use ZfrForum\Entity\Category;
-use ZfcUser\Entity\UserInterface;
 
 interface CategoryTrackingMapperInterface extends ObjectRepository
 {
@@ -42,11 +40,4 @@ interface CategoryTrackingMapperInterface extends ObjectRepository
      * @return void
      */
     public function remove(CategoryTracking $categoryTracking);
-
-    /**
-     * @param  Category      $category
-     * @param  UserInterface $user
-     * @return CategoryTracking
-     */
-    public function findByCategoryAndUser(Category $category, UserInterface $user);
 }
