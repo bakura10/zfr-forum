@@ -19,11 +19,8 @@
 namespace ZfrForum\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use ZfrForum\Entity\Thread;
 use ZfrForum\Entity\ThreadTracking;
 use ZfrForum\Mapper\ThreadTrackingMapperInterface;
-use ZfrForum\Entity\Category;
-use ZfcUser\Entity\UserInterface;
 
 class ThreadTrackingRepository extends EntityRepository implements ThreadTrackingMapperInterface
 {
@@ -54,47 +51,4 @@ class ThreadTrackingRepository extends EntityRepository implements ThreadTrackin
     {
         // TODO: Implement remove() method.
     }
-
-    /**
-     * @param  Thread        $thread
-     * @param  UserInterface $user
-     * @return ThreadTracking
-     */
-    public function findByThreadAndUser(Thread $thread, UserInterface $user)
-    {
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
-        $queryBuilder->select('tt')
-            ->from('ZfrForum\Entity\ThreadTracking', 'tt')
-            ->where('tt.thread = :thread')
-            ->andWhere('tt.category = :category')
-            ->andWhere('tt.user = :user')
-            ->setParameter('thread', $thread)
-            ->setParameter('user', $user);
-
-        $threadTracking = $queryBuilder->getQuery()->getOneOrNullResult();
-
-        return $threadTracking;
-    }
-
-    /**
-     * @param  Category      $category
-     * @param  UserInterface $user
-     * @return array
-     */
-    public function findByCategoryAndUser(Category $category, UserInterface $user)
-    {
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
-        $queryBuilder->select('tt')
-            ->from('ZfrForum\Entity\ThreadTracking', 'tt')
-            ->where('ct.category = :category')
-            ->andWhere('ct.user = :user')
-            ->setParameter('category', $category)
-            ->setParameter('user', $user);
-
-        $categoryTracking = $queryBuilder->getQuery()->getResult();
-
-        return $categoryTracking;
-    }
-
-
 }

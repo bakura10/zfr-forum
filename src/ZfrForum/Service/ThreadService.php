@@ -82,8 +82,7 @@ class ThreadService extends EventProvider
         // we raised the event
         $this->getEventManager()->trigger('addPost.post', this, array(
                 'user' => $post->getAuthor(),
-                'thread' => $thread,
-                'date' => $post->getSentAt()
+                'thread' => $thread
             ));
     }
 

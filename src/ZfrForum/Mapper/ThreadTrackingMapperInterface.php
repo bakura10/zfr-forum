@@ -20,9 +20,6 @@ namespace ZfrForum\Mapper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use ZfrForum\Entity\ThreadTracking;
-use ZfrForum\Entity\Thread;
-use ZfrForum\Entity\Category;
-use ZfcUser\Entity\UserInterface;
 
 interface ThreadTrackingMapperInterface extends ObjectRepository
 {
@@ -43,18 +40,4 @@ interface ThreadTrackingMapperInterface extends ObjectRepository
      * @return void
      */
     public function remove(ThreadTracking $threadTracking);
-
-    /**
-     * @param  Thread        $thread
-     * @param  UserInterface $user
-     * @return ThreadTracking
-     */
-    public function findByThreadAndUser(Thread $thread, UserInterface $user);
-
-    /**
-     * @param  Category      $category
-     * @param  UserInterface $user
-     * @return array
-     */
-    public function findByCategoryAndUser(Category $category, UserInterface $user);
 }
