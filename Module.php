@@ -38,7 +38,7 @@ class Module implements
     public function onBootstrap(EventInterface $e)
     {
         /* @var $app \Zend\Mvc\ApplicationInterface */
-        $app = $e->getTarget();
+        $app    = $e->getTarget();
         $events = $app->getEventManager();
 
         // Attach to helper set event and load the entity manager helper.
@@ -46,9 +46,9 @@ class Module implements
             /* @var $threadService \ZfrForum\Service\ThreadService */
             $threadService = $e->getTarget();
 
-            $params        = $e->getParams();
-            $user          = $params['user'];
-            $thread        = $params['thread'];
+            $params = $e->getParams();
+            $user   = $params['user'];
+            $thread = $params['thread'];
 
             $threadService->track($user, $thread);
         });

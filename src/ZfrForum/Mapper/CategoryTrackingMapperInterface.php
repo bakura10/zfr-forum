@@ -27,7 +27,7 @@ interface CategoryTrackingMapperInterface extends ObjectRepository
      * @param  CategoryTracking $categoryTracking
      * @return CategoryTracking
      */
-    public function add(CategoryTracking $categoryTracking);
+    public function create(CategoryTracking $categoryTracking);
 
     /**
      * @param  CategoryTracking $categoryTracking

@@ -28,7 +28,7 @@ class CategoryTrackingRepository extends EntityRepository implements CategoryTra
      * @param  CategoryTracking $categoryTracking
      * @return CategoryTracking
      */
-    public function add(CategoryTracking $categoryTracking)
+    public function create(CategoryTracking $categoryTracking)
     {
         // TODO: Implement add() method.
     }
