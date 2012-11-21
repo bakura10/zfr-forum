@@ -46,9 +46,9 @@ class Module implements
             /* @var $threadService \ZfrForum\Service\ThreadService */
             $threadService = $e->getTarget();
 
-            $params = $e->getParams();
-            $user   = $params['user'];
-            $thread = $params['thread'];
+            $params        = $e->getParams();
+            $user          = $params['user'];
+            $thread        = $params['thread'];
 
             $threadService->track($user, $thread);
         });

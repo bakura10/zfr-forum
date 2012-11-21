@@ -28,7 +28,7 @@ class ThreadTrackingRepository extends EntityRepository implements ThreadTrackin
      * @param  ThreadTracking $threadTracking
      * @return ThreadTracking
      */
-    public function add(ThreadTracking $threadTracking)
+    public function create(ThreadTracking $threadTracking)
     {
 
     }

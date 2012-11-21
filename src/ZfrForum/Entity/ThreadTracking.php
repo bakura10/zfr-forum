@@ -69,8 +69,8 @@ class ThreadTracking
      */
     function __construct(UserInterface $user, Thread $thread)
     {
-        $this->user = $user;
-        $this->thread = $thread;
+        $this->user     = $user;
+        $this->thread   = $thread;
         $this->category = $thread->getCategory();
         $this->markTime = $thread->getLastPost()->getSentAt();
     }

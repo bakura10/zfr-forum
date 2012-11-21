@@ -62,7 +62,7 @@ class CategoryTracking
     function __construct(UserInterface $user, Category $category)
     {
         $this->category = $category;
-        $this->user = $user;
+        $this->user     = $user;
         $this->markTime = new DateTime('now');
     }
 

@@ -53,7 +53,9 @@ class ThreadService extends EventProvider
      * @param ThreadTrackingMapperInterface $threadTrackingMapper
      * @param AuthenticationService         $authenticationService
      */
-    public function __construct(ThreadMapperInterface $threadMapper, ThreadTrackingMapperInterface $threadTrackingMapper,
+    public function __construct(
+        ThreadMapperInterface $threadMapper,
+        ThreadTrackingMapperInterface $threadTrackingMapper,
         AuthenticationService $authenticationService)
     {
         $this->threadMapper          = $threadMapper;
@@ -156,7 +158,7 @@ class ThreadService extends EventProvider
         // There is not a track for this thread
         if ($threadTracking === null) {
             $threadTracking = new ThreadTracking($user, $thread);
-            $this->threadTrackingMapper->add($threadTracking);
+            $this->threadTrackingMapper->create($threadTracking);
         } elseif ($threadTracking->getMarkTime() < $thread->getLastPost()->getSentAt()) {
             $threadTracking->setMarkTime($thread->getLastPost()->getSentAt());
             $this->threadTrackingMapper->update($threadTracking);

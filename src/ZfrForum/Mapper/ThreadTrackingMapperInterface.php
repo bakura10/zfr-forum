@@ -27,7 +27,7 @@ interface ThreadTrackingMapperInterface extends ObjectRepository
      * @param  ThreadTracking $threadTracking
      * @return ThreadTracking
      */
-    public function add(ThreadTracking $threadTracking);
+    public function create(ThreadTracking $threadTracking);
 
     /**
      * @param  ThreadTracking $threadTracking

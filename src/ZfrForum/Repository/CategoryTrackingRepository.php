@@ -19,11 +19,8 @@
 namespace ZfrForum\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use ZfrForum\Entity\Thread;
 use ZfrForum\Entity\CategoryTracking;
 use ZfrForum\Mapper\CategoryTrackingMapperInterface;
-use ZfrForum\Entity\Category;
-use ZfcUser\Entity\UserInterface;
 
 class CategoryTrackingRepository extends EntityRepository implements CategoryTrackingMapperInterface
 {
