@@ -89,8 +89,9 @@ return array(
      */
     'controllers' => array(
         'invokables' => array(
-            'ZfrForum\Controller\Message' => 'ZfrForum\Controller\MessageController',
-            'ZfrForum\Controller\Thread'  => 'ZfrForum\Controller\ThreadController'
+            'ZfrForum\Controller\Category' => 'ZfrForum\Controller\CategoryController',
+            'ZfrForum\Controller\Message'  => 'ZfrForum\Controller\MessageController',
+            'ZfrForum\Controller\Thread'   => 'ZfrForum\Controller\ThreadController'
         )
     ),
 

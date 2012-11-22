@@ -7,7 +7,7 @@ return array(
             'options' => array(
                 'route'    => '/forum/',
                 'defaults' => array(
-                    'controller' => 'ZfrForum\Controller\Thread'
+                    'controller' => 'ZfrForum\Controller\Category'
                 )
             ),
             'may_terminate' => true,
