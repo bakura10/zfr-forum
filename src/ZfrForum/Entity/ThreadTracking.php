@@ -61,6 +61,7 @@ class ThreadTracking
      */
     protected $markTime;
 
+    
     /**
      * Constructor
      *
@@ -101,7 +102,7 @@ class ThreadTracking
      * @param  Category $category
      * @return ThreadTracking
      */
-    public function setCategory($category)
+    public function setCategory(Category $category)
     {
         $this->category = $category;
         return $this;
