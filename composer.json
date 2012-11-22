@@ -21,15 +21,15 @@
             "email": "florent.blaison@gmail.com"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.*",
-        "zf-commons/zfc-user": "dev-master",
-        "zf-commons/zfc-user-doctrine-orm": "dev-master",
         "doctrine/doctrine-module": "dev-master",
-        "doctrine/doctrine-orm-module": "dev-master"
+        "doctrine/doctrine-orm-module": "dev-master",
+        "zf-commons/zfc-user": "dev-master",
+        "zf-commons/zfc-user-doctrine-orm": "dev-master"        
     },
-    "minimum-stability": "alpha",
     "autoload": {
         "psr-0": {
             "ZfrForum": "src/"
