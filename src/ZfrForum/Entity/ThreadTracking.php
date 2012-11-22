@@ -26,7 +26,6 @@ use ZfrForum\Entity\Category;
 
 /**
  * @ORM\Entity(repositoryClass="ZfrForum\Repository\ThreadTrackingRepository")
- * @ORM\Entity
  * @ORM\Table(name="ThreadsTracking")
  */
 class ThreadTracking

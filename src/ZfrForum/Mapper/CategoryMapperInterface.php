@@ -40,9 +40,4 @@ interface CategoryMapperInterface extends ObjectRepository
      * @return void
      */
     public function remove(Category $category);
-
-    /**
-     * @return Category
-     */
-    public function findRoot();
 }

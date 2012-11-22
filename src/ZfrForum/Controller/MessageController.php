@@ -16,38 +16,64 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Repository;
+namespace ZfrForum\Controller;
 
-use Doctrine\ORM\EntityRepository;
-use ZfrForum\Entity\Category;
-use ZfrForum\Mapper\CategoryMapperInterface;
+use Zend\Mvc\Controller\AbstractRestfulController;
 
-class CategoryRepository extends EntityRepository implements CategoryMapperInterface
+class MessageController extends AbstractRestfulController
 {
     /**
-     * @param  Category $category
-     * @return Category
+     * Return list of resources
+     *
+     * @return mixed
      */
-    public function create(Category $category)
+    public function getList()
+    {
+        // TODO: Implement getList() method.
+    }
+
+    /**
+     * Return single resource
+     *
+     * @param  mixed $id
+     * @return mixed
+     */
+    public function get($id)
+    {
+        // TODO: Implement get() method.
+    }
+
+    /**
+     * Create a new resource
+     *
+     * @param  mixed $data
+     * @return mixed
+     */
+    public function create($data)
     {
         // TODO: Implement create() method.
     }
 
     /**
-     * @param  Category $category
-     * @return Category
+     * Update an existing resource
+     *
+     * @param  mixed $id
+     * @param  mixed $data
+     * @return mixed
      */
-    public function update(Category $category)
+    public function update($id, $data)
     {
         // TODO: Implement update() method.
     }
 
     /**
-     * @param  Category $category
-     * @return void
+     * Delete an existing resource
+     *
+     * @param  mixed $id
+     * @return mixed
      */
-    public function remove(Category $category)
+    public function delete($id)
     {
-        // TODO: Implement remove() method.
+        // TODO: Implement delete() method.
     }
 }

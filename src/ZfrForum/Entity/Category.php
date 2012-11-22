@@ -25,10 +25,7 @@ use Doctrine\ORM\Mapping as ORM;
  * from specific categories, or from all the sub-categories of a given category...
  *
  * @ORM\Entity(repositoryClass="ZfrForum\Repository\CategoryRepository")
- * @ORM\Table(name="Categories", indexes={
- *      @ORM\Index(name="IDX_FF3A7B97AEF225EE", columns={"leftBound"}),
- *      @ORM\Index(name="IDX_FF3A7B975DE4E6B6", columns={"rightBound"})
- * })
+ * @ORM\Table(name="Categories")
  */
 class Category
 {
@@ -63,27 +60,6 @@ class Category
      */
     protected $description = '';
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="smallint")
-     */
-    protected $depth = 0;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="smallint")
-     */
-    protected $leftBound = 1;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="smallint")
-     */
-    protected $rightBound = 2;
-
 
     /**
      * Get the identifier of the category
@@ -104,10 +80,6 @@ class Category
     public function setParent(Category $parent)
     {
         $this->parent = $parent;
-        $this->setDepth($parent->getDepth() + 1)
-             ->setLeftBound($parent->getRightBound())
-             ->setRightBound($parent->getRightBound() + 1);
-
         return $this;
     }
 
@@ -128,7 +100,7 @@ class Category
      */
     public function hasParent()
     {
-        return ($this->depth > 1);
+        return $this->parent !== null;
     }
 
     /**
@@ -173,95 +145,5 @@ class Category
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set the depth of the category
-     *
-     * @param $depth
-     * @return Category
-     */
-    public function setDepth($depth)
-    {
-        $this->depth = (int) $depth;
-        return $this;
-    }
-
-    /**
-     * Get the depth of the category
-     *
-     * @return int
-     */
-    public function getDepth()
-    {
-        return $this->depth;
-    }
-
-    /**
-     * Set the left bound for the category
-     *
-     * @param  int $leftBound
-     * @return Category
-     */
-    public function setLeftBound($leftBound)
-    {
-        $this->leftBound = (int) $leftBound;
-        return $this;
-    }
-
-    /**
-     * Get the left bound for the category
-     *
-     * @return int
-     */
-    public function getLeftBound()
-    {
-        return $this->leftBound;
-    }
-
-    /**
-     * Set the right bound for the category
-     *
-     * @param  int $rightBound
-     * @return Category
-     */
-    public function setRightBound($rightBound)
-    {
-        $this->rightBound = (int) $rightBound;
-        return $this;
-    }
-
-    /**
-     * Get the right bound for the category
-     *
-     * @return int
-     */
-    public function getRightBound()
-    {
-        return $this->rightBound;
-    }
-
-    /**
-     * Returns true if the category does not have any children categories
-     *
-     * @return bool
-     */
-    public function isLeaf()
-    {
-        return (($this->rightBound - $this->leftBound) === 1);
-    }
-
-    /**
-     * Returns the number of children categories for the category (or null if it is a leaf category)
-     *
-     * @return int|null
-     */
-    public function getChildrenCount()
-    {
-        if ($this->isLeaf()) {
-            return null;
-        }
-
-        return ceil(($this->rightBound - $this->leftBound) / 2) - 1;
     }
 }
