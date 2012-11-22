@@ -25,7 +25,6 @@ use ZfrForum\Entity\Category;
 
 /**
  * @ORM\Entity(repositoryClass="ZfrForum\Repository\CategoryTrackingRepository")
- * @ORM\Entity
  * @ORM\Table(name="CategoriesTracking")
  */
 class CategoryTracking

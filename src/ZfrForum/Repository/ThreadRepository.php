@@ -19,6 +19,7 @@
 namespace ZfrForum\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as PaginatorAdapter;
 use Zend\Paginator\Paginator;
@@ -63,11 +64,9 @@ class ThreadRepository extends EntityRepository implements ThreadMapperInterface
                 $queryBuilder->where('t.category = :category')
                              ->setParameter('category', $category);
             } else {
-                $queryBuilder->join('t.category', 'c')
-                             ->where('c.leftBound >= :leftBound')
-                             ->andWhere('c.rightBound <= :rightBound')
-                             ->setParameter('leftBound', $category->getLeftBound())
-                             ->setParameter('rightBound', $category->getRightBound());
+                $queryBuilder->join('ZfrForum\Entity\CategoryRelationship', 'cr', Expr\Join::WITH, 'cr.parentCategory = :category')
+                             ->where('t.category = cr.category')
+                             ->setParameter('category', $category);
             }
         }
 

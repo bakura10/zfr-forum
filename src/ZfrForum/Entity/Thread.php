@@ -85,9 +85,8 @@ class Thread
 
     /**
      * @var Collection
-     * TODO: remettre UserInterface
      *
-     * @ORM\ManyToMany(targetEntity="ZfrForum\Entity\User", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="ZfrForum\Entity\UserInterface", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="ThreadsFollowers",
      *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
      * )
@@ -319,12 +318,19 @@ class Thread
     }
 
     /**
-     * Get the last post of the thread
+     * Get the last post of the thread. If page is set to null, it returns the last post of the whole
+     * thread, otherwise it returns that last post of a given page of the thread
      *
+     * @param int|null $page
      * @return Post
      */
-    public function getLastPost()
+    public function getLastPost($page = null)
     {
+        if ($page === null) {
+            return $this->lastPost;
+        }
+
+        // TODO: use criteria API
         return $this->lastPost;
     }
 
