@@ -60,6 +60,13 @@ class Category
      */
     protected $description = '';
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $depth = 1;
+
 
     /**
      * Get the identifier of the category
@@ -80,6 +87,8 @@ class Category
     public function setParent(Category $parent)
     {
         $this->parent = $parent;
+        $this->depth  = $parent->getDepth() + 1;
+
         return $this;
     }
 
@@ -145,5 +154,15 @@ class Category
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Get the depth of the category (it begins by 1)
+     *
+     * @return int
+     */
+    public function getDepth()
+    {
+        return $this->depth;
     }
 }
