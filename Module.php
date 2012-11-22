@@ -18,6 +18,7 @@
 
 namespace ZfrForum;
 
+use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ControllerPluginProviderInterface;
@@ -31,6 +32,27 @@ class Module implements
     ServiceProviderInterface,
     ViewHelperProviderInterface
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function onBootstrap(EventInterface $e)
+    {
+        /* @var $app \Zend\Mvc\ApplicationInterface */
+        $app    = $e->getTarget();
+        $events = $app->getEventManager();
+
+        // Attach to helper set event and load the entity manager helper.
+        $events->attach('addPost.post', function(EventInterface $e) {
+            /* @var $threadService \ZfrForum\Service\ThreadService */
+            $threadService = $e->getTarget();
+
+            $params = $e->getParams();
+            $user   = $params['user'];
+            $thread = $params['thread'];
+
+            $threadService->track($user, $thread);
+        });
+    }
 
     /**
      * @return array
@@ -146,9 +168,10 @@ class Module implements
                     return new Service\SettingsService($settingsMapper);
                 },
                 'ZfrForum\Service\ThreadService' => function($serviceManager) {
-                    $threadMapper   = $serviceManager->get('ZfrForum\Mapper\ThreadMapperInterface');
-                    $authentication = $serviceManager->get('Zend\Authentication\AuthenticationService');
-                    return new Service\ThreadService($threadMapper, $authentication);
+                    $threadMapper         = $serviceManager->get('ZfrForum\Mapper\ThreadMapperInterface');
+                    $threadTrackingMapper = $serviceManager->get('ZfrForum\Mapper\ThreadTrackingMapperInterface');
+                    $authentication       = $serviceManager->get('Zend\Authentication\AuthenticationService');
+                    return new Service\ThreadService($threadMapper, $threadTrackingMapper, $authentication);
                 },
                 'ZfrForum\Service\UserBanService' => function($serviceManager) {
                     $userBanMapper = $serviceManager->get('ZfrForum\Mapper\UserBanMapperInterface');
