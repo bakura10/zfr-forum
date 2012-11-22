@@ -99,6 +99,10 @@ return array(
      * View manager configuration
      */
     'view_manager' => array(
+        'strategies' => array(
+            'ViewJsonStrategy'
+        ),
+
         'template_path_stack' => array(
             'ZfrForum' => __DIR__ . '/../view',
         ),
