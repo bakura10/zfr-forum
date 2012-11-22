@@ -53,6 +53,7 @@ class CategoryTracking
      */
     protected $markTime;
 
+
     /**
      * Constructor
      *
@@ -65,7 +66,6 @@ class CategoryTracking
         $this->user     = $user;
         $this->markTime = new DateTime('now');
     }
-
 
     /**
      * Set when all thread of the category was read
