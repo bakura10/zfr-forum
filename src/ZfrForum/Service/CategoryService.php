@@ -76,6 +76,17 @@ class CategoryService
     }
 
     /**
+     * Get all the categories with a max depth
+     *
+     * @param  int $maxDepth
+     * @return array
+     */
+    public function getAll($maxDepth = 3)
+    {
+        return $this->categoryMapper->findAll($maxDepth);
+    }
+
+    /**
      * @param  int $id
      * @return Category
      */

@@ -30,13 +30,23 @@ class CategoryController extends AbstractRestfulController
 
 
     /**
-     * Return list of resources
+     * Return the list of all categories (with a max depth). This is likely to be called as the index page
+     * of the forum
      *
      * @return mixed
      */
     public function getList()
     {
-        // TODO: Implement getList() method.
+        $categoryService = $this->getCategoryService();
+
+        // TODO: make the depth configurable
+        $maxDepth   = 3;
+        $categories = $categoryService->getAll($maxDepth);
+
+        // TODO: we need to convert to JSON/XML as we're REST
+        return array(
+            'categories' => $categories
+        );
     }
 
     /**
