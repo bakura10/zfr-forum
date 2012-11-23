@@ -19,6 +19,7 @@
 namespace ZfrForum\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Internally, categories are stored into a hierarchical tree in order to easily fetch threads
@@ -27,7 +28,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="ZfrForum\Repository\CategoryRepository")
  * @ORM\Table(name="Categories")
  */
-class Category
+class Category implements JsonSerializable
 {
     /**
      * @var int
@@ -164,5 +165,19 @@ class Category
     public function getDepth()
     {
         return $this->depth;
+    }
+
+    /**
+     * (PHP 5 >= 5.4.0)
+     * Serializes the object to a value that can be serialized natively by json_encode().
+     */
+    function jsonSerialize()
+    {
+        return array(
+            'id'          => $this->id,
+            'name'        => $this->name,
+            'description' => $this->description,
+            'depth'       => $this->depth
+        );
     }
 }

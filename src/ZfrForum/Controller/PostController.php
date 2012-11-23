@@ -19,34 +19,45 @@
 namespace ZfrForum\Controller;
 
 use Zend\Mvc\Controller\AbstractRestfulController;
-use ZfrForum\Service\CategoryService;
+use Zend\View\Model\JsonModel;
+use ZfrForum\Service\PostService;
 
-class CategoryController extends AbstractRestfulController
+class PostController extends AbstractRestfulController
 {
     /**
-     * @var CategoryService
+     * @var PostService
      */
-    protected $categoryService;
+    protected $postService;
 
 
     /**
-     * Return the list of all categories (with a max depth). This is likely to be called as the index page
-     * of the forum
+     * Get the list of messages for a given thread
      *
      * @return mixed
      */
     public function getList()
     {
-        $categoryService = $this->getCategoryService();
+        /*$threadId = $this->params('threadId');
+        $page     = $this->params()->fromQuery('page', 1);
 
-        // TODO: make the depth configurable
-        $maxDepth   = 3;
-        $categories = $categoryService->getAll($maxDepth);
+        $posts = $this->getPostService()->getByThread($threadId);
 
-        // TODO: we need to convert to JSON/XML as we're REST
         return array(
-            'categories' => $categories
-        );
+            'posts' => $posts->setCurrentPageNumber($page)
+        );*/
+
+        if ($this->request->isXmlHttpRequest()) {
+            $threadId = $this->params('threadId');
+            $page     = $this->params()->fromQuery('page', 1);
+
+            $posts = $this->getPostService()->getByThread($threadId);
+
+            $posts = $posts->getCurrentItems();
+
+            return new JsonModel(array(
+                'posts' => (array)$posts
+            ));
+        }
     }
 
     /**
@@ -57,7 +68,11 @@ class CategoryController extends AbstractRestfulController
      */
     public function get($id)
     {
-        // TODO: Implement get() method.
+        $post = $this->getPostService()->getById($id);
+
+        return array(
+            'post' => $post
+        );
     }
 
     /**
@@ -95,14 +110,14 @@ class CategoryController extends AbstractRestfulController
     }
 
     /**
-     * @return CategoryService
+     * @return PostService
      */
-    protected function getCategoryService()
+    protected function getPostService()
     {
-        if ($this->categoryService === null) {
-            $this->categoryService = $this->serviceLocator->get('ZfrForum\Service\CategoryService');
+        if ($this->postService === null) {
+            $this->postService = $this->serviceLocator->get('ZfrForum\Service\PostService');
         }
 
-        return $this->categoryService;
+        return $this->postService;
     }
 }

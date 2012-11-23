@@ -19,7 +19,6 @@
 namespace ZfrForum\Repository;
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\Category;
 use ZfrForum\Mapper\CategoryMapperInterface;
 

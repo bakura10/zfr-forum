@@ -90,7 +90,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'ZfrForum\Controller\Category' => 'ZfrForum\Controller\CategoryController',
-            'ZfrForum\Controller\Message'  => 'ZfrForum\Controller\MessageController',
+            'ZfrForum\Controller\Post'     => 'ZfrForum\Controller\PostController',
             'ZfrForum\Controller\Thread'   => 'ZfrForum\Controller\ThreadController'
         )
     ),

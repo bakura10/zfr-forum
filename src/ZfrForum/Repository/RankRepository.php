@@ -18,7 +18,6 @@
 
 namespace ZfrForum\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\Rank;
 use ZfrForum\Mapper\RankMapperInterface;
 

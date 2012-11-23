@@ -23,6 +23,7 @@ use Zend\Authentication\AuthenticationService;
 use Zend\Paginator\Paginator;
 use ZfrForum\Entity\Post;
 use ZfrForum\Entity\Report;
+use ZfrForum\Entity\Thread;
 use ZfrForum\Entity\UserInterface;
 use ZfrForum\Mapper\PostMapperInterface;
 use ZfrForum\Mapper\ReportMapperInterface;
@@ -122,6 +123,32 @@ class PostService
         }
 
         return $reports;
+    }
+
+    /**
+     * Get all the post for a given thread
+     *
+     * @param $thread|integer
+     * @throws Exception\UnexpectedValueException
+     * @return Paginator
+     */
+    public function getByThread($thread)
+    {
+        if ($thread instanceof Thread) {
+            $thread = $thread->getId();
+        }
+
+        $posts = $this->postMapper->findByThread($thread);
+
+        if (!$posts instanceof Paginator) {
+            throw new Exception\UnexpectedValueException(sprintf(
+                '%s method expects a Zend\Paginator\Paginator instance, %s received',
+                __FUNCTION__,
+                get_class($posts)
+            ));
+        }
+
+        return $posts;
     }
 
     /**

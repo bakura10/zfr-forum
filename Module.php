@@ -156,7 +156,7 @@ class Module implements
                 'ZfrForum\Service\PostService' => function($serviceManager) {
                     $postMapper     = $serviceManager->get('ZfrForum\Mapper\PostMapperInterface');
                     $reportMapper   = $serviceManager->get('ZfrForum\Mapper\ReportMapperInterface');
-                    $authentication = $serviceManager->get('Zend\Authentication\AuthenticationService');
+                    $authentication = $serviceManager->get('zfcuser_auth_service');
                     return new Service\PostService($postMapper, $reportMapper, $authentication);
                 },
                 'ZfrForum\Service\RankService' => function($serviceManager) {
@@ -170,7 +170,7 @@ class Module implements
                 'ZfrForum\Service\ThreadService' => function($serviceManager) {
                     $threadMapper         = $serviceManager->get('ZfrForum\Mapper\ThreadMapperInterface');
                     $threadTrackingMapper = $serviceManager->get('ZfrForum\Mapper\ThreadTrackingMapperInterface');
-                    $authentication       = $serviceManager->get('Zend\Authentication\AuthenticationService');
+                    $authentication       = $serviceManager->get('zfcuser_auth_service');
                     return new Service\ThreadService($threadMapper, $threadTrackingMapper, $authentication);
                 },
                 'ZfrForum\Service\UserBanService' => function($serviceManager) {
