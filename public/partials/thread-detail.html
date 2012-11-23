@@ -1,0 +1,6 @@
+<h1>Ok</h1>
+<p>{{ thread.thread.title }}</p>
+
+<div data-ng-include data-src="'/partials/messages.html'"></div>
+
+<a href="/forum/threads/{{ thread.thread.id + 1 }}">Load next</a>
