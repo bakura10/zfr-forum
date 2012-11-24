@@ -1,6 +1,17 @@
 <?php
 
 return array(
+    'asset_manager' => array(
+        'resolver_configs' => array(
+            /*'paths' => array(
+                __DIR__ . '/../public',
+            ),*/
+            'map' => array(
+                'zfr-forum/' => __DIR__ . '/../public/',
+            ),
+        ),
+    ),
+
     /**
      * Router configuration
      */
