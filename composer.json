@@ -27,7 +27,8 @@
         "zendframework/zendframework": "2.*",
         "zf-commons/zfc-base": "dev-master",
         "zf-commons/zfc-user": "dev-master",
-        "doctrine/doctrine-orm-module": "dev-master"        
+        "doctrine/doctrine-orm-module": "dev-master",
+        "rwoverdijk/assetmanager": "1.*"
     },
     "autoload": {
         "psr-0": {
