@@ -5,7 +5,7 @@ return array(
         'zfrforum' => array(
             'type'    => 'Literal',
             'options' => array(
-                'route'    => '/forum/',
+                'route'    => '/forum',
                 'defaults' => array(
                     'controller' => 'ZfrForum\Controller\Category'
                 )
@@ -15,13 +15,14 @@ return array(
                 'categories' => array(
                     'type'    => 'Segment',
                     'options' => array(
-                        'route'       => '/categories[/:id/:slug]',
+                        'route'       => '/categories[/:id[/:slug]]',
                         'constraints' => array(
                             'id'   => '[0-9]+',
                             'slug' => '[a-zA-Z][a-zA-Z0-9_-]*'
                         ),
                         'defaults' => array(
-                            'controller' => 'ZfrForum\Controller\Category'
+                            'controller' => 'ZfrForum\Controller\Category',
+                            'slug'       => ''
                         )
                     )
                 ),
@@ -29,26 +30,30 @@ return array(
                 'threads' => array(
                     'type'    => 'Segment',
                     'options' => array(
-                        'route'       => '/threads[/:id/:slug]',
+                        'route'       => '/threads[/:id[/:slug]]',
                         'constraints' => array(
                             'id'   => '[0-9]+',
                             'slug' => '[a-zA-Z][a-zA-Z0-9_-]*'
                         ),
                         'defaults' => array(
-                            'controller' => 'ZfrForum\Controller\Thread'
+                            'controller' => 'ZfrForum\Controller\Thread',
+                            'slug'       => ''
                         )
                     )
                 ),
 
-                'messages' => array(
+                'posts' => array(
                     'type'    => 'Segment',
                     'options' => array(
-                        'route'       => '/messages[/:id]',
+                        'route'       => '/threads/:threadId[/:slug]/posts[/:id]',
                         'constraints' => array(
-                            'id' => '[0-9]+'
+                            'id'       => '[0-9]+',
+                            'threadId' => '[0-9]+',
+                            'slug'     => '[a-zA-Z][a-zA-Z0-9_-]*'
                         ),
                         'defaults' => array(
-                            'controller' => 'ZfrForum\Controller\Message'
+                            'controller' => 'ZfrForum\Controller\Post',
+                            'slug'       => ''
                         )
                     )
                 )

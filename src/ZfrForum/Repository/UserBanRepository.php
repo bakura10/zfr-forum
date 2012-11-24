@@ -19,7 +19,6 @@
 
 namespace ZfrForum\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\UserBan;
 use ZfrForum\Mapper\UserBanMapperInterface;
 

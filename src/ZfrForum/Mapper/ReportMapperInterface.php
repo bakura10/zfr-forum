@@ -30,10 +30,4 @@ interface ReportMapperInterface extends ObjectRepository
      * @return Report
      */
     public function create(Report $report);
-
-    /**
-     * @param  Post $post
-     * @return Paginator
-     */
-    public function findByPost(Post $post);
 }

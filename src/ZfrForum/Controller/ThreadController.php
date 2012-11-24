@@ -19,6 +19,7 @@
 namespace ZfrForum\Controller;
 
 use Zend\Mvc\Controller\AbstractRestfulController;
+use Zend\View\Model\JsonModel;
 use ZfrForum\Entity\Thread;
 use ZfrForum\Service\ThreadService;
 
@@ -37,7 +38,7 @@ class ThreadController extends AbstractRestfulController
      */
     public function getList()
     {
-        //return $this->threadService
+        // TODO: Implement getList() method
     }
 
     /**
@@ -48,7 +49,11 @@ class ThreadController extends AbstractRestfulController
      */
     public function get($id)
     {
-        return $this->threadService->getById($id);
+        if ($this->request->isXmlHttpRequest()) {
+            $thread = $this->getThreadService()->getById($id);
+
+            return (new JsonModel(array('thread' => $thread)));
+        }
     }
 
     /**
@@ -88,7 +93,7 @@ class ThreadController extends AbstractRestfulController
     /**
      * @return ThreadService
      */
-    public function getThreadService()
+    protected function getThreadService()
     {
         if ($this->threadService === null) {
             $this->threadService = $this->serviceLocator->get('ZfrForum\Service\ThreadService');

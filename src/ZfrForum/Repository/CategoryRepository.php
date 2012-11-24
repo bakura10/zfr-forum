@@ -18,7 +18,7 @@
 
 namespace ZfrForum\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use ZfrForum\Entity\Category;
 use ZfrForum\Mapper\CategoryMapperInterface;
 
@@ -49,5 +49,17 @@ class CategoryRepository extends EntityRepository implements CategoryMapperInter
     public function remove(Category $category)
     {
         // TODO: Implement remove() method.
+    }
+
+    /**
+     * @param int $maxDepth
+     * @return array
+     */
+    public function findAll($maxDepth = 3)
+    {
+        $exprBuilder = Criteria::expr();
+        $criteria    = new Criteria($exprBuilder->lte('depth', $maxDepth));
+
+        return $this->matching($criteria);
     }
 }

@@ -18,7 +18,6 @@
 
 namespace ZfrForum\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\ThreadTracking;
 use ZfrForum\Mapper\ThreadTrackingMapperInterface;
 

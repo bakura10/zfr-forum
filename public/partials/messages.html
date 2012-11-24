@@ -1,0 +1,10 @@
+<p>Salut</p>
+
+<div data-ng-controller="PostsController">
+    <ul>
+        <li data-ng-repeat="post in posts.posts">
+            {{ post.id }}
+            {{ post.content }}
+        </li>
+    </ul>
+</div>

@@ -19,14 +19,17 @@
 namespace ZfrForum\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 use ZfrForum\Entity\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="ZfrForum\Repository\PostRepository")
  * @ORM\Table(name="Posts")
  */
-class Post
+class Post implements JsonSerializable
 {
     /**
      * @var int
@@ -87,6 +90,28 @@ class Post
      */
     protected $countModified = 0;
 
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="ZfrForum\Entity\Post", mappedBy="answerOf")
+     */
+    protected $answers;
+
+    /**
+     * @var Post
+     *
+     * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\Post", inversedBy="answers")
+     */
+    protected $answerOf;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->answers = new ArrayCollection();
+    }
 
     /**
      * Get the identifier of the post
@@ -232,7 +257,11 @@ class Post
      */
     public function getLastModifiedAt()
     {
-        return clone $this->lastModifiedAt;
+        if ($this->lastModifiedAt) {
+            return clone $this->lastModifiedAt;
+        }
+
+        return null;
     }
 
     /**
@@ -243,5 +272,129 @@ class Post
     public function getCountModified()
     {
         return $this->countModified;
+    }
+
+    /**
+     * Add an answer to this post
+     *
+     * @param Post $post
+     * @return Post
+     */
+    public function addAnswer(Post $post)
+    {
+        $post->setAnswerOf($this);
+        $this->answers->add($post);
+
+        return $this;
+    }
+
+    /**
+     * Add a collection of answers
+     *
+     * @param  Collection $posts
+     * @return Post
+     */
+    public function addAnswers(Collection $posts)
+    {
+        foreach ($posts as $post) {
+            $this->addAnswer($post);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove an answer
+     *
+     * @param  Post $post
+     * @return Post
+     */
+    public function removeAnswer(Post $post)
+    {
+        $this->answers->remove($post);
+        return $this;
+    }
+
+    /**
+     * Remove a collection of answers
+     *
+     * @param  Collection $posts
+     * @return Post
+     */
+    public function removeAnswers(Collection $posts)
+    {
+        foreach ($posts as $post) {
+            $this->removeAnswer($post);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add a collection of answers to the post, removing the old ones
+     *
+     * @param Collection $posts
+     * @return Post
+     */
+    public function setAnswers(Collection $posts)
+    {
+        $this->answers->clear();
+        $this->addAnswers($posts);
+
+        return $this;
+    }
+
+    /**
+     * Get all the answers to this post
+     *
+     * @return Collection
+     */
+    public function getAnswers()
+    {
+        return $this->answers;
+    }
+
+    /**
+     * Set the post this post is answering (this is similar as quoting)
+     *
+     * @param Post $post
+     * @return Post
+     */
+    public function setAnswerOf(Post $post)
+    {
+        $this->answerOf = $post;
+        return $this;
+    }
+
+    /**
+     * Get the post this post is answering (null if none)
+     *
+     * @return Post
+     */
+    public function getAnswerOf()
+    {
+        return $this->answerOf;
+    }
+
+    /**
+     * (PHP 5 >= 5.4.0)
+     * Serializes the object to a value that can be serialized natively by json_encode().
+     *
+     * @link http://docs.php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed Returns data which can be serialized by json_encode(), which is a value of any type other than a resource.
+     */
+    function jsonSerialize()
+    {
+        return array(
+            'id'     => $this->getId(),
+            'author' => array(
+                'id'          => $this->getAuthor()->getId(),
+                'displayName' => $this->getAuthorDisplayName()
+            ),
+            'thread' => array(
+                'id' => $this->getThread()->getId()
+            ),
+            'content' => $this->getContent()
+        );
     }
 }

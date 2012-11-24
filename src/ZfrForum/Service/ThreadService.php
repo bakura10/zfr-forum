@@ -113,13 +113,39 @@ class ThreadService extends EventProvider
     }
 
     /**
+     * Add or update the track for this thread
+     *
+     * @param UserInterface $user
+     * @param Thread        $thread
+     */
+    public function track(UserInterface $user, Thread $thread) {
+        $threadTracking = $this->threadTrackingMapper->findOnBy(array(
+            'thread' => $thread,
+            'user'   => $user
+        ));
+
+        // There is not a track for this thread
+        if ($threadTracking === null) {
+            $threadTracking = new ThreadTracking($user, $thread);
+            $this->threadTrackingMapper->create($threadTracking);
+        } elseif ($threadTracking->getMarkTime() < $thread->getLastPost()->getSentAt()) {
+            $threadTracking->setMarkTime($thread->getLastPost()->getSentAt());
+            $this->threadTrackingMapper->update($threadTracking);
+        }
+
+        // TODO : Penser à tenir compte du CategoryTracking : lorsque tous les threads d'une catégorie sont lus en
+        // TODO : tenant compte du markTime il faut supprimer les threadTracking et ajouter le CategoryTracking à la
+        // TODO : date du jour. Il faut donc s'assurer
+    }
+
+    /**
      * Get a paginator for the latest threads, optionally filtered by a category
      *
      * @param  Category $category
      * @throws Exception\UnexpectedValueException
      * @return Paginator
      */
-    public function getLatestThreadsByCategory(Category $category = null)
+    public function getByCategory(Category $category = null)
     {
         $latestThreads = $this->threadMapper->findByCategory($category);
 
@@ -141,31 +167,5 @@ class ThreadService extends EventProvider
     public function getById($id)
     {
         return $this->threadMapper->find($id);
-    }
-
-    /**
-     * Add or update the track for this thread
-     *
-     * @param UserInterface $user
-     * @param Thread        $thread
-     */
-    public function track(UserInterface $user, Thread $thread) {
-        $threadTracking = $this->threadTrackingMapper->findOnBy(array(
-                'thread' => $thread,
-                'user'   => $user
-            ));
-
-        // There is not a track for this thread
-        if ($threadTracking === null) {
-            $threadTracking = new ThreadTracking($user, $thread);
-            $this->threadTrackingMapper->create($threadTracking);
-        } elseif ($threadTracking->getMarkTime() < $thread->getLastPost()->getSentAt()) {
-            $threadTracking->setMarkTime($thread->getLastPost()->getSentAt());
-            $this->threadTrackingMapper->update($threadTracking);
-        }
-
-        // TODO : Penser à tenir compte du CategoryTracking : lorsque tous les threads d'une catégorie sont lus en
-        // TODO : tenant compte du markTime il faut supprimer les threadTracking et ajouter le CategoryTracking à la
-        // TODO : date du jour. Il faut donc s'assurer
     }
 }

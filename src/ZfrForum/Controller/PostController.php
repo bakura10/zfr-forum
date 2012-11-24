@@ -19,17 +19,45 @@
 namespace ZfrForum\Controller;
 
 use Zend\Mvc\Controller\AbstractRestfulController;
+use Zend\View\Model\JsonModel;
+use ZfrForum\Service\PostService;
 
-class MessageController extends AbstractRestfulController
+class PostController extends AbstractRestfulController
 {
     /**
-     * Return list of resources
+     * @var PostService
+     */
+    protected $postService;
+
+
+    /**
+     * Get the list of messages for a given thread
      *
      * @return mixed
      */
     public function getList()
     {
-        // TODO: Implement getList() method.
+        /*$threadId = $this->params('threadId');
+        $page     = $this->params()->fromQuery('page', 1);
+
+        $posts = $this->getPostService()->getByThread($threadId);
+
+        return array(
+            'posts' => $posts->setCurrentPageNumber($page)
+        );*/
+
+        if ($this->request->isXmlHttpRequest()) {
+            $threadId = $this->params('threadId');
+            $page     = $this->params()->fromQuery('page', 1);
+
+            $posts = $this->getPostService()->getByThread($threadId);
+
+            $posts = $posts->getCurrentItems();
+
+            return new JsonModel(array(
+                'posts' => (array)$posts
+            ));
+        }
     }
 
     /**
@@ -40,7 +68,11 @@ class MessageController extends AbstractRestfulController
      */
     public function get($id)
     {
-        // TODO: Implement get() method.
+        $post = $this->getPostService()->getById($id);
+
+        return array(
+            'post' => $post
+        );
     }
 
     /**
@@ -75,5 +107,17 @@ class MessageController extends AbstractRestfulController
     public function delete($id)
     {
         // TODO: Implement delete() method.
+    }
+
+    /**
+     * @return PostService
+     */
+    protected function getPostService()
+    {
+        if ($this->postService === null) {
+            $this->postService = $this->serviceLocator->get('ZfrForum\Service\PostService');
+        }
+
+        return $this->postService;
     }
 }

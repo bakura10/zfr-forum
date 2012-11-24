@@ -18,10 +18,6 @@
 
 namespace ZfrForum\Repository;
 
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as PaginatorAdapter;
-use Zend\Paginator\Paginator;
 use ZfrForum\Entity\Post;
 use ZfrForum\Entity\Report;
 use ZfrForum\Mapper\ReportMapperInterface;
@@ -41,22 +37,5 @@ class ReportRepository extends EntityRepository implements ReportMapperInterface
         $em->flush();
 
         return $report;
-    }
-
-    /**
-     * Find all the reports for a given post, and return as a paginator
-     *
-     * @param  Post $post
-     * @return Paginator
-     */
-    public function findByPost(Post $post)
-    {
-        $queryBuilder = $this->createQueryBuilder('r');
-        $queryBuilder->where('r.post = :post')
-                     ->setParameter('post', $post);
-
-        $paginatorAdapter = new PaginatorAdapter(new DoctrinePaginator($queryBuilder, false));
-
-        return new Paginator($paginatorAdapter);
     }
 }

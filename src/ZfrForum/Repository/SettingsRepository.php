@@ -18,7 +18,6 @@
 
 namespace ZfrForum\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\GlobalSettings;
 use ZfrForum\Entity\UserSettings;
 use ZfrForum\Mapper\SettingsMapperInterface;
