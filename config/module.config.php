@@ -1,6 +1,18 @@
 <?php
 
 return array(
+
+    /**
+     * AssetManager configuration
+     */
+    'asset_manager' => array(
+        'resolver_configs' => array(
+            'paths' => array(
+                __DIR__ . '/../public',
+            ),
+        ),
+    ),
+
     /**
      * Router configuration
      */
