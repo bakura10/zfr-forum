@@ -20,40 +20,59 @@ namespace ZfrForum\Controller;
 
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
-use ZfrForum\Entity\Thread;
-use ZfrForum\Service\ThreadService;
+use ZfrForum\Service\PostService;
 
-class ThreadController extends AbstractRestfulController
+class PostRestController extends AbstractRestfulController
 {
     /**
-     * @var ThreadService
+     * @var PostService
      */
-    protected $threadService;
+    protected $postService;
 
 
     /**
-     * Return list of resources
+     * Get the list of messages for a given thread
      *
      * @return mixed
      */
     public function getList()
     {
-        // TODO: Implement getList() method
+        /*$threadId = $this->params('threadId');
+        $page     = $this->params()->fromQuery('page', 1);
+
+        $posts = $this->getPostService()->getByThread($threadId);
+
+        return array(
+            'posts' => $posts->setCurrentPageNumber($page)
+        );*/
+
+        if ($this->request->isXmlHttpRequest()) {
+            $threadId = $this->params('threadId');
+            $page     = $this->params()->fromQuery('page', 1);
+
+            $posts = $this->getPostService()->getByThread($threadId);
+
+            $posts = $posts->getCurrentItems();
+
+            return new JsonModel(array(
+                'posts' => (array)$posts
+            ));
+        }
     }
 
     /**
      * Return single resource
      *
      * @param  mixed $id
-     * @return Thread|null
+     * @return mixed
      */
     public function get($id)
     {
-        if ($this->request->isXmlHttpRequest()) {
-            $thread = $this->getThreadService()->getById($id);
+        $post = $this->getPostService()->getById($id);
 
-            return (new JsonModel(array('thread' => $thread)));
-        }
+        return array(
+            'post' => $post
+        );
     }
 
     /**
@@ -91,14 +110,14 @@ class ThreadController extends AbstractRestfulController
     }
 
     /**
-     * @return ThreadService
+     * @return PostService
      */
-    protected function getThreadService()
+    protected function getPostService()
     {
-        if ($this->threadService === null) {
-            $this->threadService = $this->serviceLocator->get('ZfrForum\Service\ThreadService');
+        if ($this->postService === null) {
+            $this->postService = $this->serviceLocator->get('ZfrForum\Service\PostService');
         }
 
-        return $this->threadService;
+        return $this->postService;
     }
 }

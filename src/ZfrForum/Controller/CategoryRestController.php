@@ -21,7 +21,7 @@ namespace ZfrForum\Controller;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use ZfrForum\Service\CategoryService;
 
-class CategoryController extends AbstractRestfulController
+class CategoryRestController extends AbstractRestfulController
 {
     /**
      * @var CategoryService
@@ -58,6 +58,7 @@ class CategoryController extends AbstractRestfulController
     public function get($id)
     {
         // TODO: Implement get() method.
+        return array();
     }
 
     /**
