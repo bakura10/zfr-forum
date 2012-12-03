@@ -35,6 +35,7 @@ class ThreadTracking
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\UserInterface")
+     * @ORM\JoinColumn(referencedColumnName="user_id")
      */
     protected $user;
 

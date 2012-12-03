@@ -42,6 +42,7 @@ class UserBan
      * @var UserInterface
      *
      * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\UserInterface")
+     * @ORM\JoinColumn(referencedColumnName="user_id")
      */
     protected $user;
 
@@ -70,6 +71,7 @@ class UserBan
      * @var UserInterface
      *
      * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\UserInterface")
+     * @ORM\JoinColumn(referencedColumnName="user_id")
      */
     protected $bannedBy;
     
