@@ -44,6 +44,7 @@ class Post implements JsonSerializable
      * @var UserInterface
      *
      * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\UserInterface")
+     * @ORM\JoinColumn(referencedColumnName="user_id")
      */
     protected $author;
 

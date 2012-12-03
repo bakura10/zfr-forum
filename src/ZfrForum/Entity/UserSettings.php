@@ -34,6 +34,7 @@ class UserSettings extends AbstractSettings
      * @var UserInterface
      *
      * @ORM\OneToOne(targetEntity="ZfrForum\Entity\UserInterface")
+     * @ORM\JoinColumn(referencedColumnName="user_id")
      */
     protected $user;
 
