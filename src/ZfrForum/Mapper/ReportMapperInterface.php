@@ -19,8 +19,6 @@
 namespace ZfrForum\Mapper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
-use Zend\Paginator\Paginator;
-use ZfrForum\Entity\Post;
 use ZfrForum\Entity\Report;
 
 interface ReportMapperInterface extends ObjectRepository
@@ -30,4 +28,16 @@ interface ReportMapperInterface extends ObjectRepository
      * @return Report
      */
     public function create(Report $report);
+
+    /**
+     * @param  Report $report
+     * @return Report
+     */
+    public function update(Report $report);
+
+    /**
+     * @param  Report $report
+     * @return void
+     */
+    public function remove(Report $report);
 }

@@ -18,43 +18,14 @@
 
 namespace ZfrForum\Form;
 
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\InputFilter\InputFilter;
 
-class PostFieldset extends Fieldset implements InputFilterProviderInterface
+class PostFieldset extends InputFilter
 {
     /**
      * Constructor
      */
     public function __construct()
     {
-        parent::__construct('post');
-
-        $this->add(array(
-            'name'       => 'author',
-            'attributes' => array(
-                'type'     => 'hidden',
-                'required' => 'required'
-            )
-        ));
-
-        $this->add(array(
-            'type'    => 'Zend\Form\Element\Textarea',
-            'name'    => 'content',
-            'options' => array(
-                'label' => 'Your message'
-            )
-        ));
-    }
-
-    /**
-     * Should return an array specification compatible with
-     * {@link Zend\InputFilter\Factory::createInputFilter()}.
-     *
-     * @return array
-     */
-    public function getInputFilterSpecification()
-    {
-        return array();
     }
 }

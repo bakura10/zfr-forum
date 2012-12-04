@@ -18,20 +18,45 @@
 
 namespace ZfrForum\Repository;
 
+use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\Post;
 use ZfrForum\Mapper\PostMapperInterface;
 
 class PostRepository extends EntityRepository implements PostMapperInterface
 {
     /**
-     * Update the post
+     * Create the post
      *
      * @param  Post $post
      * @return mixed
      */
+    public function create(Post $post)
+    {
+        $this->_em->persist($post);
+        $this->_em->flush();
+
+        return $post;
+    }
+
+    /**
+     * Update the post
+     *
+     * @param  Post $post
+     * @return Post
+     */
     public function update(Post $post)
     {
-        $this->getEntityManager()->flush($post);
+        $this->_em->flush();
         return $post;
+    }
+
+    /**
+     * @param  Post $post
+     * @return void
+     */
+    public function remove(Post $post)
+    {
+        $this->_em->remove($post);
+        $this->_em->flush($post);
     }
 }

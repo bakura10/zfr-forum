@@ -18,6 +18,7 @@
 
 namespace ZfrForum\Repository;
 
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as PaginatorAdapter;
@@ -29,44 +30,61 @@ use ZfrForum\Mapper\ThreadMapperInterface;
 class ThreadRepository extends EntityRepository implements ThreadMapperInterface
 {
     /**
+     * Create the thread
+     *
      * @param  Thread $thread
      * @return Thread
      */
     public function create(Thread $thread)
     {
-        $em = $this->getEntityManager();
-        $em->persist($thread);
-        $em->flush();
+        $this->_em->persist($thread);
+        $this->_em->flush();
+
+        return $thread;
     }
 
     /**
+     * Update the thread
+     *
      * @param  Thread $thread
      * @return Thread
      */
     public function update(Thread $thread)
     {
-        $this->getEntityManager()->flush($thread);
+        $this->_em->flush($thread);
         return $thread;
     }
 
     /**
-     * @param  Category $category
-     * @param  bool     $strict If set to true, do not consider threads in children categories of the one given
+     * Remove the thread
+     *
+     * @param  Thread $thread
+     * @return void
+     */
+    public function remove(Thread $thread)
+    {
+        $this->_em->remove($thread);
+        $this->_em->flush();
+    }
+
+    /**
+     * @param  Category|int $category
+     * @param  bool         $strict If set to true, do not consider threads in children categories of the one given
      * @return Paginator
      */
-    public function findByCategory(Category $category = null, $strict = false)
+    public function findByCategory($category, $strict = false)
     {
         $queryBuilder = $this->createQueryBuilder('t');
 
         if ($category !== null) {
             if ($strict) {
-                $queryBuilder->where('t.category = :category')
-                             ->setParameter('category', $category);
+                $queryBuilder->where('t.category = :category');
             } else {
                 $queryBuilder->join('ZfrForum\Entity\CategoryRelationship', 'cr', Expr\Join::WITH, 'cr.parentCategory = :category')
-                             ->where('t.category = cr.category')
-                             ->setParameter('category', $category);
+                             ->where('t.category = cr.category');
             }
+
+            $queryBuilder->setParameter('category', $category);
         }
 
         $paginatorAdapter = new PaginatorAdapter(new DoctrinePaginator($queryBuilder, false));

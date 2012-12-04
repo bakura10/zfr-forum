@@ -1,7 +1,6 @@
 <?php
 
 return array(
-
     /**
      * AssetManager configuration
      */
@@ -101,9 +100,10 @@ return array(
      */
     'controllers' => array(
         'invokables' => array(
-            'ZfrForum\Controller\Category' => 'ZfrForum\Controller\CategoryController',
-            'ZfrForum\Controller\Post'     => 'ZfrForum\Controller\PostController',
-            'ZfrForum\Controller\Thread'   => 'ZfrForum\Controller\ThreadController'
+            'ZfrForum\Controller\CategoryRest' => 'ZfrForum\Controller\CategoryRestController',
+            'ZfrForum\Controller\Index'        => 'ZfrForum\Controller\IndexController',
+            'ZfrForum\Controller\PostRest'     => 'ZfrForum\Controller\PostRestController',
+            'ZfrForum\Controller\ThreadRest'   => 'ZfrForum\Controller\ThreadRestController'
         )
     ),
 
@@ -115,8 +115,8 @@ return array(
             'ViewJsonStrategy'
         ),
 
-        'template_path_stack' => array(
-            'ZfrForum' => __DIR__ . '/../view',
+        'template_map' => array(
+            'zfr-forum/index/index' => __DIR__ . '/../view/zfr-forum/index/index.phtml',
         ),
     ),
 );

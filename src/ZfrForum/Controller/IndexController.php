@@ -16,28 +16,18 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Mapper;
+namespace ZfrForum\Controller;
 
-use Doctrine\Common\Persistence\ObjectRepository;
-use ZfrForum\Entity\Rank;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
-interface RankMapperInterface extends ObjectRepository
+class IndexController extends AbstractActionController
 {
     /**
-     * @param  Rank $rank
-     * @return Rank
+     * @return ViewModel
      */
-    public function create(Rank $rank);
-
-    /**
-     * @param  Rank $rank
-     * @return Rank
-     */
-    public function update(Rank $rank);
-
-    /**
-     * @param  Rank $rank
-     * @return void
-     */
-    public function remove(Rank $rank);
+    public function indexAction()
+    {
+        return new ViewModel();
+    }
 }

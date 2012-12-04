@@ -19,7 +19,6 @@
 namespace ZfrForum\Mapper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
-use Zend\Paginator\Paginator;
 use ZfrForum\Entity\Post;
 
 interface PostMapperInterface extends ObjectRepository
@@ -28,5 +27,17 @@ interface PostMapperInterface extends ObjectRepository
      * @param  Post $post
      * @return Post
      */
+    public function create(Post $post);
+
+    /**
+     * @param  Post $post
+     * @return Post
+     */
     public function update(Post $post);
+
+    /**
+     * @param  Post $post
+     * @return void
+     */
+    public function remove(Post $post);
 }

@@ -18,8 +18,9 @@
 
 namespace ZfrForum\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use JsonSerializable;
 
 /**
  * Internally, categories are stored into a hierarchical tree in order to easily fetch threads
@@ -28,7 +29,7 @@ use JsonSerializable;
  * @ORM\Entity(repositoryClass="ZfrForum\Repository\CategoryRepository")
  * @ORM\Table(name="Categories")
  */
-class Category implements JsonSerializable
+class Category
 {
     /**
      * @var int
@@ -42,10 +43,24 @@ class Category implements JsonSerializable
     /**
      * @var Category
      *
-     * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\Category")
+     * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\Category", inversedBy="children")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $parent;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="ZfrForum\Entity\Category", mappedBy="parent")
+     */
+    protected $children;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint")
+     */
+    protected $position;
 
     /**
      * @var string
@@ -64,10 +79,18 @@ class Category implements JsonSerializable
     /**
      * @var int
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="smallint")
      */
     protected $depth = 1;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+    }
 
     /**
      * Get the identifier of the category
@@ -80,12 +103,12 @@ class Category implements JsonSerializable
     }
 
     /**
-     * Set the parent category
+     * Set the parent category (or null to remove)
      *
-     * @param Category $parent
+     * @param  Category|null $parent
      * @return Category
      */
-    public function setParent(Category $parent)
+    public function setParent(Category $parent = null)
     {
         $this->parent = $parent;
         $this->depth  = $parent->getDepth() + 1;
@@ -111,6 +134,110 @@ class Category implements JsonSerializable
     public function hasParent()
     {
         return $this->parent !== null;
+    }
+
+    /**
+     * Add a child category
+     *
+     * @param  Category $category
+     * @return Category
+     */
+    public function addChild(Category $category)
+    {
+        $category->setParent($this);
+        $this->children->add($category);
+
+        return $this;
+    }
+
+    /**
+     * Add children categories
+     *
+     * @param  Collection $children
+     * @return Category
+     */
+    public function addChildren(Collection $children)
+    {
+        foreach ($children as $child) {
+            $this->addChild($child);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove a child category
+     *
+     * @param  Category $category
+     * @return Category
+     */
+    public function removeChild(Category $category)
+    {
+        $category->setParent(null);
+        $this->children->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * Remove children categories
+     *
+     * @param  Collection $children
+     * @return Category
+     */
+    public function removeChildren(Collection $children)
+    {
+        foreach ($children as $child) {
+            $this->removeChild($child);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set children categories
+     *
+     * @param  Collection $children
+     * @return Category
+     */
+    public function setChildren(Collection $children)
+    {
+        $this->children->clear();
+        $this->addChildren($children);
+
+        return $this;
+    }
+
+    /**
+     * Get the children categories
+     *
+     * @return Collection
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set the position of the category according to the sibling categories
+     *
+     * @param  int $position
+     * @return Category
+     */
+    public function setPosition($position)
+    {
+        $this->position = (int) $position;
+        return $this;
+    }
+
+    /**
+     * Get the position of the category according to the sibling categories
+     *
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 
     /**
@@ -165,19 +292,5 @@ class Category implements JsonSerializable
     public function getDepth()
     {
         return $this->depth;
-    }
-
-    /**
-     * (PHP 5 >= 5.4.0)
-     * Serializes the object to a value that can be serialized natively by json_encode().
-     */
-    function jsonSerialize()
-    {
-        return array(
-            'id'          => $this->id,
-            'name'        => $this->name,
-            'description' => $this->description,
-            'depth'       => $this->depth
-        );
     }
 }

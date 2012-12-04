@@ -18,48 +18,47 @@
 
 namespace ZfrForum\Repository;
 
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\Category;
 use ZfrForum\Mapper\CategoryMapperInterface;
 
 class CategoryRepository extends EntityRepository implements CategoryMapperInterface
 {
     /**
+     * Create the category
+     *
      * @param  Category $category
      * @return Category
      */
     public function create(Category $category)
     {
-        // TODO: Implement create() method.
+        $this->_em->persist($category);
+        $this->_em->flush($category);
+
+        return $category;
     }
 
     /**
+     * Update the category
+     *
      * @param  Category $category
      * @return Category
      */
     public function update(Category $category)
     {
-        // TODO: Implement update() method.
+        $this->_em->flush($category);
+        return $category;
     }
 
     /**
+     * Remove the category
+     *
      * @param  Category $category
      * @return void
      */
     public function remove(Category $category)
     {
-        // TODO: Implement remove() method.
-    }
-
-    /**
-     * @param int $maxDepth
-     * @return array
-     */
-    public function findAll($maxDepth = 3)
-    {
-        $exprBuilder = Criteria::expr();
-        $criteria    = new Criteria($exprBuilder->lte('depth', $maxDepth));
-
-        return $this->matching($criteria);
+        $this->_em->remove($category);
+        $this->_em->flush($category);
     }
 }

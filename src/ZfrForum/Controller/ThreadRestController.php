@@ -23,8 +23,15 @@ use Zend\View\Model\JsonModel;
 use ZfrForum\Entity\Thread;
 use ZfrForum\Service\ThreadService;
 
-class ThreadController extends AbstractRestfulController
+class ThreadRestController extends AbstractRestfulController
 {
+    /**
+     * @var array
+     */
+    protected $acceptCriteria = array(
+        'Zend\View\Model\JsonModel' => array('application/json')
+    );
+
     /**
      * @var ThreadService
      */
@@ -38,7 +45,50 @@ class ThreadController extends AbstractRestfulController
      */
     public function getList()
     {
-        // TODO: Implement getList() method
+        $viewModel = $this->acceptableViewModelSelector($this->acceptCriteria);
+
+        if ($viewModel instanceof JsonModel) {
+            $threadsService = $this->getThreadService();
+            $threads        = null;
+
+            // We can have two cases : either we get the threads of a user, either we get the threads of
+            // a category. We just need to check which parameter is set
+            if ($categoryId = $this->params('categoryId', null)) {
+                $threads = $threadsService->getByCategory($categoryId);
+            } elseif ($userId = $this->params('userId', null)) {
+
+            }
+
+            $threads->setCurrentPageNumber($this->params()->fromQuery('page'), 1)
+                    ->setItemCountPerPage($this->params()->fromQuery('limit'), 25);
+
+            $data = array();
+            $data['current_page'] = $threads->getCurrentPageNumber();
+            $data['num_pages']    = count($threads);
+            $data['total_items']  = $threads->getTotalItemCount();
+
+            foreach ($threads as $thread) {
+                $data['items'][] = array(
+                    'id'       => $thread->getId(),
+                    'title'    => $thread->getTitle(),
+                    'category' => array(
+                        'id' => $thread->getCategory()->getId()
+                    ),
+                    'createdBy' => array(
+                        'id'          => $thread->getCreatedBy()->getId(),
+                        'displayName' => $thread->getCreatedBy()->getDisplayName()
+                    ),
+                    'createdAt'  => $thread->getCreatedAt(),
+                    'countViews' => $thread->getCountViews(),
+                    'pinned'     => $thread->isPinned(),
+                    'closed'     => $thread->isClosed()
+                );
+            }
+
+            $viewModel->setVariables($data);
+        }
+
+        return $viewModel;
     }
 
     /**

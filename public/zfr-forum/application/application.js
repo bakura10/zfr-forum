@@ -1,4 +1,3 @@
-<?php
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -16,29 +15,20 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Repository;
+'use strict';
 
-use ZfrForum\Entity\GlobalSettings;
-use ZfrForum\Entity\UserSettings;
-use ZfrForum\Mapper\SettingsMapperInterface;
-use ZfrForum\Entity\UserInterface;
+var ForumApplication = angular.module('ForumApplication', ['ngResource']);
 
-class SettingsRepository extends EntityRepository implements SettingsMapperInterface
-{
-    /**
-     * @return GlobalSettings
-     */
-    public function findGlobalSettings()
-    {
-        // TODO: Implement findGlobalSettings() method.
-    }
+ForumApplication.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+    $locationProvider.html5Mode(true).hashPrefix('!');
 
-    /**
-     * @param  UserInterface $user
-     * @return UserSettings|null
-     */
-    public function findByUser(UserInterface $user)
-    {
-        // TODO: Implement findByUser() method.
-    }
-}
+    $routeProvider.
+        when('/forum', {
+            controller: 'CategoriesController'
+        }).
+        when('/forum/categories/:categoryId/:slug', {
+            controller: 'ThreadsController',
+            templateUrl: '/zfr-forum/threads/list.html'
+        }).
+        otherwise({redirectTo: '/forum'});
+}]);

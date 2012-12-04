@@ -1,4 +1,3 @@
-<?php
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -16,23 +15,8 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Mapper;
+'use strict';
 
-use Doctrine\Common\Persistence\ObjectRepository;
-use ZfrForum\Entity\UserInterface;
-use ZfrForum\Entity\GlobalSettings;
-use ZfrForum\Entity\UserSettings;
-
-interface SettingsMapperInterface extends ObjectRepository
-{
-    /**
-     * @return GlobalSettings
-     */
-    public function findGlobalSettings();
-
-    /**
-     * @param  UserInterface $user
-     * @return UserSettings|null
-     */
-    public function findByUser(UserInterface $user);
-}
+ForumApplication.service('CategoriesService', ['ngResource', function($resource) {
+    return $resource();
+}]);

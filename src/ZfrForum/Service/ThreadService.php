@@ -139,25 +139,25 @@ class ThreadService extends EventProvider
     }
 
     /**
-     * Get a paginator for the latest threads, optionally filtered by a category
+     * Get the latest threads, optionally filtered by a category
      *
-     * @param  Category $category
+     * @param  Category|int $category
      * @throws Exception\UnexpectedValueException
      * @return Paginator
      */
-    public function getByCategory(Category $category = null)
+    public function getByCategory($category = null)
     {
-        $latestThreads = $this->threadMapper->findByCategory($category);
+        $threads = $this->threadMapper->findByCategory($category);
 
-        if (!$latestThreads instanceof Paginator) {
+        if (!$threads instanceof Paginator) {
             throw new Exception\UnexpectedValueException(sprintf(
                 '%s method expects a Zend\Paginator\Paginator instance, %s received',
                 __FUNCTION__,
-                get_class($latestThreads)
+                get_class($threads)
             ));
         }
 
-        return $latestThreads;
+        return $threads;
     }
 
     /**

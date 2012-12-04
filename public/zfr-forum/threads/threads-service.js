@@ -1,4 +1,3 @@
-<?php
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -16,29 +15,12 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Form;
+'use strict';
 
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Form\Fieldset;
-
-class ThreadFieldset extends Fieldset implements InputFilterProviderInterface
-{
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        parent::__construct('thread');
-    }
-
-    /**
-     * Should return an array specification compatible with
-     * {@link Zend\InputFilter\Factory::createInputFilter()}.
-     *
-     * @return array
-     */
-    public function getInputFilterSpecification()
-    {
-        return array();
-    }
-}
+ForumApplication.factory('ThreadsService', ['$resource', function($resource) {
+    return $resource(
+        '/forum/api/categories/:categoryId/threads', { page: 1, limit: 25 },
+        {
+            query: {method: 'GET', isArray: false}
+        });
+}]);
