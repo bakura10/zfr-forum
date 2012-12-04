@@ -18,36 +18,47 @@
 
 namespace ZfrForum\Repository;
 
+use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\ThreadTracking;
 use ZfrForum\Mapper\ThreadTrackingMapperInterface;
 
 class ThreadTrackingRepository extends EntityRepository implements ThreadTrackingMapperInterface
 {
     /**
+     * Create a thread tracking
+     *
      * @param  ThreadTracking $threadTracking
      * @return ThreadTracking
      */
     public function create(ThreadTracking $threadTracking)
     {
+        $this->_em->persist($threadTracking);
+        $this->_em->flush($threadTracking);
 
+        return $threadTracking;
     }
 
     /**
+     * Update a thread tracking
+     *
      * @param  ThreadTracking $threadTracking
      * @return ThreadTracking
      */
     public function update(ThreadTracking $threadTracking)
     {
-        $this->getEntityManager()->flush($threadTracking);
+        $this->_em->flush($threadTracking);
         return $threadTracking;
     }
 
     /**
+     * Remove a thread tracking
+     *
      * @param  ThreadTracking $threadTracking
      * @return void
      */
     public function remove(ThreadTracking $threadTracking)
     {
-        // TODO: Implement remove() method.
+        $this->_em->remove($threadTracking);
+        $this->_em->flush($threadTracking);
     }
 }

@@ -10,23 +10,16 @@
  * which leads to REST API, and all the routes that begin by /forum/static, which are static routes that are here
  * just for SEO purposes (more on that in the doc).
  *
- * About the REST, here is the API :
+ * About the REST, here is the API. It should be pretty self-explanatory:
  *
- *  - /forum/api/categories => get all the categories
- *  - /forum/api/categories/4 => get the details of the categories 4
- *
- *  - /forum/api/categories/4/threads[?page=1&limit=25] => get all the threads of category 4, optionally filtered
- *                                                         by page and limited
- *  - /forum/api/threads/5 => get the details of the thread 5
- *  - /forum/api/threads/5/posts[?page=1&limit=25] => get all the posts of threads 5, optionally filtered by page
- *                                                    and limited
- *
- *  - /forum/api/posts/6 => get the details of post 6
- *
- *  - /forum/api/users/7/threads[?page=1&limit=25] => get all the threads created by user 7, optionally filtered by
- *                                                    page and limited
- *  - /forum/api/users/7/posts[?page=1&limit=25] => get all the posts created by user 7, optionally filtered by page
- *                                                  and limited
+ *  - /forum/api/categories
+ *  - /forum/api/categories/4
+ *  - /forum/api/categories/4/threads[?page=1&limit=25]
+ *  - /forum/api/threads/5
+ *  - /forum/api/threads/5/posts[?page=1&limit=25]
+ *  - /forum/api/posts/6
+ *  - /forum/api/users/7/threads[?page=1&limit=25]
+ *  - /forum/api/users/7/posts[?page=1&limit=25]
  */
 return array(
     'routes' => array(

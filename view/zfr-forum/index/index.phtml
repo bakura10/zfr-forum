@@ -6,5 +6,7 @@
 
 <?php $this->inlineScript()->appendFile('//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js')
                            ->appendFile('//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-resource.min.js')
-                           ->appendFile($this->basePath() . '/app/application/application.js')
-                           ->appendFile($this->basePath() . '/app/categories/categories-controller.js'); ?>
+                           ->appendFile($this->basePath() . '/zfr-forum/application/application.js')
+                           ->appendFile($this->basePath() . '/zfr-forum/categories/categories-controller.js')
+                           ->appendFile($this->basePath() . '/zfr-forum/threads/threads-service.js')
+                           ->appendFile($this->basePath() . '/zfr-forum/threads/threads-controller.js'); ?>

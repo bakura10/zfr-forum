@@ -16,23 +16,16 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Mapper;
+namespace ZfrForum\Form;
 
-use Doctrine\Common\Persistence\ObjectRepository;
-use ZfrForum\Entity\UserInterface;
-use ZfrForum\Entity\GlobalSettings;
-use ZfrForum\Entity\UserSettings;
+use Zend\InputFilter\InputFilter;
 
-interface SettingsMapperInterface extends ObjectRepository
+class PostFieldset extends InputFilter
 {
     /**
-     * @return GlobalSettings
+     * Constructor
      */
-    public function findGlobalSettings();
-
-    /**
-     * @param  UserInterface $user
-     * @return UserSettings|null
-     */
-    public function findByUser(UserInterface $user);
+    public function __construct()
+    {
+    }
 }

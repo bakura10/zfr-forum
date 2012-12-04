@@ -22,14 +22,13 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use JsonSerializable;
 use ZfrForum\Entity\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="ZfrForum\Repository\PostRepository")
  * @ORM\Table(name="Posts")
  */
-class Post implements JsonSerializable
+class Post
 {
     /**
      * @var int
@@ -375,27 +374,5 @@ class Post implements JsonSerializable
     public function getAnswerOf()
     {
         return $this->answerOf;
-    }
-
-    /**
-     * (PHP 5 >= 5.4.0)
-     * Serializes the object to a value that can be serialized natively by json_encode().
-     *
-     * @link http://docs.php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value of any type other than a resource.
-     */
-    function jsonSerialize()
-    {
-        return array(
-            'id'     => $this->getId(),
-            'author' => array(
-                'id'          => $this->getAuthor()->getId(),
-                'displayName' => $this->getAuthorDisplayName()
-            ),
-            'thread' => array(
-                'id' => $this->getThread()->getId()
-            ),
-            'content' => $this->getContent()
-        );
     }
 }

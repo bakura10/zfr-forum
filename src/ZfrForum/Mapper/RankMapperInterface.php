@@ -31,7 +31,7 @@ interface RankMapperInterface extends ObjectRepository
 
     /**
      * @param  Rank $rank
-     * @return void
+     * @return Rank
      */
     public function update(Rank $rank);
 

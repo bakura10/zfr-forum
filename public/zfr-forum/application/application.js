@@ -1,4 +1,3 @@
-<?php
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -16,29 +15,20 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\Form;
+'use strict';
 
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Form\Fieldset;
+var ForumApplication = angular.module('ForumApplication', ['ngResource']);
 
-class CategoryFieldset extends Fieldset implements InputFilterProviderInterface
-{
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        parent::__construct('category');
-    }
+ForumApplication.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+    $locationProvider.html5Mode(true).hashPrefix('!');
 
-    /**
-     * Should return an array specification compatible with
-     * {@link Zend\InputFilter\Factory::createInputFilter()}.
-     *
-     * @return array
-     */
-    public function getInputFilterSpecification()
-    {
-        return array();
-    }
-}
+    $routeProvider.
+        when('/forum', {
+            controller: 'CategoriesController'
+        }).
+        when('/forum/categories/:categoryId/:slug', {
+            controller: 'ThreadsController',
+            templateUrl: '/zfr-forum/threads/list.html'
+        }).
+        otherwise({redirectTo: '/forum'});
+}]);

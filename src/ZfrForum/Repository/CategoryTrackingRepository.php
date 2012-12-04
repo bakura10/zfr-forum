@@ -18,27 +18,35 @@
 
 namespace ZfrForum\Repository;
 
+use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\CategoryTracking;
 use ZfrForum\Mapper\CategoryTrackingMapperInterface;
 
 class CategoryTrackingRepository extends EntityRepository implements CategoryTrackingMapperInterface
 {
     /**
+     * Create the category tracking
+     *
      * @param  CategoryTracking $categoryTracking
      * @return CategoryTracking
      */
     public function create(CategoryTracking $categoryTracking)
     {
-        // TODO: Implement add() method.
+        $this->_em->persist($categoryTracking);
+        $this->_em->flush($categoryTracking);
+
+        return $categoryTracking;
     }
 
     /**
+     * Update the category tracking
+     *
      * @param  CategoryTracking $categoryTracking
      * @return CategoryTracking
      */
     public function update(CategoryTracking $categoryTracking)
     {
-        $this->getEntityManager()->flush($categoryTracking);
+        $this->_em->flush($categoryTracking);
         return $categoryTracking;
     }
 
@@ -48,6 +56,7 @@ class CategoryTrackingRepository extends EntityRepository implements CategoryTra
      */
     public function remove(CategoryTracking $categoryTracking)
     {
-        // TODO: Implement remove() method.
+        $this->_em->remove($categoryTracking);
+        $this->_em->flush($categoryTracking);
     }
 }

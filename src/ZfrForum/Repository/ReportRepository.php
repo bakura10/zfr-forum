@@ -18,24 +18,45 @@
 
 namespace ZfrForum\Repository;
 
-use ZfrForum\Entity\Post;
+use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\Report;
 use ZfrForum\Mapper\ReportMapperInterface;
 
 class ReportRepository extends EntityRepository implements ReportMapperInterface
 {
     /**
-     * Add a new report
+     * Create the report
      *
      * @param  Report $report
      * @return Report
      */
     public function create(Report $report)
     {
-        $em = $this->getEntityManager();
-        $em->persist($report);
-        $em->flush();
+        $this->_em->persist($report);
+        $this->_em->flush($report);
 
         return $report;
+    }
+
+    /**
+     * Update the report
+     *
+     * @param  Report $report
+     * @return Report
+     */
+    public function update(Report $report)
+    {
+        $this->_em->flush($report);
+        return $report;
+    }
+
+    /**
+     * @param  Report $report
+     * @return void
+     */
+    public function remove(Report $report)
+    {
+        $this->_em->remove($report);
+        $this->_em->flush($report);
     }
 }

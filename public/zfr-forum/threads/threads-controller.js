@@ -17,14 +17,12 @@
 
 'use strict';
 
-var ForumApplication = angular.module('ForumApplication', ['ngResource']);
-
-ForumApplication.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-    $locationProvider.html5Mode(true).hashPrefix('!');
-
-    $routeProvider.
-        when('/forum', {
-            controller: 'CategoriesController'
-        }).
-        otherwise({redirectTo: '/forum'});
-}]);
+ForumApplication.controller('ThreadsController', ['$scope', '$routeParams', 'ThreadsService',
+    function($scope, $routeParams, ThreadsService) {
+        $scope.threads = ThreadsService.query({
+            categoryId: $routeParams.categoryId,
+            page: ($routeParams.page === undefined ? 1 : $routeParams.page),
+            limit: ($routeParams.limit === undefined ? 25 : $routeParams.limit)
+        });
+    }
+]);

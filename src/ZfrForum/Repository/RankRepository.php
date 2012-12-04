@@ -18,35 +18,47 @@
 
 namespace ZfrForum\Repository;
 
+use Doctrine\ORM\EntityRepository;
 use ZfrForum\Entity\Rank;
 use ZfrForum\Mapper\RankMapperInterface;
 
 class RankRepository extends EntityRepository implements RankMapperInterface
 {
     /**
+     * Create the rank
+     *
      * @param  Rank $rank
-     * @return mixed
+     * @return Rank
      */
     public function create(Rank $rank)
     {
-        // TODO: Implement create() method.
+        $this->_em->persist($rank);
+        $this->_em->flush($rank);
+
+        return $rank;
     }
 
     /**
+     * Update the rank
+     *
      * @param  Rank $rank
-     * @return mixed
+     * @return Rank
      */
     public function update(Rank $rank)
     {
-        // TODO: Implement update() method.
+        $this->_em->flush($rank);
+        return $rank;
     }
 
     /**
+     * Remove the rank
+     *
      * @param  Rank $rank
-     * @return mixed
+     * @return void
      */
     public function remove(Rank $rank)
     {
-        // TODO: Implement remove() method.
+        $this->_em->remove($rank);
+        $this->_em->flush();
     }
 }
