@@ -16,39 +16,28 @@
  * and is licensed under the MIT license.
  */
 
-namespace ZfrForum\View\Helper;
+namespace ZfrForum\Controller;
 
-use Zend\View\Helper\AbstractHelper;
-use ZfrForum\Service\SettingsService;
+use Zend\Mvc\Controller\AbstractActionController;
+use ZfrForum\Service\PostService;
 
-/**
- * This view helper allow to retrieve the settings of the forum. It can either return the global settings or,
- * if they exist and if the owner of the forum allowed this feature, the settings overridden by the user
- */
-class ForumSettings extends AbstractHelper
+class PostRestController extends AbstractActionController
 {
     /**
-     * @var SettingsService
+     * @var PostService
      */
-    protected $settingsService;
+    protected $postService;
 
 
     /**
-     * @param SettingsService $settingsService
+     * @return PostService
      */
-    public function __construct(SettingsService $settingsService)
+    protected function getPostService()
     {
-        $this->settingsService = $settingsService;
-    }
+        if ($this->postService === null) {
+            $this->postService = $this->serviceLocator->get('ZfrForum\Service\PostService');
+        }
 
-    /**
-     * Get the settings (either a GlobalSettings instance or a UserInstance)
-     *
-     * @param  bool $forceGlobals
-     * @return \ZfrForum\Entity\AbstractSettings
-     */
-    public function __invoke($forceGlobals = false)
-    {
-        return $this->settingsService->getSettings($forceGlobals);
+        return $this->postService;
     }
 }

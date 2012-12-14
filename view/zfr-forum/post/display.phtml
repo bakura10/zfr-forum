@@ -1,0 +1,13 @@
+<!-- Display a single post -->
+
+<?php $author = $this->post->getAuthor(); ?>
+
+<article class="zfr-post">
+    <div class="zfr-author" itemprop="author" itemtype="http://schema.org/Person">
+        <span itemprop="name"><?= $author->getDisplayName(); ?></span>
+    </div>
+
+    <div class="zfr-content">
+        <?php $this->post->getContent(); ?>
+    </div>
+</article>

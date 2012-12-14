@@ -1,3 +1,4 @@
+<?php
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -15,8 +16,28 @@
  * and is licensed under the MIT license.
  */
 
-'use strict';
+namespace ZfrForum\Controller;
 
-ForumApplication.service('CategoriesService', ['ngResource', function($resource) {
-    return $resource();
-}]);
+use Zend\Mvc\Controller\AbstractActionController;
+use ZfrForum\Service\ThreadService;
+
+class ThreadRestController extends AbstractActionController
+{
+    /**
+     * @var ThreadService
+     */
+    protected $threadService;
+
+
+    /**
+     * @return ThreadService
+     */
+    protected function getThreadService()
+    {
+        if ($this->threadService === null) {
+            $this->threadService = $this->serviceLocator->get('ZfrForum\Service\ThreadService');
+        }
+
+        return $this->threadService;
+    }
+}

@@ -1,3 +1,4 @@
+<?php
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -15,14 +16,28 @@
  * and is licensed under the MIT license.
  */
 
-'use strict';
+namespace ZfrForum\Controller;
 
-ForumApplication.controller('ThreadsController', ['$scope', '$routeParams', 'ThreadsService',
-    function($scope, $routeParams, ThreadsService) {
-        $scope.threads = ThreadsService.query({
-            categoryId: $routeParams.categoryId,
-            page: ($routeParams.page === undefined ? 1 : $routeParams.page),
-            limit: ($routeParams.limit === undefined ? 25 : $routeParams.limit)
-        });
+use Zend\Mvc\Controller\AbstractActionController;
+use ZfrForum\Service\CategoryService;
+
+class CategoryController extends AbstractActionController
+{
+    /**
+     * @var CategoryService
+     */
+    protected $categoryService;
+
+
+    /**
+     * @return CategoryService
+     */
+    protected function getCategoryService()
+    {
+        if ($this->categoryService === null) {
+            $this->categoryService = $this->serviceLocator->get('ZfrForum\Service\CategoryService');
+        }
+
+        return $this->categoryService;
     }
-]);
+}
