@@ -21,16 +21,12 @@ namespace ZfrForum;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\ControllerPluginProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
-use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
 class Module implements
     AutoloaderProviderInterface,
     ConfigProviderInterface,
-    ControllerPluginProviderInterface,
-    ServiceProviderInterface,
-    ViewHelperProviderInterface
+    ServiceProviderInterface
 {
     /**
      * {@inheritDoc}
@@ -77,54 +73,6 @@ class Module implements
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
-    }
-
-    /**
-     * @return array
-     */
-    public function getControllerPluginConfig()
-    {
-        return array(
-            /**
-             * Invokables
-             */
-            'factories' => array(
-                'ZfrForum\Controller\Plugin\ForumSettings' => function($serviceManager) {
-                    $settingsService = $serviceManager->get('ZfrForum\Service\SettingsService');
-                    return new Controller\Plugin\ForumSettings($settingsService);
-                }
-            ),
-            /**
-             * Aliases
-             */
-            'aliases' => array(
-                'forumSettings' => 'ZfrForum\Controller\Plugin\ForumSettings'
-            )
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function getViewHelperConfig()
-    {
-        return array(
-            /**
-             * Invokables
-             */
-            'factories' => array(
-                'ZfrForum\View\Helper\ForumSettings' => function($serviceManager) {
-                    $settingsService = $serviceManager->get('ZfrForum\Service\SettingsService');
-                    return new View\Helper\ForumSettings($settingsService);
-                }
-            ),
-            /**
-             * Aliases
-             */
-            'aliases' => array(
-                'forumSettings' => 'ZfrForum\View\Helper\ForumSettings'
-            )
-        );
     }
 
     /**

@@ -2,17 +2,6 @@
 
 return array(
     /**
-     * AssetManager configuration
-     */
-    'asset_manager' => array(
-        'resolver_configs' => array(
-            'paths' => array(
-                __DIR__ . '/../public',
-            ),
-        ),
-    ),
-
-    /**
      * Router configuration
      */
     'router' => include 'module.config.routes.php',
@@ -62,48 +51,14 @@ return array(
     ),
 
     /**
-     * ZfrForum configuration
-     */
-    'zfr_forum' => array(
-        'db_options' => array(
-            'table_prefix' => 'Zfr_'
-        ),
-
-        'forum_settings' => array(
-            /**
-             * Count settings
-             */
-            'num_threads_per_page'    => 25,
-            'num_messages_per_thread' => 25,
-
-            /**
-             * Style settings
-             */
-            'styles' => array('Default' => 'default.css'),
-            'default_style_name' => 'Default',
-
-            /**
-             * Signature settings
-             */
-            'show_signatures'       => true,
-            'max_signatures_length' => 250,
-
-            /**
-             * Other
-             */
-            'can_settings_be_overridden_by_user' => true,
-        )
-    ),
-
-    /**
      * Controllers
      */
     'controllers' => array(
         'invokables' => array(
-            'ZfrForum\Controller\CategoryRest' => 'ZfrForum\Controller\CategoryRestController',
-            'ZfrForum\Controller\Index'        => 'ZfrForum\Controller\IndexController',
-            'ZfrForum\Controller\PostRest'     => 'ZfrForum\Controller\PostRestController',
-            'ZfrForum\Controller\ThreadRest'   => 'ZfrForum\Controller\ThreadRestController'
+            'ZfrForum\Controller\Category' => 'ZfrForum\Controller\CategoryController',
+            'ZfrForum\Controller\Index'    => 'ZfrForum\Controller\IndexController',
+            'ZfrForum\Controller\Post'     => 'ZfrForum\Controller\PostController',
+            'ZfrForum\Controller\Thread'   => 'ZfrForum\Controller\ThreadController'
         )
     ),
 
@@ -116,7 +71,10 @@ return array(
         ),
 
         'template_map' => array(
-            'zfr-forum/index/index' => __DIR__ . '/../view/zfr-forum/index/index.phtml',
+            'zfr-forum/category/display' => __DIR__ . '/../view/zfr-forum/category/display.phtml',
+            'zfr-forum/index/index'      => __DIR__ . '/../view/zfr-forum/index/index.phtml',
+            'zfr-forum/post/display'     => __DIR__ . '/../view/zfr-forum/post/display.phtml',
+            'zfr-forum/thread/display'   => __DIR__ . '/../view/zfr-forum/thread/display.phtml'
         ),
     ),
 );

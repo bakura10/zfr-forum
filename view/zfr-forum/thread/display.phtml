@@ -1,0 +1,17 @@
+<!-- This page display all the posts for a given thread -->
+
+<div itemscope itemtype="http://schema.org/WebPage">
+    <!-- Move breadcrumb rendering to a partial -->
+    <div class="zfr-breadcrumb" itemprop="breadcrumb">
+    </div>
+
+    <section class="zfr-thread">
+        <h1><?= $this->thread->getTitle(); ?></h1>
+
+        <ul class="zfr-posts">
+            <?php foreach($this->posts as $post): ?>
+                <?= $this->render('zfr-forum/post/display', $post); ?>
+            <?php endforeach; ?>
+        </ul>
+    </section>
+</div>
