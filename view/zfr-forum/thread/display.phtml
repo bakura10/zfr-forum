@@ -10,7 +10,7 @@
 
         <ul class="zfr-posts">
             <?php foreach($this->posts as $post): ?>
-                <?= $this->render('zfr-forum/post/display', $post); ?>
+                <?= $this->render('zfr-forum/post/display', array('post' => $post)); ?>
             <?php endforeach; ?>
         </ul>
     </section>
