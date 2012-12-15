@@ -72,7 +72,7 @@ class CategoryService
      */
     public function remove(Category $category)
     {
-        $this->categoryMapper->remove($category);
+        $this->categoryMapper->removeFromTree($category);
     }
 
     /**

@@ -19,13 +19,13 @@
 namespace ZfrForum\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Internally, categories are stored into a hierarchical tree in order to easily fetch threads
- * from specific categories, or from all the sub-categories of a given category...
+ * Categories are stored through the use of a nested set
  *
+ * @Gedmo\Tree(type="nested")
  * @ORM\Entity(repositoryClass="ZfrForum\Repository\CategoryRepository")
  * @ORM\Table(name="Categories")
  */
@@ -41,8 +41,33 @@ class Category
     protected $id;
 
     /**
+     * @var int
+     *
+     * @Gedmo\TreeLeft
+     * @ORM\Column(type="integer")
+     */
+    protected $left;
+
+    /**
+     * @var int
+     *
+     * @Gedmo\TreeRight
+     * @ORM\Column(type="integer")
+     */
+    protected $right;
+
+    /**
+     * @var int
+     *
+     * @Gedmo\TreeLevel
+     * @ORM\Column(type="integer")
+     */
+    protected $level;
+
+    /**
      * @var Category
      *
+     * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="ZfrForum\Entity\Category", inversedBy="children")
      * @ORM\JoinColumn(onDelete="cascade")
      */
@@ -52,6 +77,7 @@ class Category
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="ZfrForum\Entity\Category", mappedBy="parent")
+     * @ORM\OrderBy({"left" = "ASC"})
      */
     protected $children;
 
@@ -75,13 +101,6 @@ class Category
      * @ORM\Column(type="text", length=1000)
      */
     protected $description = '';
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="smallint")
-     */
-    protected $depth = 1;
 
 
     /**
@@ -111,7 +130,6 @@ class Category
     public function setParent(Category $parent = null)
     {
         $this->parent = $parent;
-        $this->depth  = $parent->getDepth() + 1;
 
         return $this;
     }
@@ -134,88 +152,6 @@ class Category
     public function hasParent()
     {
         return $this->parent !== null;
-    }
-
-    /**
-     * Add a child category
-     *
-     * @param  Category $category
-     * @return Category
-     */
-    public function addChild(Category $category)
-    {
-        $category->setParent($this);
-        $this->children->add($category);
-
-        return $this;
-    }
-
-    /**
-     * Add children categories
-     *
-     * @param  Collection $children
-     * @return Category
-     */
-    public function addChildren(Collection $children)
-    {
-        foreach ($children as $child) {
-            $this->addChild($child);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Remove a child category
-     *
-     * @param  Category $category
-     * @return Category
-     */
-    public function removeChild(Category $category)
-    {
-        $category->setParent(null);
-        $this->children->removeElement($category);
-
-        return $this;
-    }
-
-    /**
-     * Remove children categories
-     *
-     * @param  Collection $children
-     * @return Category
-     */
-    public function removeChildren(Collection $children)
-    {
-        foreach ($children as $child) {
-            $this->removeChild($child);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Set children categories
-     *
-     * @param  Collection $children
-     * @return Category
-     */
-    public function setChildren(Collection $children)
-    {
-        $this->children->clear();
-        $this->addChildren($children);
-
-        return $this;
-    }
-
-    /**
-     * Get the children categories
-     *
-     * @return Collection
-     */
-    public function getChildren()
-    {
-        return $this->children;
     }
 
     /**
@@ -282,15 +218,5 @@ class Category
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Get the depth of the category (it begins by 1)
-     *
-     * @return int
-     */
-    public function getDepth()
-    {
-        return $this->depth;
     }
 }

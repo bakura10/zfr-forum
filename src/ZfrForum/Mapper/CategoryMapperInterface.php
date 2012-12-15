@@ -19,9 +19,10 @@
 namespace ZfrForum\Mapper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
+use Gedmo\Tree\RepositoryInterface as TreeRepository;
 use ZfrForum\Entity\Category;
 
-interface CategoryMapperInterface extends ObjectRepository
+interface CategoryMapperInterface extends ObjectRepository, TreeRepository
 {
     /**
      * @param  Category $category
@@ -37,7 +38,7 @@ interface CategoryMapperInterface extends ObjectRepository
 
     /**
      * @param  Category $category
-     * @return void
+     * @return mixed
      */
-    public function remove(Category $category);
+    public function removeFromTree(Category $category);
 }

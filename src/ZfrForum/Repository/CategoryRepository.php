@@ -18,11 +18,11 @@
 
 namespace ZfrForum\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use ZfrForum\Entity\Category;
 use ZfrForum\Mapper\CategoryMapperInterface;
 
-class CategoryRepository extends EntityRepository implements CategoryMapperInterface
+class CategoryRepository extends NestedTreeRepository implements CategoryMapperInterface
 {
     /**
      * Create the category
@@ -33,7 +33,7 @@ class CategoryRepository extends EntityRepository implements CategoryMapperInter
     public function create(Category $category)
     {
         $this->_em->persist($category);
-        $this->_em->flush($category);
+        $this->_em->flush();
 
         return $category;
     }
@@ -48,17 +48,5 @@ class CategoryRepository extends EntityRepository implements CategoryMapperInter
     {
         $this->_em->flush($category);
         return $category;
-    }
-
-    /**
-     * Remove the category
-     *
-     * @param  Category $category
-     * @return void
-     */
-    public function remove(Category $category)
-    {
-        $this->_em->remove($category);
-        $this->_em->flush($category);
     }
 }
